@@ -1,4 +1,4 @@
-package main.java.com.forrst.api;
+package com.forrst.api;
 
 public interface ForrstAPI {
 	
