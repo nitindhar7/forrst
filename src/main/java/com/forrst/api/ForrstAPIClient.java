@@ -9,7 +9,7 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ForrstAPIClient implements ForrstAPI {
+public class ForrstAPIClient implements ForrstAPI, Http {
 	
 	@Override
 	public void stats() {
@@ -118,6 +118,12 @@ public class ForrstAPIClient implements ForrstAPI {
 		}
 
 		return jString;
+	}
+
+	@Override
+	public void get(String path) {
+		// ping (Forrst.BASE_URI + path) url to fetch resource
+		// return json
 	}
 
 }
