@@ -12,53 +12,46 @@ import org.json.JSONObject;
 public class ForrstAPIClient implements ForrstAPI, Http {
 	
 	@Override
-	public void stats() {
-		// TODO Auto-generated method stub
-
+	public String stats() {
 		// example
 		this.read_exec("stats", "udiudi");
+		
+		return "";
 	}
 
 	@Override
-	public void usersAuth() {
-		// TODO Auto-generated method stub
-
+	public String usersAuth() {
+		return "";
 	}
 
 	@Override
-	public void usersInfo() {
-		// TODO Auto-generated method stub
-
+	public String usersInfo() {
+		return "";
 	}
 
 	@Override
-	public void userPosts() {
-		// TODO Auto-generated method stub
-
+	public String userPosts() {
+		return "";
 	}
 
 	@Override
-	public void postsShow() {
-		// TODO Auto-generated method stub
-
+	public String postsShow() {
+		return "";
 	}
 
 	@Override
-	public void postsAll() {
-		// TODO Auto-generated method stub
-
+	public String postsAll() {
+		return "";
 	}
 
 	@Override
-	public void postsList() {
-		// TODO Auto-generated method stub
-
+	public String postsList() {
+		return "";
 	}
 
 	@Override
-	public void postComments() {
-		// TODO Auto-generated method stub
-
+	public String postComments() {
+		return "";
 	}
 	
 	/**

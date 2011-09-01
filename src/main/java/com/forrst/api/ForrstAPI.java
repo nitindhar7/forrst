@@ -2,22 +2,24 @@ package com.forrst.api;
 
 public interface ForrstAPI {
 	
-	String BASE_URI = "https://forrst.com/api/v2/";
+	public int RATE_LIMIT = 150;
 	
-	void stats();
+	public String BASE_URI = "https://forrst.com/api/v2/";
 	
-	void usersAuth();
+	public String stats();
 	
-	void usersInfo();
+	public String usersAuth();
 	
-	void userPosts();
+	public String usersInfo();
 	
-	void postsShow();
+	public String userPosts();
 	
-	void postsAll();
+	public String postsShow();
 	
-	void postsList();
+	public String postsAll();
 	
-	void postComments();
+	public String postsList();
+	
+	public String postComments();
 
 }

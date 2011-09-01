@@ -21,3 +21,4 @@ Todo
 ----
 
 - Versionstamp on dist jar via latest git tag
+- Add author github/forrst links
