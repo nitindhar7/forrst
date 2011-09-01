@@ -1,0 +1,52 @@
+<?xml version='1.0'?>
+<project name="forrst" default="dist" basedir=".">
+    <property name="targetdir" value="target"/>
+    <property name="srcdir" value="src/main/java"/>
+	<property name="classdir" value="${targetdir}/classes"/>
+	<property name="test_srcdir" value="src/test/java"/>
+    <property name="test_resdir" value="src/test/resources"/>
+    <property name="test_outdir" value="test-output"/>
+    <property name="test_classdir" value="${targetdir}/tests"/>
+    <property name="distdir" value="dist"/>
+
+    <path id="classpath">
+      <fileset dir="lib">
+        <include name="**/*.jar"/>
+      </fileset>
+      <pathelement path="${classdir}" />
+    </path>
+
+    <path id="test_classpath">
+      <path refid="classpath"/>
+      <pathelement path="${test_classdir}" />
+      <pathelement path="${test_resdir}"/>
+    </path>
+
+    <target name="init">
+      <mkdir dir="${classdir}"/>
+      <mkdir dir="${test_classdir}"/>
+    </target>
+
+    <target name="clean">
+      <delete dir="${classdir}"/>
+      <delete dir="${test_classdir}"/>
+      <delete dir="${targetdir}"/>
+      <delete dir="${distdir}"/>
+    </target>    
+
+    <target name="compile" depends="clean, init">
+      <javac debug="on" srcdir="${srcdir}" destdir="${classdir}" classpathref="classpath" includeantruntime="false" />
+    </target>
+
+    <target name="compile_tests" depends="compile">
+      <javac debug="on" srcdir="${test_srcdir}" destdir="${test_classdir}" classpathref="test_classpath" includeantruntime="false" />
+    </target>
+
+    <target name="dist" depends="compile, compile_tests" description="Builds a complete forrst jar.">
+      <mkdir dir="${distdir}"/>
+      <delete>
+        <fileset dir="." includes="${distdir}/forrst.jar"/>
+      </delete>
+      <jar destfile="${distdir}/forrst.jar" basedir="${classdir}"/>
+    </target>
+</project>
