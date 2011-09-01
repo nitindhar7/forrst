@@ -9,7 +9,6 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class ForrstApiClient implements ForrstAPI {
 	
 	@Override
