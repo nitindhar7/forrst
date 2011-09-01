@@ -4,6 +4,7 @@ forrst is a Java library for the Forrst API. Currently this library is in develo
 
 Authors
 =======
-Nitin Dhar
-Udi Mosayev
-Rene Merino
+
+- Nitin Dhar
+- Udi Mosayev
+- Rene Merino
