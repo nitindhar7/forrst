@@ -9,7 +9,7 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ForrstApiClient implements ForrstAPI {
+public class ForrstAPIClient implements ForrstAPI {
 	
 	@Override
 	public void stats() {
@@ -70,8 +70,8 @@ public class ForrstApiClient implements ForrstAPI {
 	 * @author Udi Mosayev <udi.mosayev@gmail.com>
 	 */
 	private JSONObject read_exec(String command, String username) {
-		String commandUrl = ForrstApiClient.BASE_URI+command+"/?username="+username;
-		String jsonResult = ForrstApiClient.getData(commandUrl);
+		String commandUrl = ForrstAPIClient.BASE_URI+command+"/?username="+username;
+		String jsonResult = ForrstAPIClient.getData(commandUrl);
 		JSONObject jsonData;
 		
 		try {
