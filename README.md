@@ -28,11 +28,24 @@ Authors
 -------
 
 - Nitin Dhar
-- Udi Mosayev
+
+  - Forrst: https://forrst.com/people/nitindhar7
+  - Site: http://coding-sense.blogspot.com
+  - Twitter: @nitin_dhar
+
 - Rene Merino
+
+  - Forrst: https://forrst.com/people/Alxmerino
+  - Site: http://www.amayamedia.com
+  - Twitter: @renemerino
+
+- Udi Mosayev
+
+  - Forrst: https://forrst.com/people/udiudi
+  - Site: http://udiudi.com
+  - Twitter: @udiudi
 
 Todo
 ----
 
 - Versionstamp on dist jar via latest git tag
-- Add author github/forrst links
