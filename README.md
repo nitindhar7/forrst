@@ -17,7 +17,7 @@ so keep that in mind.
 
 - stats
   - Returns stats about your API usage. Note: does not count against your rate limit.
-  -    curl https://forrst.com/api/v2/stats
+    - curl https://forrst.com/api/v2/stats
 
 - users/auth
   - User authentication. Provide an email/username and password and get an access token back
