@@ -17,35 +17,35 @@ so keep that in mind.
 
 - stats
   - Returns stats about your API usage. Note: does not count against your rate limit.
-    - Example: https://forrst.com/api/v2/stats
+  - https://forrst.com/api/v2/stats
 
 - users/auth
   - User authentication. Provide an email/username and password and get an access token back
-  - Example: https://forrst.com/api/v2/users/auth
+  - https://forrst.com/api/v2/users/auth
 
 - users/info
   - Returns user info
-  - Example: https://forrst.com/api/v2/users/info
+  - https://forrst.com/api/v2/users/info
 
 - user/posts
   - Returns a user's posts
-  - Example: https://forrst.com/api/v2/user/posts
+  - https://forrst.com/api/v2/user/posts
 
 - posts/show
   - Return data about a single post. Note: For questions, content is the question. For code, content contains the code snippet. For code, snaps, and links, description is the post description; it is not used for questions.
-  - Example: https://forrst.com/api/v2/posts/show
+  - https://forrst.com/api/v2/posts/show
 
 - posts/all
   - Returns a list of all posts in reverse-chron order
-  - Example: https://forrst.com/api/v2/posts/all
+  - https://forrst.com/api/v2/posts/all
 
 - posts/list
   - Returns a list of posts of a given type
-  - Example: https://forrst.com/api/v2/posts/list
+  - https://forrst.com/api/v2/posts/list
 
 - post/comments
   - Returns a post's comments
-  - Example: https://forrst.com/api/v2/post/comments
+  - https://forrst.com/api/v2/post/comments
 
 Authors
 -------
