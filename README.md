@@ -12,20 +12,47 @@ Each API method in this library is heavily commented. The descriptions are taken
 
 Forrst API Endpoints
 --------------------
-This library is build around the Forrt API version 2. At the moment there are 8 API endpoints available
+This library is build around the Forrt API version 2. At the moment there are 8 API endpoints available and each of them uses 'https://forrst.com/api/v2/' as the base URI. Also at the moment, API calls are rate limited to 150
+so keep that in mind.
 
 - stats
+  - Returns stats about your API usage. Note: does not count against your rate limit.
+    curl https://forrst.com/api/v2/stats
+
 - users/auth
+  - User authentication. Provide an email/username and password and get an access token back
+    curl https://forrst.com/api/v2/users/auth
+
 - users/info
+  - Returns user info
+    curl https://forrst.com/api/v2/users/info
+
 - user/posts
+  - Returns a user's posts
+    curl https://forrst.com/api/v2/user/posts
+
 - posts/show
+  - Return data about a single post. Note: For questions, content is the question. For code, content contains the code snippet. For code, snaps, and links, description is the post description; it is not used for questions.
+    curl https://forrst.com/api/v2/posts/show
+
 - posts/all
+  - Returns a list of all posts in reverse-chron order
+    curl https://forrst.com/api/v2/posts/all
+
 - posts/list
+  - Returns a list of posts of a given type
+    curl https://forrst.com/api/v2/posts/list
+
 - post/comments
+  - Returns a post's comments
+    curl https://forrst.com/api/v2/post/comments
 
 
 Authors
 -------
+
+Our aim is to make Forrst integration into Java applications as easy as possible. We have tried our best to provide in-code documentation for each method.
+Tests coming up soon! Until then please help us find bugs.
 
 - Nitin Dhar
 
