@@ -8,6 +8,7 @@ $ ant dist
 
 Usage
 -----
+Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official Forrst API documentation at www.forrst.com/api for up to date API definitions and descriptions.
 
 
 Authors

@@ -13,27 +13,33 @@ public class ForrstAPIClient implements ForrstAPI {
 	}
 
 	public String usersInfo(int id, String username) {
-		return "";
+		HttpRequest http = new HttpRequest();
+		return http.get(USERS_INFO);
 	}
 
-	public String userPosts() {
-		return "";
+	public String userPosts(int id, String username, String type, int limit, int after) {
+		HttpRequest http = new HttpRequest();
+		return http.get(USER_POSTS);
 	}
 
-	public String postsShow() {
-		return "";
+	public String postsShow(int id, int tinyId) {
+		HttpRequest http = new HttpRequest();
+		return http.get(POSTS_SHOW);
 	}
 
-	public String postsAll() {
-		return "";
+	public String postsAll(int after) {
+		HttpRequest http = new HttpRequest();
+		return http.get(POSTS_ALL);
 	}
 
-	public String postsList() {
-		return "";
+	public String postsList(String postType, String sort, int page) {
+		HttpRequest http = new HttpRequest();
+		return http.get(POSTS_LIST);
 	}
 
-	public String postComments() {
-		return "";
+	public String postComments(int id, int tinyId) {
+		HttpRequest http = new HttpRequest();
+		return http.get(POST_COMMENTS);
 	}
 
 }
