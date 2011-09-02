@@ -16,6 +16,7 @@ This library is build around the Forrt API version 2. At the moment there are 8 
 so keep that in mind.
 
 - stats
+  
   - Returns stats about your API usage. Note: does not count against your rate limit.
 
     curl https://forrst.com/api/v2/stats
