@@ -44,7 +44,7 @@ public class HttpRequest {
 	 * @param requestURI The Forrst endpoint requested
 	 * @return JSONObject containing the full Forrst API response
 	 */
-	private JSONObject getData(String requestURI) {
+	protected JSONObject getData(String requestURI) {
 		String jsonResult = "";
 		
 		JSONObject json = null;
@@ -79,17 +79,19 @@ public class HttpRequest {
 	 * @param args
 	 * @return
 	 */
-	private String stringifyArgs(Map<String,String> args) {
-		StringBuilder argString = new StringBuilder();
-		
+	protected String stringifyArgs(Map<String,String> args) {
+		StringBuilder argString = new StringBuilder('?');
+
 		for(String key : args.keySet()) {
-			argString.append("?");
 			argString.append(key);
-			argString.append("=");
+			argString.append('=');
 			argString.append(args.get(key));
+			argString.append('&');
 		}
-		
-		return argString.toString();
+
+		String stringifiedArgs = argString.toString();
+
+		return stringifiedArgs.substring(0, stringifiedArgs.length() - 1);
 	}
 
 }

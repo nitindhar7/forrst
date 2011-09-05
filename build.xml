@@ -32,7 +32,7 @@
       <delete dir="${test_classdir}"/>
       <delete dir="${targetdir}"/>
       <delete dir="${distdir}"/>
-    </target>    
+    </target>
 
     <target name="compile" depends="clean, init">
       <javac debug="on" srcdir="${srcdir}" destdir="${classdir}" classpathref="classpath" includeantruntime="false" />
@@ -48,5 +48,11 @@
         <fileset dir="." includes="${distdir}/forrst.jar"/>
       </delete>
       <jar destfile="${distdir}/forrst.jar" basedir="${classdir}"/>
+    </target>
+	
+	<target name="tests" depends="compile_tests" description="runs unit/functional tests">
+        <junit classpathref="test_classpath" haltOnFailure="true">
+        	<classfileset dir="${test_classdir}" includes="**/**.class" />
+        </junit>
     </target>
 </project>

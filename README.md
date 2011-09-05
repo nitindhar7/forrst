@@ -59,19 +59,16 @@ Tests coming up soon! Until then please help us find bugs.
   - Site: http://coding-sense.blogspot.com
   - Twitter: @nitin_dhar
 
-- Rene Merino
-
-  - Forrst: https://forrst.com/people/Alxmerino
-  - Site: http://www.amayamedia.com
-  - Twitter: @renemerino
-
 - Udi Mosayev
 
   - Forrst: https://forrst.com/people/udiudi
   - Site: http://udiudi.com
   - Twitter: @udiudi
 
-Todo
+TODO
 ----
 
-- Versionstamp on dist jar via latest git tag
+- Rate limit API methods
+- Create ForrstException
+- Complete HttpRequest tests
+- Complete ForrstAPIClient tests
