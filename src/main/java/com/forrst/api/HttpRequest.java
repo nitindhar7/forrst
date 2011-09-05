@@ -5,73 +5,91 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HttpRequest {
-	
+
 	/**
-	 * Gets a command like stats or users/posts for certain username and returns
-	 * the json object of that reponse.
-	 * @param String command
-	 * @param String username
-	 * @return JSONObject response
-	 * @author Udi Mosayev <udi.mosayev@gmail.com>
+	 * Fetch data from Forrst using the request URI
+	 * without URL parameters
+	 * 
+	 * @param request Forrst URI requested
+	 * @return JSONObject containing a response
 	 */
-	private JSONObject read_exec(String command, String username) {
-		String commandUrl = ForrstAPI.BASE_URI + command + "/?username=" + username;
-		String jsonResult = getData(commandUrl);
-		JSONObject jsonData;
-		
-		try {
-			jsonData = new JSONObject(jsonResult);
-			JSONObject response = jsonData.getJSONObject("resp");
-			
-			return response;
-			/**
-			 * @TODO need to reconsider to current code structure.
-			 * Probably should have an for each result type (stats, user/posts and etc.)
-			 * and create out of every response (the json object) an object we can work with easily.
-			 */			
-		} catch (JSONException e) {
-			
-		}
-		
-		return new JSONObject();
+	public JSONObject get(String request) {
+		String requestURI = ForrstAPI.BASE_URI + request;
+		return getData(requestURI);
 	}
 	
 	/**
-	 * This method actually gets the data from the request URI
-	 * @param request the URI of the request
-	 * @return response string - JSON
-	 * @author Udi Mosayev <udi.mosayev@gmail.com>
+	 * Fetch data from Forrst using the request URI
+	 * without URL parameters
+	 * 
+	 * @param request Forrst URI requested
+	 * @param args Map of URL parameters and their values
+	 * @return JSONObject containing a response
 	 */
-	private static String getData(String request) {
-		String jString = "";
-		try {
-			URL url = new URL(request);
+	public JSONObject get(String request, Map<String,String> args) {
+		String requestURI = ForrstAPI.BASE_URI + request + stringifyArgs(args);
+		return getData(requestURI);
+	}
+	
+	/**
+	 * Workhorse method that reads data from a URL and
+	 * returns the result as a JSON object
+	 * 
+	 * @param requestURI The Forrst endpoint requested
+	 * @return JSONObject containing the full Forrst API response
+	 */
+	private JSONObject getData(String requestURI) {
+		String jsonResult = "";
+		
+		JSONObject json = null;
 
-			// Read all the text returned by the server
+		try {
+			URL url = new URL(requestURI);
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-			String str;
 			
-			while ((str = in.readLine()) != null) {
-				jString += str;
+			String responseLine;
+			while ((responseLine = in.readLine()) != null) {
+				jsonResult += responseLine;
 			}
-			
-			in.close();
-		} catch (MalformedURLException e) {
-			// TODO Handle this
-		} catch (IOException e) {
-			// TODO Handle this */
-		}
 
-		return jString;
+			in.close();
+			
+			json = new JSONObject(jsonResult);
+			json = json.getJSONObject("resp");
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("Invalid URL requested");
+		} catch (IOException e) {
+			throw new RuntimeException("Could not read from requested stream");
+		} catch (JSONException e) {
+			throw new RuntimeException("JSON could not be formed");
+		}
+		
+		return json;
 	}
 	
-	public String get(String request) {
-		return "";
+	/**
+	 * Creates a string version of the URL params
+	 * 
+	 * @param args
+	 * @return
+	 */
+	private String stringifyArgs(Map<String,String> args) {
+		StringBuilder argString = new StringBuilder();
+		
+		for(String key : args.keySet()) {
+			argString.append("?");
+			argString.append(key);
+			argString.append("=");
+			argString.append(args.get(key));
+		}
+		
+		return argString.toString();
 	}
 
 }

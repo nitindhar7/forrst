@@ -1,5 +1,7 @@
 package com.forrst.api;
 
+import org.json.JSONObject;
+
 public interface ForrstAPI {
 
     /**
@@ -43,7 +45,7 @@ public interface ForrstAPI {
      *         rate_limit,
      *         calls_made
      */
-    public String stats();
+    public JSONObject stats();
 
     /**
      * User authentication. Provide an email/username
@@ -54,7 +56,7 @@ public interface ForrstAPI {
      * @return JSON response containing:
      *         token
      */
-    public String usersAuth(String emailOrUsername, String password);
+    public JSONObject usersAuth(String emailOrUsername, String password);
 
     /**
      * Returns user info
@@ -85,7 +87,7 @@ public interface ForrstAPI {
      *         in_directory,
      *         tag_string
      */
-    public String usersInfo(int id, String username);
+    public JSONObject usersInfo(int id, String username);
 
     /**
      * Returns a user's posts
@@ -128,7 +130,7 @@ public interface ForrstAPI {
      *             }
      *         }]
      */
-    public String userPosts(int id, String username, String type, int limit, int after);
+    public JSONObject userPosts(int id, String username, String type, int limit, int after);
 
     /**
      * Return data about a single post. Note: For questions,
@@ -160,7 +162,7 @@ public interface ForrstAPI {
      *         tag_string,
      *         tags [ ... ]
      */
-    public String postsShow(int id, int tinyId);
+    public JSONObject postsShow(int id, int tinyId);
 
     /**
      * Returns a list of all posts in reverse-chron order
@@ -199,7 +201,7 @@ public interface ForrstAPI {
      *         }],
      *         page
      */
-    public String postsAll(int after);
+    public JSONObject postsAll(int after);
 
     /**
      * Returns a list of posts of a given type
@@ -240,7 +242,7 @@ public interface ForrstAPI {
      *         }],
      *         page
      */
-    public String postsList(String postType, String sort, int page);
+    public JSONObject postsList(String postType, String sort, int page);
 
     /**
      * Returns a post's comments
@@ -259,6 +261,7 @@ public interface ForrstAPI {
      *         }],
      *         count
      */
-    public String postComments(int id, int tinyId);
+    public JSONObject postComments(int id, int tinyId);
 
+    // TODO: helper method to get all endpoints as Map<String,String>
 }
