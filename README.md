@@ -97,3 +97,7 @@ TODO
 - Complete ForrstAPIClient tests
 - Helper method to get all endpoints as Map<String,String>
 - Decouple/refactor code
+
+COPYRIGHT
+---------
+Copyright (c) 2011 Nitin Dhar & Udi Mosayev. See LICENSE for details.
