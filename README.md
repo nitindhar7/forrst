@@ -6,14 +6,38 @@ Building
 --------
     $ ant
 
-Overview & Example
-------------------
-Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official Forrst API documentation at www.forrst.com/api for up to date API definitions and descriptions.
+Usage
+-----
+Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions.
+
+To begin, build Forrst and import it in your code
+
+    import com.forrst.api
+
+Initialize a ForrstAPI object using the client implementation
+
+    ForrstAPI forrst = new ForrstAPIClient();
+
+To check the number of API calls left for the current hour
+
+    forrst.stats();
+
+Note that each library API endpoint returns a JSONObject. For more information on JSONObject visit [json.org/java](http://json.org/java/). The dependency json-java jar file is also included in the `lib` folder.
+
+Certain methods require authentication. Check the official docs for more details on which methods require this. To authenticate
+
+    forrst.usersAuth("USERNAME", "PASSWORD");
+
+To get a specific users information
+
+    forrst.usersInfo(USER_ID, "USERNAME");
+
+Details for the rest of the available API endpoints is given inline.  
 
 Forrst API Endpoints
 --------------------
-This library is build around the Forrt API version 2. At the moment there are 8 API endpoints available and each of them uses 'https://forrst.com/api/v2/' as the base URI. Also at the moment, API calls are rate limited to 150
-so keep that in mind.
+This library is built around the Forrt API version 2. At the moment there are 8 API endpoints available and each of them uses 'https://forrst.com/api/v2/' as the base URI. Also at the moment, API calls are rate limited to 150
+calls per hour, so keep that in mind when designing your applications.
 
 - **stats**
   - Returns stats about your API usage. Note: does not count against your rate limit.
@@ -70,5 +94,4 @@ TODO
 
 - Rate limit API methods
 - Create ForrstException
-- Complete HttpRequest tests
 - Complete ForrstAPIClient tests
