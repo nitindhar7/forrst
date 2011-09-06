@@ -95,3 +95,5 @@ TODO
 - Rate limit API methods
 - Create ForrstException
 - Complete ForrstAPIClient tests
+- Helper method to get all endpoints as Map<String,String>
+- Decouple/refactor code
