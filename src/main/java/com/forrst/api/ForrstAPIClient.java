@@ -20,7 +20,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		args.put("email_or_username", emailOrUsername);
 		args.put("password", password);
 		
-		return http.get(USERS_AUTH, args);
+		return http.get(USERS_AUTH_URI, args);
 	}
 
 	public JSONObject usersInfo(int id, String username) {
@@ -30,7 +30,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		args.put("id", Integer.toString(id));
 		args.put("username", username);
 		
-		return http.get(USERS_INFO, args);
+		return http.get(USERS_INFO_URI, args);
 	}
 
 	public JSONObject userPosts(int id, String username, String type, int limit, int after) {
@@ -43,7 +43,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		args.put("limit", Integer.toString(limit));
 		args.put("after", Integer.toString(after));
 		
-		return http.get(USER_POSTS, args);
+		return http.get(USER_POSTS_URI, args);
 	}
 
 	public JSONObject postsShow(int id, int tinyId) {
@@ -53,7 +53,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		args.put("id", Integer.toString(id));
 		args.put("tiny_id", Integer.toString(tinyId));
 		
-		return http.get(POSTS_SHOW, args);
+		return http.get(POSTS_SHOW_URI, args);
 	}
 
 	public JSONObject postsAll(int after) {
@@ -62,7 +62,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		Map<String,String> args = new HashMap<String,String>();
 		args.put("after", Integer.toString(after));
 		
-		return http.get(POSTS_ALL, args);
+		return http.get(POSTS_ALL_URI, args);
 	}
 
 	public JSONObject postsList(String postType, String sort, int page) {
@@ -73,7 +73,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		args.put("sort", sort);
 		args.put("after", Integer.toString(page));
 		
-		return http.get(POSTS_LIST, args);
+		return http.get(POSTS_LIST_URI, args);
 	}
 
 	public JSONObject postComments(int id, int tinyId) {
@@ -83,6 +83,6 @@ public class ForrstAPIClient implements ForrstAPI {
 		args.put("id", Integer.toString(id));
 		args.put("tiny_id", Integer.toString(tinyId));
 		
-		return http.get(POST_COMMENTS, args);
+		return http.get(POST_COMMENTS_URI, args);
 	}
 }

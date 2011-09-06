@@ -16,11 +16,10 @@ public class HttpRequest {
 	 * Fetch data from Forrst using the request URI
 	 * without URL parameters
 	 * 
-	 * @param request Forrst URI requested
+	 * @param requestURI Forrst URI requested
 	 * @return JSONObject containing a response
 	 */
-	public JSONObject get(String request) {
-		String requestURI = ForrstAPI.BASE_URI + request;
+	public JSONObject get(String requestURI) {
 		return getData(requestURI);
 	}
 	
@@ -28,13 +27,12 @@ public class HttpRequest {
 	 * Fetch data from Forrst using the request URI
 	 * without URL parameters
 	 * 
-	 * @param request Forrst URI requested
+	 * @param requestURI Forrst URI requested
 	 * @param args Map of URL parameters and their values
 	 * @return JSONObject containing a response
 	 */
-	public JSONObject get(String request, Map<String,String> args) {
-		String requestURI = ForrstAPI.BASE_URI + request + stringifyArgs(args);
-		return getData(requestURI);
+	public JSONObject get(String requestURI, Map<String,String> args) {
+		return getData(requestURI + stringifyArgs(args));
 	}
 	
 	/**
@@ -80,7 +78,7 @@ public class HttpRequest {
 	 * @return
 	 */
 	protected String stringifyArgs(Map<String,String> args) {
-		StringBuilder argString = new StringBuilder('?');
+		StringBuilder argString = new StringBuilder("?");
 
 		for(String key : args.keySet()) {
 			argString.append(key);

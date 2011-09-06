@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"> 
+
+<suite name="forrst" verbose="5"> 
+  <test name="forrst tests">
+          <groups>
+            <run>
+                <include name="ready"/>
+                <exclude name="stub"/>
+            </run>
+        </groups> 
+        <packages>             
+            <package name="com.forrst.api"/>
+        </packages> 
+   </test> 
+ </suite>
