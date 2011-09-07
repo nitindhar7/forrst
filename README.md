@@ -8,9 +8,8 @@ Building
 
 Usage
 -----
-Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions.
+Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions. To begin, build Forrst and import it in your code
 
-    // To begin, build Forrst and import it in your code
     import com.forrst.api;
 
     // Initialize a ForrstAPI object using the client implementation
@@ -32,6 +31,10 @@ Certain methods require authentication. Check the official docs for more details
     forrst.usersInfo("USERNAME");
 
 Details for the rest of the available API endpoints are given inline.  
+
+Contributing
+------------
+Submit well documented code with unit tests and I will merge your changes in.
 
 Forrst API Endpoints
 --------------------
