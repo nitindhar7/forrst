@@ -23,39 +23,90 @@ public class ForrstAPIClient implements ForrstAPI {
 		return http.get(USERS_AUTH_URI, args);
 	}
 
-	public JSONObject usersInfo(int id, String username) {
+	public JSONObject usersInfo(int id) {
 		HttpRequest http = new HttpRequest();
 		
 		Map<String,String> args = new HashMap<String,String>();
 		args.put("id", Integer.toString(id));
+		
+		return http.get(USERS_INFO_URI, args);
+	}
+	
+	public JSONObject usersInfo(String username) {
+		HttpRequest http = new HttpRequest();
+		
+		Map<String,String> args = new HashMap<String,String>();
 		args.put("username", username);
 		
 		return http.get(USERS_INFO_URI, args);
 	}
 
-	public JSONObject userPosts(int id, String username, String type, int limit, int after) {
+	public JSONObject userPosts(int id, Map<String,String> options) {
 		HttpRequest http = new HttpRequest();
 		
 		Map<String,String> args = new HashMap<String,String>();
 		args.put("id", Integer.toString(id));
+		
+		if(options != null) {
+			if(options.containsKey("type")) {
+				args.put("type", options.get("type"));
+			}
+			if(options.containsKey("limit")) {
+				args.put("limit", options.get("limit"));
+			}
+			if(options.containsKey("after")) {
+				args.put("after", options.get("after"));
+			}
+		}
+		
+		return http.get(USER_POSTS_URI, args);
+	}
+	
+	public JSONObject userPosts(String username, Map<String,String> options) {
+		HttpRequest http = new HttpRequest();
+		
+		Map<String,String> args = new HashMap<String,String>();
 		args.put("username", username);
-		args.put("type", type);
-		args.put("limit", Integer.toString(limit));
-		args.put("after", Integer.toString(after));
+
+		if(options != null) {
+			if(options.containsKey("type")) {
+				args.put("type", options.get("type"));
+			}
+			if(options.containsKey("limit")) {
+				args.put("limit", options.get("limit"));
+			}
+			if(options.containsKey("after")) {
+				args.put("after", options.get("after"));
+			}
+		}
 		
 		return http.get(USER_POSTS_URI, args);
 	}
 
-	public JSONObject postsShow(int id, int tinyId) {
+	public JSONObject postsShow(int id) {
 		HttpRequest http = new HttpRequest();
 		
 		Map<String,String> args = new HashMap<String,String>();
 		args.put("id", Integer.toString(id));
-		args.put("tiny_id", Integer.toString(tinyId));
+		
+		return http.get(POSTS_SHOW_URI, args);
+	}
+	
+	public JSONObject postsShow(String tinyId) {
+		HttpRequest http = new HttpRequest();
+		
+		Map<String,String> args = new HashMap<String,String>();
+		args.put("tiny_id", tinyId);
 		
 		return http.get(POSTS_SHOW_URI, args);
 	}
 
+	public JSONObject postsAll() {
+		HttpRequest http = new HttpRequest();
+		
+		return http.get(POSTS_ALL_URI);
+	}
+	
 	public JSONObject postsAll(int after) {
 		HttpRequest http = new HttpRequest();
 		
@@ -65,23 +116,38 @@ public class ForrstAPIClient implements ForrstAPI {
 		return http.get(POSTS_ALL_URI, args);
 	}
 
-	public JSONObject postsList(String postType, String sort, int page) {
+	public JSONObject postsList(String postType, Map<String,String> options) {
 		HttpRequest http = new HttpRequest();
 
 		Map<String,String> args = new HashMap<String,String>();
 		args.put("post_type", postType);
-		args.put("sort", sort);
-		args.put("after", Integer.toString(page));
+		
+		if(options != null) {
+			if(options.containsKey("sort")) {
+				args.put("sort", options.get("sort"));
+			}
+			if(options.containsKey("after")) {
+				args.put("after", options.get("after"));
+			}
+		}
 		
 		return http.get(POSTS_LIST_URI, args);
 	}
 
-	public JSONObject postComments(int id, int tinyId) {
+	public JSONObject postComments(int id) {
 		HttpRequest http = new HttpRequest();
 		
 		Map<String,String> args = new HashMap<String,String>();
 		args.put("id", Integer.toString(id));
-		args.put("tiny_id", Integer.toString(tinyId));
+		
+		return http.get(POST_COMMENTS_URI, args);
+	}
+	
+	public JSONObject postComments(String tinyId) {
+		HttpRequest http = new HttpRequest();
+		
+		Map<String,String> args = new HashMap<String,String>();
+		args.put("tiny_id", tinyId);
 		
 		return http.get(POST_COMMENTS_URI, args);
 	}

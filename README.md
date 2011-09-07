@@ -10,29 +10,28 @@ Usage
 -----
 Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions.
 
-To begin, build Forrst and import it in your code
-
+    // To begin, build Forrst and import it in your code
     import com.forrst.api;
 
-Initialize a ForrstAPI object using the client implementation
-
+    // Initialize a ForrstAPI object using the client implementation
     ForrstAPI forrst = new ForrstAPIClient();
 
-To check the number of API calls left for the current hour
-
+    // To check the number of API calls left for the current hour
     forrst.stats();
 
 Note that each library API endpoint returns a JSONObject. For more information on JSONObject visit [json.org/java](http://json.org/java/). The dependency json-java jar file is also included in the `lib` folder.
 
-Certain methods require authentication. Check the official docs for more details on which methods require this. To authenticate
+Certain methods require authentication. Check the official docs for more details on which methods require this.
 
+    // To authenticate
     forrst.usersAuth("USERNAME", "PASSWORD");
 
-To get a specific users information
+    // To get a specific users information
+    forrst.usersInfo(USER_ID);
+    OR
+    forrst.usersInfo("USERNAME");
 
-    forrst.usersInfo(USER_ID, "USERNAME");
-
-Details for the rest of the available API endpoints is given inline.  
+Details for the rest of the available API endpoints are given inline.  
 
 Forrst API Endpoints
 --------------------
@@ -93,10 +92,14 @@ TODO
 ----
 
 - Rate limit API methods
+- Return full json
 - Create ForrstException
-- Complete ForrstAPIClient tests
+- validations
+- fix broken ForrstAPIClient tests
+- refactor and remove redundancy
 - Helper method to get all endpoints as Map<String,String>
 - Decouple/refactor code
+- Add some tests using optional params
 
 COPYRIGHT
 ---------
