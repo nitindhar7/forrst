@@ -15,18 +15,16 @@ Each API method in this library is heavily commented. The descriptions are taken
 
     // Check the # of API calls left this hour
     forrst.stats();
-
-Note that each library API endpoint returns a JSONObject. For more information on JSONObject visit [json.org/java](http://json.org/java/). The dependency json-java jar file is also included in the `lib` folder.
-Also, at the moment the rate limit threshold is soft, which means that it is up to the client application to ensure that it sticks close to the 150 calls/hour limit. This limit may become strictly
-enforced eventually.
-
-Certain methods require authentication. Check the official docs for more details on which methods require this.
-
+    
     // Authenticate
     forrst.usersAuth("USERNAME", "PASSWORD");
 
     // Get a users information
     forrst.usersInfo("USERNAME");
+
+Note that each library API endpoint returns a JSONObject. For more information on JSONObject visit [json.org/java](http://json.org/java/). The dependency json-java jar file is also included in the `lib` folder.
+Also, at the moment the rate limit threshold is soft, which means that it is up to the client application to ensure that it sticks close to the 150 calls/hour limit. This limit may become strictly
+enforced eventually.
 
 Details for the rest of the available API endpoints are given inline.  
 
