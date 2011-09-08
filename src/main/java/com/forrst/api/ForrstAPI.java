@@ -52,6 +52,8 @@ public interface ForrstAPI {
     /**
      * User authentication. Provide an email/username
      * and password and get an access token back
+     * 
+     * NOTE: CURRENTLY BROKEN
      *
      * @param emailOrUsername Email/Username
      * @param password Password

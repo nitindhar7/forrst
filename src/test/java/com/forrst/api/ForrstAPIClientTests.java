@@ -243,5 +243,13 @@ public class ForrstAPIClientTests {
 		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postComments("BMH");
 	}
+	
+	@Test (groups= {"toBeFixed"})
+	public void testRateLimit() {
+		ForrstAPI forrst = new ForrstAPIClient();
+		for(int i = 0; i < 10000; i++) {
+			forrst.usersInfo(29470);
+		}
+	}
 
 }
