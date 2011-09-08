@@ -2,7 +2,7 @@ package com.forrst.api;
 
 public class Endpoint {
 	
-	/**
+    /**
      * All calls should be made using https://forrst.com/api/v2/
      * as the endpoint (e.g. calling posts/all would be
      * https://forrst.com/api/v2/posts/all). Making calls over
