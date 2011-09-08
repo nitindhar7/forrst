@@ -8,6 +8,7 @@
     <property name="test_outdir" value="test-output"/>
     <property name="test_classdir" value="${targetdir}/tests"/>
     <property name="distdir" value="dist"/>
+	<property name="docdir" value="javadocs"/>
 
     <path id="classpath">
       <fileset dir="lib">
@@ -55,5 +56,20 @@
         <fileset dir="." includes="${distdir}/forrst.jar"/>
       </delete>
       <jar destfile="${distdir}/forrst.jar" basedir="${classdir}"/>
+    </target>
+	
+	<target name="javadocs" description="Generates javadoc into target/api">
+      <delete dir="${docdir}"/>
+	  <javadoc
+              destdir="${docdir}"
+	  	      author="true"
+              version="true"
+              use="true"
+              classpathref="classpath"
+              windowtitle="forrst">
+        <packageset dir="${srcdir}" defaultexcludes="yes">
+          <include name="com/forrst/api/**"/>
+        </packageset>
+      </javadoc>
     </target>
 </project>
