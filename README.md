@@ -10,16 +10,15 @@ Each API method in this library is heavily commented. The descriptions are taken
 
     import com.forrst.api;
 
-    // Initialize a ForrstAPI object using the client implementation
     ForrstAPI forrst = new ForrstAPIClient();
 
-    // Check the # of API calls left this hour
+    // API stats
     forrst.stats();
     
-    // Authenticate
+    // Authentication
     forrst.usersAuth("USERNAME", "PASSWORD");
 
-    // Get a users information
+    // User information
     forrst.usersInfo("USERNAME");
 
 Note that each library API endpoint returns a JSONObject. For more information on JSONObject visit [json.org/java](http://json.org/java/). The dependency json-java jar file is also included in the `lib` folder.
@@ -38,6 +37,7 @@ to be done:
 - Return full json
 - Create ForrstException
 - Rate limit API methods
+- rename API methods to something simpler
 - fix broken ForrstAPIClient endpoints/tests
 - Helper method to get all endpoints as Map<String,String>
 - Decouple/refactor code

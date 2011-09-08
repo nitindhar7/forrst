@@ -1,6 +1,8 @@
 package com.forrst.api;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -244,12 +246,27 @@ public class ForrstAPIClientTests {
 		JSONObject json = forrst.postComments("BMH");
 	}
 	
-	@Test (groups= {"toBeFixed"})
+	@Test (groups={"toBeFixed"})
 	public void testRateLimit() {
 		ForrstAPI forrst = new ForrstAPIClient();
 		for(int i = 0; i < 10000; i++) {
 			forrst.usersInfo(29470);
 		}
+	}
+	
+	@Test (groups={"ready"})
+	public void testGetEndpointURIs() {
+		ForrstAPI forrst = new ForrstAPIClient();
+		Map<String,String> endpoints = new HashMap<String,String>();
+		endpoints.put("stats", Endpoint.getInstance().STATS_URI);
+		endpoints.put("users/auth", Endpoint.getInstance().USERS_AUTH_URI);
+		endpoints.put("users/info", Endpoint.getInstance().USERS_INFO_URI);
+		endpoints.put("user/posts", Endpoint.getInstance().USER_POSTS_URI);
+		endpoints.put("posts/show", Endpoint.getInstance().POSTS_SHOW_URI);
+		endpoints.put("posts/all", Endpoint.getInstance().POSTS_ALL_URI);
+		endpoints.put("posts/list", Endpoint.getInstance().POSTS_LIST_URI);
+		endpoints.put("post/comments", Endpoint.getInstance().POST_COMMENTS_URI);
+		TestCase.assertEquals(endpoints, forrst.getEndpointsURIs());
 	}
 
 }

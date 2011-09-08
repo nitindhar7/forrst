@@ -14,7 +14,7 @@ public class ForrstAPIClient implements ForrstAPI {
 	}
 
 	public JSONObject stats() {
-		return http.get(STATS_URI);
+		return http.get(Endpoint.getInstance().STATS_URI);
 	}
 
 	public JSONObject usersAuth(String emailOrUsername, String password) {
@@ -22,21 +22,21 @@ public class ForrstAPIClient implements ForrstAPI {
 		params.put("email_or_username", emailOrUsername);
 		params.put("password", password);
 		
-		return http.get(USERS_AUTH_URI, params);
+		return http.get(Endpoint.getInstance().USERS_AUTH_URI, params);
 	}
 
 	public JSONObject usersInfo(int id) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("id", Integer.toString(id));
 		
-		return http.get(USERS_INFO_URI, params);
+		return http.get(Endpoint.getInstance().USERS_INFO_URI, params);
 	}
 	
 	public JSONObject usersInfo(String username) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("username", username);
 		
-		return http.get(USERS_INFO_URI, params);
+		return http.get(Endpoint.getInstance().USERS_INFO_URI, params);
 	}
 
 	public JSONObject userPosts(int id, Map<String,String> options) {
@@ -55,7 +55,7 @@ public class ForrstAPIClient implements ForrstAPI {
 			}
 		}
 		
-		return http.get(USER_POSTS_URI, params);
+		return http.get(Endpoint.getInstance().USER_POSTS_URI, params);
 	}
 	
 	public JSONObject userPosts(String username, Map<String,String> options) {
@@ -74,32 +74,32 @@ public class ForrstAPIClient implements ForrstAPI {
 			}
 		}
 		
-		return http.get(USER_POSTS_URI, params);
+		return http.get(Endpoint.getInstance().USER_POSTS_URI, params);
 	}
 
 	public JSONObject postsShow(int id) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("id", Integer.toString(id));
 		
-		return http.get(POSTS_SHOW_URI, params);
+		return http.get(Endpoint.getInstance().POSTS_SHOW_URI, params);
 	}
 	
 	public JSONObject postsShow(String tinyId) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("tiny_id", tinyId);
 		
-		return http.get(POSTS_SHOW_URI, params);
+		return http.get(Endpoint.getInstance().POSTS_SHOW_URI, params);
 	}
 
 	public JSONObject postsAll() {
-		return http.get(POSTS_ALL_URI);
+		return http.get(Endpoint.getInstance().POSTS_ALL_URI);
 	}
 	
 	public JSONObject postsAll(int after) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("after", Integer.toString(after));
 		
-		return http.get(POSTS_ALL_URI, params);
+		return http.get(Endpoint.getInstance().POSTS_ALL_URI, params);
 	}
 
 	public JSONObject postsList(String postType, Map<String,String> options) {
@@ -115,20 +115,35 @@ public class ForrstAPIClient implements ForrstAPI {
 			}
 		}
 		
-		return http.get(POSTS_LIST_URI, params);
+		return http.get(Endpoint.getInstance().POSTS_LIST_URI, params);
 	}
 
 	public JSONObject postComments(int id) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("id", Integer.toString(id));
 		
-		return http.get(POST_COMMENTS_URI, params);
+		return http.get(Endpoint.getInstance().POST_COMMENTS_URI, params);
 	}
 	
 	public JSONObject postComments(String tinyId) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("tiny_id", tinyId);
 		
-		return http.get(POST_COMMENTS_URI, params);
+		return http.get(Endpoint.getInstance().POST_COMMENTS_URI, params);
+	}
+	
+	public Map<String,String> getEndpointsURIs() {
+		Map<String,String> endpoints = new HashMap<String,String>();
+		
+		endpoints.put("stats", Endpoint.getInstance().STATS_URI);
+		endpoints.put("users/auth", Endpoint.getInstance().USERS_AUTH_URI);
+		endpoints.put("users/info", Endpoint.getInstance().USERS_INFO_URI);
+		endpoints.put("user/posts", Endpoint.getInstance().USER_POSTS_URI);
+		endpoints.put("posts/show", Endpoint.getInstance().POSTS_SHOW_URI);
+		endpoints.put("posts/all", Endpoint.getInstance().POSTS_ALL_URI);
+		endpoints.put("posts/list", Endpoint.getInstance().POSTS_LIST_URI);
+		endpoints.put("post/comments", Endpoint.getInstance().POST_COMMENTS_URI);
+		
+		return endpoints;
 	}
 }
