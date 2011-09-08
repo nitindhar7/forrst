@@ -6,149 +6,129 @@ import java.util.Map;
 import org.json.JSONObject;
 
 public class ForrstAPIClient implements ForrstAPI {
+	
+	private static HttpRequest http;
+	
+	public ForrstAPIClient() {
+		http = new HttpRequest();
+	}
 
 	public JSONObject stats() {
-		HttpRequest http = new HttpRequest();
-		
 		return http.get(STATS_URI);
 	}
 
 	public JSONObject usersAuth(String emailOrUsername, String password) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("email_or_username", emailOrUsername);
+		params.put("password", password);
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("email_or_username", emailOrUsername);
-		args.put("password", password);
-		
-		return http.get(USERS_AUTH_URI, args);
+		return http.get(USERS_AUTH_URI, params);
 	}
 
 	public JSONObject usersInfo(int id) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("id", Integer.toString(id));
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("id", Integer.toString(id));
-		
-		return http.get(USERS_INFO_URI, args);
+		return http.get(USERS_INFO_URI, params);
 	}
 	
 	public JSONObject usersInfo(String username) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("username", username);
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("username", username);
-		
-		return http.get(USERS_INFO_URI, args);
+		return http.get(USERS_INFO_URI, params);
 	}
 
 	public JSONObject userPosts(int id, Map<String,String> options) {
-		HttpRequest http = new HttpRequest();
-		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("id", Integer.toString(id));
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("id", Integer.toString(id));
 		
 		if(options != null) {
 			if(options.containsKey("type")) {
-				args.put("type", options.get("type"));
+				params.put("type", options.get("type"));
 			}
 			if(options.containsKey("limit")) {
-				args.put("limit", options.get("limit"));
+				params.put("limit", options.get("limit"));
 			}
 			if(options.containsKey("after")) {
-				args.put("after", options.get("after"));
+				params.put("after", options.get("after"));
 			}
 		}
 		
-		return http.get(USER_POSTS_URI, args);
+		return http.get(USER_POSTS_URI, params);
 	}
 	
 	public JSONObject userPosts(String username, Map<String,String> options) {
-		HttpRequest http = new HttpRequest();
-		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("username", username);
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("username", username);
 
 		if(options != null) {
 			if(options.containsKey("type")) {
-				args.put("type", options.get("type"));
+				params.put("type", options.get("type"));
 			}
 			if(options.containsKey("limit")) {
-				args.put("limit", options.get("limit"));
+				params.put("limit", options.get("limit"));
 			}
 			if(options.containsKey("after")) {
-				args.put("after", options.get("after"));
+				params.put("after", options.get("after"));
 			}
 		}
 		
-		return http.get(USER_POSTS_URI, args);
+		return http.get(USER_POSTS_URI, params);
 	}
 
 	public JSONObject postsShow(int id) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("id", Integer.toString(id));
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("id", Integer.toString(id));
-		
-		return http.get(POSTS_SHOW_URI, args);
+		return http.get(POSTS_SHOW_URI, params);
 	}
 	
 	public JSONObject postsShow(String tinyId) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("tiny_id", tinyId);
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("tiny_id", tinyId);
-		
-		return http.get(POSTS_SHOW_URI, args);
+		return http.get(POSTS_SHOW_URI, params);
 	}
 
 	public JSONObject postsAll() {
-		HttpRequest http = new HttpRequest();
-		
 		return http.get(POSTS_ALL_URI);
 	}
 	
 	public JSONObject postsAll(int after) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("after", Integer.toString(after));
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("after", Integer.toString(after));
-		
-		return http.get(POSTS_ALL_URI, args);
+		return http.get(POSTS_ALL_URI, params);
 	}
 
 	public JSONObject postsList(String postType, Map<String,String> options) {
-		HttpRequest http = new HttpRequest();
-
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("post_type", postType);
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("post_type", postType);
 		
 		if(options != null) {
 			if(options.containsKey("sort")) {
-				args.put("sort", options.get("sort"));
+				params.put("sort", options.get("sort"));
 			}
 			if(options.containsKey("after")) {
-				args.put("after", options.get("after"));
+				params.put("after", options.get("after"));
 			}
 		}
 		
-		return http.get(POSTS_LIST_URI, args);
+		return http.get(POSTS_LIST_URI, params);
 	}
 
 	public JSONObject postComments(int id) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("id", Integer.toString(id));
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("id", Integer.toString(id));
-		
-		return http.get(POST_COMMENTS_URI, args);
+		return http.get(POST_COMMENTS_URI, params);
 	}
 	
 	public JSONObject postComments(String tinyId) {
-		HttpRequest http = new HttpRequest();
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("tiny_id", tinyId);
 		
-		Map<String,String> args = new HashMap<String,String>();
-		args.put("tiny_id", tinyId);
-		
-		return http.get(POST_COMMENTS_URI, args);
+		return http.get(POST_COMMENTS_URI, params);
 	}
 }

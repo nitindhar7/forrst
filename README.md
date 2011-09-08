@@ -30,23 +30,22 @@ Certain methods require authentication. Check the official docs for more details
 
 Details for the rest of the available API endpoints are given inline.  
 
-Contributing
+Contribute
 ------------
-Submit well documented code with unit tests and I will merge your changes in.
+Submit well documented code with unit tests and I will merge your changes in
+as long as your code does not break the build. Here are some things that need
+to be done:
 
-TODO
-----
-
-- Rate limit API methods
+- refactor and remove redundancy
 - Return full json
 - Create ForrstException
-- validations
+- Rate limit API methods
 - fix broken ForrstAPIClient endpoints/tests
-- refactor and remove redundancy
 - Helper method to get all endpoints as Map<String,String>
 - Decouple/refactor code
 - Add some tests using optional params
 - rename properties in buildfile
+- maybe cache stuff?
 
 Forrst API Endpoints
 --------------------
@@ -103,6 +102,6 @@ Tests coming up soon! Until then please help us find bugs.
   - Site: http://udiudi.com
   - Twitter: @udiudi
 
-COPYRIGHT
+Copyright
 ---------
 Copyright (c) 2011 Nitin Dhar & Udi Mosayev. See LICENSE for details.

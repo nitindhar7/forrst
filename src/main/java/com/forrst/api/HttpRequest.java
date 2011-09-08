@@ -28,11 +28,11 @@ public class HttpRequest {
 	 * without URL parameters
 	 * 
 	 * @param requestURI Forrst URI requested
-	 * @param args Map of URL parameters and their values
+	 * @param params Map of URL parameters and their values
 	 * @return JSONObject containing a response
 	 */
-	public JSONObject get(String requestURI, Map<String,String> args) {
-		return getData(requestURI + stringifyArgs(args));
+	public JSONObject get(String requestURI, Map<String,String> params) {
+		return getData(requestURI + stringifyArgs(params));
 	}
 	
 	/**
@@ -74,16 +74,16 @@ public class HttpRequest {
 	/**
 	 * Creates a string version of the URL params
 	 * 
-	 * @param args
+	 * @param params
 	 * @return
 	 */
-	protected String stringifyArgs(Map<String,String> args) {
+	protected String stringifyArgs(Map<String,String> params) {
 		StringBuilder argString = new StringBuilder("?");
 
-		for(String key : args.keySet()) {
+		for(String key : params.keySet()) {
 			argString.append(key);
 			argString.append('=');
-			argString.append(args.get(key));
+			argString.append(params.get(key));
 			argString.append('&');
 		}
 
