@@ -2,13 +2,11 @@ Forrst
 ======
 forrst is a Java library for the Forrst API(v2). Currently this library is in development and will provide basic support for reading posts. forrst has minimal dependencies and is aimed to be easy to use.
 
-Building
---------
-    $ ant
-
-Usage
------
+Build & Use
+-----------
 Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions. To begin, build Forrst and import it in your code
+
+    $ ant
 
     import com.forrst.api;
 
