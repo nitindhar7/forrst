@@ -9,7 +9,7 @@ Android platform to be tested soon!
 Build & Use
 -----------
 Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions.
-To begin, build Forrst and import it in your code. __To run the test for the `users/auth` endpoint update your credentials in `ForrstAPIClientTests`.__
+To begin, build Forrst and import it in your code. __To run the test for the `users/auth` endpoint update your credentials in `ForrstAPIClientTests.java`.__
 
     $ ant
 
@@ -21,10 +21,15 @@ To begin, build Forrst and import it in your code. __To run the test for the `us
     forrst.stats();
     
     // Authentication
-    forrst.usersAuth("USERNAME", "PASSWORD");
+    forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
 
     // User information
     forrst.usersInfo("USERNAME");
+    
+    // User posts (questions)
+    Map<String,String> options = new HashMap<String,String>();
+    options.put("type", "questions");
+    forrst.userPosts("USERNAME", options)
 
 Note that each library API endpoint returns a JSONObject. For more information on JSONObject visit [json.org/java](http://json.org/java/). The dependency json-java jar file is also included in the `lib` folder.
 Also, at the moment the rate limit threshold is soft, which means that it is up to the client application to ensure that it sticks close to the 150 calls/hour limit. This limit may become strictly
