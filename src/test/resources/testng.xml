@@ -5,6 +5,7 @@
           <groups>
             <run>
                 <include name="ready"/>
+                <exclude name="skip"/>
                 <exclude name="toBeFixed"/>
             </run>
         </groups> 

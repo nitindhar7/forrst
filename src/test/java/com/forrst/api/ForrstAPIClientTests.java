@@ -13,9 +13,10 @@ import org.testng.annotations.Test;
 
 public class ForrstAPIClientTests {
 
+	private ForrstAPI forrst = new ForrstAPIClient();
+	
 	@Test (groups={"ready"})
 	public void testStats() throws MalformedURLException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.stats();
 		TestCase.assertEquals(true, json.has("rate_limit"));
 		TestCase.assertEquals(true, json.has("calls_made"));
@@ -24,22 +25,26 @@ public class ForrstAPIClientTests {
 	/*@Test (groups={"toBeFixed"})
 	public void testNotifications() throws MalformedURLException, JSONException {
 		// FIXME
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.notifications(null);
 		TestCase.assertEquals(true, json.has("error"));
 	}*/
 	
-	/*@Test (groups={"toBeFixed"})
+	/*
+	 * Before testing,
+	 * 
+	 * Replace "skip" with "ready"
+	 * Replace EMAIL_OR_USERNAME with email/username
+	 * Replace PASSWORD with password
+	 */
+	@Test (groups={"skip"})
 	public void testUsersAuth() throws MalformedURLException, JSONException {
-		// FIXME
-		ForrstAPI forrst = new ForrstAPIClient();
-		JSONObject json = forrst.usersAuth("", "");
+		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
 		TestCase.assertEquals(true, json.has("token"));
-	}*/
+		TestCase.assertEquals(true, json.has("user_id"));
+	}
 	
 	@Test (groups={"ready"})
 	public void testUsersInfoById() throws MalformedURLException, JSONException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.usersInfo(29470);
 		TestCase.assertEquals(true, json.has("id"));
 		TestCase.assertEquals(true, json.has("username"));
@@ -67,7 +72,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testUsersInfoByUsername() throws MalformedURLException, JSONException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.usersInfo("nitindhar7");
 		TestCase.assertEquals(true, json.has("id"));
 		TestCase.assertEquals(true, json.has("username"));
@@ -95,7 +99,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testUsersPostsById() throws MalformedURLException, JSONException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.userPosts(29470, null);
 		TestCase.assertEquals(true, json.has("posts"));
 		JSONArray jsonArray = json.getJSONArray("posts");
@@ -121,7 +124,6 @@ public class ForrstAPIClientTests {
 
 	@Test (groups={"ready"})
 	public void testUsersPostsByUsername() throws MalformedURLException, JSONException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.userPosts("nitindhar7", null);
 		TestCase.assertEquals(true, json.has("posts"));
 		JSONArray jsonArray = json.getJSONArray("posts");
@@ -147,7 +149,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testPostsShowById() throws MalformedURLException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postsShow(45114);
 		TestCase.assertEquals(true, json.has("id"));
 		TestCase.assertEquals(true, json.has("tiny_id"));
@@ -171,7 +172,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testPostsShowByTinyID() throws MalformedURLException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postsShow("BMH");
 		TestCase.assertEquals(true, json.has("id"));
 		TestCase.assertEquals(true, json.has("tiny_id"));
@@ -195,7 +195,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testPostsAll() throws MalformedURLException, JSONException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postsAll();
 		TestCase.assertEquals(true, json.has("posts"));
 		JSONArray jsonArray = json.getJSONArray("posts");
@@ -204,7 +203,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testPostsAllAfter() throws MalformedURLException, JSONException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postsAll(46000);
 		TestCase.assertEquals(true, json.has("posts"));
 		JSONArray jsonArray = json.getJSONArray("posts");
@@ -231,7 +229,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testPostsList() throws MalformedURLException, JSONException {
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postsList("question", null);
 		TestCase.assertEquals(true, json.has("posts"));
 		JSONArray jsonArray = json.getJSONArray("posts");
@@ -242,7 +239,6 @@ public class ForrstAPIClientTests {
 	@Test (groups={"toBeFixed"})
 	public void testPostCommentsByID() throws MalformedURLException {
 		// FIXME
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postComments(45114);
 	}
 	
@@ -250,21 +246,18 @@ public class ForrstAPIClientTests {
 	@Test (groups={"toBeFixed"})
 	public void testPostCommentsByTinyID() throws MalformedURLException {
 		// FIXME
-		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.postComments("BMH");
 	}
 	
 	@Test (groups={"toBeFixed"})
 	public void testRateLimit() {
-		ForrstAPI forrst = new ForrstAPIClient();
 		for(int i = 0; i < 10000; i++) {
 			forrst.usersInfo(29470);
 		}
 	}
 	
 	@Test (groups={"ready"})
-	public void testGetEndpointURIs() {
-		ForrstAPI forrst = new ForrstAPIClient();
+	public void testGetEndpointURIs() {		
 		Map<String,String> endpoints = new HashMap<String,String>();
 		endpoints.put("stats", Endpoint.getInstance().STATS_URI);
 		endpoints.put("users/auth", Endpoint.getInstance().USERS_AUTH_URI);

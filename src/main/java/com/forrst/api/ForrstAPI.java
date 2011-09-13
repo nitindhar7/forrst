@@ -65,9 +65,8 @@ public interface ForrstAPI {
      * @param password Password
      * @return JSON response containing:
      *         token
-     *
+     */
     public JSONObject usersAuth(String emailOrUsername, String password);
-    */
 
     /**
      * Returns user info by User ID
