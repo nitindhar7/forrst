@@ -58,7 +58,7 @@ to be done:
 
 Forrst API Endpoints
 --------------------
-This library is built around the Forrt API version 2. At the moment there are 8 API endpoints available and each of them uses 'https://forrst.com/api/v2/' as the base URI. Also at the moment, API calls are rate limited to 150
+This library is built around the Forrt API version 2. At the moment there are 8 API endpoints available and each of them uses `https://forrst.com/api/v2/` as the base URI. Also at the moment, API calls are rate limited to 150
 calls per hour, so keep that in mind when designing your applications.
 
 - **stats**
