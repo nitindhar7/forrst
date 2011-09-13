@@ -65,6 +65,10 @@ calls per hour, so keep that in mind when designing your applications.
   - Returns stats about your API usage. Note: does not count against your rate limit.
   - `https://forrst.com/api/v2/stats`
 
+- **notifications** (coming soon)
+  - Return notification items for the authenticating user. Most items have an associated redirect URL that will take the user to the appropriate post/comment/etc. and clear the associated notification. Construct the URLs using the view_url_format format (provided in the response), replacing ID with the ID of the desired notification. Also note that not every type of notification (currently for likes, comments [replies, subscription-based, on your post], mentions, jobs, and follows) will have the same fields present for data.
+  - `https://forrst.com/api/v2/notifications`
+
 - **users/auth**
   - User authentication. Provide an email/username and password and get an access token back
   - `https://forrst.com/api/v2/users/auth`
