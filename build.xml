@@ -50,14 +50,6 @@
       </testng>
     </target>
 	
-	<target name="dist" depends="tests" description="Builds a complete forrst jar.">
-      <mkdir dir="${distdir}"/>
-      <delete>
-        <fileset dir="." includes="${distdir}/forrst.jar"/>
-      </delete>
-      <jar destfile="${distdir}/forrst.jar" basedir="${classdir}"/>
-    </target>
-	
 	<target name="javadocs" description="Generates javadoc into target/api">
       <delete dir="${docdir}"/>
 	  <javadoc
@@ -71,5 +63,13 @@
           <include name="com/forrst/api/**"/>
         </packageset>
       </javadoc>
+    </target>
+	
+	<target name="dist" depends="tests" description="Builds a complete forrst jar.">
+      <mkdir dir="${distdir}"/>
+      <delete>
+        <fileset dir="." includes="${distdir}/forrst.jar"/>
+      </delete>
+      <jar destfile="${distdir}/forrst.jar" basedir="${classdir}"/>
     </target>
 </project>

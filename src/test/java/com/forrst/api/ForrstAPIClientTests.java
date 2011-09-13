@@ -21,13 +21,21 @@ public class ForrstAPIClientTests {
 		TestCase.assertEquals(true, json.has("calls_made"));
 	}
 	
-	@Test (groups={"toBeFixed"})
+	/*@Test (groups={"toBeFixed"})
+	public void testNotifications() throws MalformedURLException, JSONException {
+		// FIXME
+		ForrstAPI forrst = new ForrstAPIClient();
+		JSONObject json = forrst.notifications(null);
+		TestCase.assertEquals(true, json.has("error"));
+	}*/
+	
+	/*@Test (groups={"toBeFixed"})
 	public void testUsersAuth() throws MalformedURLException, JSONException {
 		// FIXME
 		ForrstAPI forrst = new ForrstAPIClient();
 		JSONObject json = forrst.usersAuth("", "");
 		TestCase.assertEquals(true, json.has("token"));
-	}
+	}*/
 	
 	@Test (groups={"ready"})
 	public void testUsersInfoById() throws MalformedURLException, JSONException {

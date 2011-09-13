@@ -17,13 +17,25 @@ public class ForrstAPIClient implements ForrstAPI {
 		return http.get(Endpoint.getInstance().STATS_URI);
 	}
 
-	public JSONObject usersAuth(String emailOrUsername, String password) {
+	/*public JSONObject notifications(Map<String,String> options) {
+		Map<String,String> params = new HashMap<String,String>();
+		
+		if(options != null) {
+			if(options.containsKey("grouped")) {
+				params.put("grouped", options.get("grouped"));
+			}
+		}
+		
+		return http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
+	}*/
+	
+	/*public JSONObject usersAuth(String emailOrUsername, String password) {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("email_or_username", emailOrUsername);
 		params.put("password", password);
 		
 		return http.get(Endpoint.getInstance().USERS_AUTH_URI, params);
-	}
+	}*/
 
 	public JSONObject usersInfo(int id) {
 		Map<String,String> params = new HashMap<String,String>();

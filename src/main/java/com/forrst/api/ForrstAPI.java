@@ -27,6 +27,33 @@ public interface ForrstAPI {
      *         calls_made
      */
     public JSONObject stats();
+    
+    /**
+     * Return notification items for the authenticating user.
+     * Most items have an associated redirect URL that will
+     * take the user to the appropriate post/comment/etc. and
+     * clear the associated notification. Construct the URLs
+     * using the view_url_format format (provided in the
+     * response), replacing ID with the ID of the desired
+     * notification. Also note that not every type of
+     * notification (currently for likes, comments [replies,
+     * subscription-based, on your post], mentions, jobs, and
+     * follows) will have the same fields present for data.
+     * 
+     * @param options is a map & can contain
+     *        grouped: [optional] Boolean indicating whether
+     *                 to return items logically grouped by
+     *                 type 
+     * @return JSON response containing:
+     *         items {
+     *             like {
+     *                 ...
+     *             }
+     *         },
+     *         view_url_format
+     *
+    public JSONObject notifications(Map<String,String> options);
+    */
 
     /**
      * User authentication. Provide an email/username
@@ -38,8 +65,9 @@ public interface ForrstAPI {
      * @param password Password
      * @return JSON response containing:
      *         token
-     */
+     *
     public JSONObject usersAuth(String emailOrUsername, String password);
+    */
 
     /**
      * Returns user info by User ID
