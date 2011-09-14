@@ -48,6 +48,7 @@ to be done:
 - Return full json
 - Create ForrstException
 - Rate limit API methods
+- all authenticated API calls 
 - rename API methods to something simpler
 - fix broken ForrstAPIClient endpoints/tests
 - Helper method to get all endpoints as Map<String,String>

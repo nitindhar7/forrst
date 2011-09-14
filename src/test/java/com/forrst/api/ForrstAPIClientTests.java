@@ -243,16 +243,34 @@ public class ForrstAPIClientTests {
 		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
 	}
 
-	@Test (groups={"toBeFixed"})
-	public void testPostCommentsByID() throws MalformedURLException {
-		// FIXME
-		JSONObject json = forrst.postComments(45114);
+	/*
+	 * Before testing,
+	 * 
+	 * Replace "skip" with "ready"
+	 * Replace USERNAME with username
+	 * Replace PASSWORD with password
+	 */
+	@Test (groups={"skip"})
+	public void testPostCommentsByID() throws MalformedURLException, JSONException {
+		JSONObject json = forrst.usersAuth("USERNAME", "PASSWORD");
+		json = forrst.postComments(json.getString("token"), 45114);
+		TestCase.assertEquals(true, json.has("comments"));
+		TestCase.assertEquals(true, json.has("count"));
 	}
 
-	@Test (groups={"toBeFixed"})
-	public void testPostCommentsByTinyID() throws MalformedURLException {
-		// FIXME
-		JSONObject json = forrst.postComments("BMH");
+	/*
+	 * Before testing,
+	 * 
+	 * Replace "skip" with "ready"
+	 * Replace USERNAME with username
+	 * Replace PASSWORD with password
+	 */
+	@Test (groups={"skip"})
+	public void testPostCommentsByTinyID() throws MalformedURLException, JSONException {
+		JSONObject json = forrst.usersAuth("USERNAME", "PASSWORD");
+		json = forrst.postComments(json.getString("token"), "BMH");
+		TestCase.assertEquals(true, json.has("comments"));
+		TestCase.assertEquals(true, json.has("count"));
 	}
 	
 	@Test (groups={"toBeFixed"})

@@ -131,15 +131,17 @@ public class ForrstAPIClient implements ForrstAPI {
 		return http.get(Endpoint.getInstance().POSTS_LIST_URI, params);
 	}
 
-	public JSONObject postComments(int id) {
+	public JSONObject postComments(String accessToken, int id) {
 		Map<String,String> params = new HashMap<String,String>();
+		params.put("access_token", accessToken);
 		params.put("id", Integer.toString(id));
 		
 		return http.get(Endpoint.getInstance().POST_COMMENTS_URI, params);
 	}
 	
-	public JSONObject postComments(String tinyId) {
+	public JSONObject postComments(String accessToken, String tinyId) {
 		Map<String,String> params = new HashMap<String,String>();
+		params.put("access_token", accessToken);
 		params.put("tiny_id", tinyId);
 		
 		return http.get(Endpoint.getInstance().POST_COMMENTS_URI, params);
