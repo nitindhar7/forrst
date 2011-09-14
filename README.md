@@ -9,7 +9,7 @@ Android platform to be tested soon!
 Build & Use
 -----------
 Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions.
-To begin, build Forrst and import it in your code. __To run the test for the `users/auth` endpoint update your credentials in `ForrstAPIClientTests.java`.__
+To begin, build Forrst and import it in your code. __To run the tests for the `users/auth` and `notifications` endpoints update your credentials in `ForrstAPIClientTests.java`.__
 
     $ ant
 
@@ -22,13 +22,14 @@ To begin, build Forrst and import it in your code. __To run the test for the `us
     
     // Authentication
     forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+    
+    // Notifications
+    forrst.notifications("ACCESS_TOKEN", options)
 
     // User information
     forrst.usersInfo("USERNAME");
     
-    // User posts (questions)
-    Map<String,String> options = new HashMap<String,String>();
-    options.put("type", "questions");
+    // User posts
     forrst.userPosts("USERNAME", options)
 
 Note that each library API endpoint returns a JSONObject. For more information on JSONObject visit [json.org/java](http://json.org/java/). The dependency json-java jar file is also included in the `lib` folder.

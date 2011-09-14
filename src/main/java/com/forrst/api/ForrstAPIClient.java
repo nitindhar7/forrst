@@ -17,8 +17,9 @@ public class ForrstAPIClient implements ForrstAPI {
 		return http.get(Endpoint.getInstance().STATS_URI);
 	}
 
-	/*public JSONObject notifications(Map<String,String> options) {
+	public JSONObject notifications(String accessToken, Map<String,String> options) {
 		Map<String,String> params = new HashMap<String,String>();
+		params.put("access_token", accessToken);
 		
 		if(options != null) {
 			if(options.containsKey("grouped")) {
@@ -27,7 +28,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		}
 		
 		return http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
-	}*/
+	}
 	
 	public JSONObject usersAuth(String emailOrUsername, String password) {
 		Map<String,String> params = new HashMap<String,String>();

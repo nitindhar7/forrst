@@ -40,6 +40,7 @@ public interface ForrstAPI {
      * subscription-based, on your post], mentions, jobs, and
      * follows) will have the same fields present for data.
      * 
+     * @param accessToken Token obtained when the user is authenticated
      * @param options is a map & can contain
      *        grouped: [optional] Boolean indicating whether
      *                 to return items logically grouped by
@@ -51,9 +52,8 @@ public interface ForrstAPI {
      *             }
      *         },
      *         view_url_format
-     *
-    public JSONObject notifications(Map<String,String> options);
-    */
+     */
+    public JSONObject notifications(String accessToken, Map<String,String> options);
 
     /**
      * User authentication. Provide an email/username

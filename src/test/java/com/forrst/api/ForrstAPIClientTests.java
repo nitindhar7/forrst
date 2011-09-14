@@ -22,12 +22,20 @@ public class ForrstAPIClientTests {
 		TestCase.assertEquals(true, json.has("calls_made"));
 	}
 	
-	/*@Test (groups={"toBeFixed"})
+	/*
+	 * Before testing,
+	 * 
+	 * Replace "skip" with "ready"
+	 * Replace EMAIL_OR_USERNAME with email/username
+	 * Replace PASSWORD with password
+	 */
+	@Test (groups={"skip"})
 	public void testNotifications() throws MalformedURLException, JSONException {
-		// FIXME
-		JSONObject json = forrst.notifications(null);
-		TestCase.assertEquals(true, json.has("error"));
-	}*/
+		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+		json = forrst.notifications(json.getString("token"), null);
+		TestCase.assertEquals(true, json.has("items"));
+		TestCase.assertEquals(true, json.has("view_url_format"));
+	}
 	
 	/*
 	 * Before testing,
@@ -234,15 +242,13 @@ public class ForrstAPIClientTests {
 		JSONArray jsonArray = json.getJSONArray("posts");
 		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
 	}
-	
-	@SuppressWarnings("unused")
+
 	@Test (groups={"toBeFixed"})
 	public void testPostCommentsByID() throws MalformedURLException {
 		// FIXME
 		JSONObject json = forrst.postComments(45114);
 	}
-	
-	@SuppressWarnings("unused")
+
 	@Test (groups={"toBeFixed"})
 	public void testPostCommentsByTinyID() throws MalformedURLException {
 		// FIXME
@@ -251,9 +257,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"toBeFixed"})
 	public void testRateLimit() {
-		for(int i = 0; i < 10000; i++) {
-			forrst.usersInfo(29470);
-		}
 	}
 	
 	@Test (groups={"ready"})
