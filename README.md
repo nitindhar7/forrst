@@ -43,12 +43,10 @@ Contribute
 Submit well documented code with unit tests and I will merge your changes in
 as long as your code does not break the build. Here are some things that need
 to be done:
-
+ 
 - refactor and remove redundancy
 - Return full json
-- Create ForrstException
 - Rate limit API methods
-- all authenticated API calls 
 - rename API methods to something simpler
 - fix broken ForrstAPIClient endpoints/tests
 - Helper method to get all endpoints as Map<String,String>

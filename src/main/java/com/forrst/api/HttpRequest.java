@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -98,7 +98,7 @@ public class HttpRequest {
 
 		try {
 			URL url = new URL(requestURI);
-		    URLConnection urlConn = url.openConnection();
+			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
 		    urlConn.setDoOutput(true);
 		    
 		    OutputStreamWriter osw = new OutputStreamWriter(urlConn.getOutputStream());
