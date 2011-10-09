@@ -7,7 +7,17 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,10 +105,22 @@ public class HttpRequest {
 		String jsonResult = "";
 		
 		JSONObject json = null;
+		HttpsURLConnection urlConnHttps = null;
+		HttpURLConnection urlConn = null;
 
 		try {
 			URL url = new URL(requestURI);
-			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+			
+			if (url.getProtocol().toLowerCase().equals("https")) {
+                trustAllHosts();
+                urlConnHttps = (HttpsURLConnection) url.openConnection();
+                urlConnHttps.setHostnameVerifier(DO_NOT_VERIFY);
+                urlConn = urlConnHttps;
+                
+            } else {
+                urlConn = (HttpURLConnection) url.openConnection();
+            }
+
 		    urlConn.setDoOutput(true);
 		    
 		    OutputStreamWriter osw = new OutputStreamWriter(urlConn.getOutputStream());
@@ -148,5 +170,44 @@ public class HttpRequest {
 
 		return stringifiedArgs.substring(0, stringifiedArgs.length() - 1);
 	}
+	
+	/**
+     * always verify the host - dont check for certificate
+     */
+    protected final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
+
+   /**
+    * Trust every server - dont check for any certificate
+    * 1. Create a trust manager that does not validate certificate chains
+    * 2. Install the all-trusting trust manager
+    */
+    protected static void trustAllHosts() {
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[] {};
+            }
+        
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+        
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {}
+        }};
+
+        SSLContext sc;
+        try {
+            sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error installing all-trusting trust manager: algorithm not found", e);
+        } catch (KeyManagementException e) {
+            throw new RuntimeException("Error installing all-trusting trust manager: problems managing key", e);
+        }
+    }
 
 }
