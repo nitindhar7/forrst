@@ -74,11 +74,11 @@ public class HttpRequest {
 			json = new JSONObject(jsonResult);
 			json = json.getJSONObject("resp");
 		} catch (MalformedURLException e) {
-			throw new RuntimeException("Invalid URL requested");
+			throw new RuntimeException("Invalid URL requested", e);
 		} catch (IOException e) {
-			throw new RuntimeException("Could not read from requested stream");
+			throw new RuntimeException("Could not read from requested stream", e);
 		} catch (JSONException e) {
-			throw new RuntimeException("JSON could not be formed");
+			throw new RuntimeException("JSON could not be formed", e);
 		}
 		
 		return json;
@@ -118,11 +118,11 @@ public class HttpRequest {
 			json = new JSONObject(jsonResult);
 			json = json.getJSONObject("resp");
 		} catch (MalformedURLException e) {
-			throw new RuntimeException("Invalid URL requested");
+			throw new RuntimeException("Invalid URL requested", e);
 		} catch (IOException e) {
-			throw new RuntimeException("Could not read from requested stream");
+			throw new RuntimeException("Could not read from requested stream", e);
 		} catch (JSONException e) {
-			throw new RuntimeException("JSON could not be formed");
+			throw new RuntimeException("JSON could not be formed", e);
 		}
 		
 		return json;
