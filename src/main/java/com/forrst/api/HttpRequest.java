@@ -22,6 +22,8 @@ import javax.net.ssl.X509TrustManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.forrst.api.util.ForrstAuthenticationException;
+
 public class HttpRequest {
 
 	/**
@@ -53,8 +55,9 @@ public class HttpRequest {
 	 * @param requestURI Forrst URI requested
 	 * @param params Map of URL parameters and their values
 	 * @return JSONObject containing a response
+	 * @throws ForrstAuthenticationException when authentication fails
 	 */
-	public JSONObject post(String requestURI, Map<String,String> params) {
+	public JSONObject post(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
 		return postData(requestURI, params);
 	}
 	
@@ -100,8 +103,9 @@ public class HttpRequest {
 	 * 
 	 * @param requestURI The Forrst endpoint requested
 	 * @return JSONObject containing the full Forrst API response
+	 * @throws ForrstAuthenticationException when authentication fails
 	 */
-	protected JSONObject postData(String requestURI, Map<String,String> params) {
+	protected JSONObject postData(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
 		String jsonResult = "";
 		
 		JSONObject json = null;
@@ -126,8 +130,15 @@ public class HttpRequest {
 		    OutputStreamWriter osw = new OutputStreamWriter(urlConn.getOutputStream());
 		    osw.write(stringifyArgs(params));
 		    osw.flush();
-
-		    BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+		    
+		    BufferedReader in = null;
+		    
+		    if(urlConn.getResponseCode() == 401) {
+		        throw new ForrstAuthenticationException("Could not authenticate");
+		    }
+		    else {
+		        in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+		    }
 			
 			String responseLine;
 			while ((responseLine = in.readLine()) != null) {

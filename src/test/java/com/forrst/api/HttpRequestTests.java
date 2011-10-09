@@ -10,6 +10,8 @@ import junit.framework.TestCase;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import com.forrst.api.util.ForrstAuthenticationException;
+
 public class HttpRequestTests {
 	
 	private HttpRequest http = new HttpRequest(); 
@@ -24,7 +26,7 @@ public class HttpRequestTests {
 	}
 	
 	@Test (groups={"toBeFixed"})
-	public void testPost() throws MalformedURLException {
+	public void testPost() throws MalformedURLException, ForrstAuthenticationException {
 		String sampleJSON = "{\"post\":{\"date\":\"2011/09/04\",\"user\":\"sample\"},\"user\":{\"age\":10,\"name\":\"sample\"}}";
 		URL url = getClass().getClassLoader().getResource("sample_data.json");
 		JSONObject sampleData = http.post(url.toString(), null);
@@ -42,7 +44,7 @@ public class HttpRequestTests {
 	}
 	
 	@Test (groups={"toBeFixed"})
-	public void testPostData() {
+	public void testPostData() throws ForrstAuthenticationException {
 		String sampleJSON = "{\"post\":{\"date\":\"2011/09/04\",\"user\":\"sample\"},\"user\":{\"age\":10,\"name\":\"sample\"}}";
 		URL url = getClass().getClassLoader().getResource("sample_data.json");
 		JSONObject sampleData = http.postData(url.toString(), null);

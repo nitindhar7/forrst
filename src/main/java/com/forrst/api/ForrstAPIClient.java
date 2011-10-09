@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.forrst.api.util.ForrstAuthenticationException;
+
 public class ForrstAPIClient implements ForrstAPI {
 	
 	private static HttpRequest http;
@@ -30,7 +32,7 @@ public class ForrstAPIClient implements ForrstAPI {
 		return http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
 	}
 	
-	public JSONObject usersAuth(String emailOrUsername, String password) {
+	public JSONObject usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("email_or_username", emailOrUsername);
 		params.put("password", password);

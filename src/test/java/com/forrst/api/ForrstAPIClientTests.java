@@ -11,6 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import com.forrst.api.util.ForrstAuthenticationException;
+
 public class ForrstAPIClientTests {
 
 	private ForrstAPI forrst = new ForrstAPIClient();
@@ -30,7 +32,7 @@ public class ForrstAPIClientTests {
 	 * Replace PASSWORD with password
 	 */
 	@Test (groups={"skip"})
-	public void testNotifications() throws MalformedURLException, JSONException {
+	public void testNotifications() throws MalformedURLException, JSONException, ForrstAuthenticationException {
 		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
 		json = forrst.notifications(json.getString("token"), null);
 		TestCase.assertEquals(true, json.has("items"));
@@ -45,7 +47,7 @@ public class ForrstAPIClientTests {
 	 * Replace PASSWORD with password
 	 */
 	@Test (groups={"skip"})
-	public void testUsersAuth() throws MalformedURLException, JSONException {
+	public void testUsersAuth() throws MalformedURLException, JSONException, ForrstAuthenticationException {
 		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
 		TestCase.assertEquals(true, json.has("token"));
 		TestCase.assertEquals(true, json.has("user_id"));
@@ -251,7 +253,7 @@ public class ForrstAPIClientTests {
 	 * Replace PASSWORD with password
 	 */
 	@Test (groups={"skip"})
-	public void testPostCommentsByID() throws MalformedURLException, JSONException {
+	public void testPostCommentsByID() throws MalformedURLException, JSONException, ForrstAuthenticationException {
 		JSONObject json = forrst.usersAuth("USERNAME", "PASSWORD");
 		json = forrst.postComments(json.getString("token"), 45114);
 		TestCase.assertEquals(true, json.has("comments"));
@@ -266,7 +268,7 @@ public class ForrstAPIClientTests {
 	 * Replace PASSWORD with password
 	 */
 	@Test (groups={"skip"})
-	public void testPostCommentsByTinyID() throws MalformedURLException, JSONException {
+	public void testPostCommentsByTinyID() throws MalformedURLException, JSONException, ForrstAuthenticationException {
 		JSONObject json = forrst.usersAuth("USERNAME", "PASSWORD");
 		json = forrst.postComments(json.getString("token"), "BMH");
 		TestCase.assertEquals(true, json.has("comments"));
