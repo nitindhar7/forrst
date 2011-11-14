@@ -133,12 +133,16 @@ public class HttpRequest {
 		    
 		    BufferedReader in = null;
 		    
-		    if(urlConn.getResponseCode() == 401) {
-		        throw new ForrstAuthenticationException("Could not authenticate");
+		    try {
+		        urlConn.getResponseCode();
+		    } catch (IOException e) {
+		        if (e.getMessage() == "Received authentication challenge is null")
+		            throw new ForrstAuthenticationException("Could not authenticate");
+		        else
+		            throw new IOException(e);
 		    }
-		    else {
-		        in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-		    }
+
+		    in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 			
 			String responseLine;
 			while ((responseLine = in.readLine()) != null) {
