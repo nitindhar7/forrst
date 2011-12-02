@@ -84,7 +84,7 @@ public class HttpRequest {
 
 			in.close();
 			
-			json = new JSONObject(jsonResult);
+			json = new JSONObject(jsonResult.trim());
 			json = json.getJSONObject("resp");
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("Invalid URL requested", e);
@@ -134,15 +134,10 @@ public class HttpRequest {
 		    BufferedReader in = null;
 		    
 		    try {
-		        urlConn.getResponseCode();
+		        in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 		    } catch (IOException e) {
-		        if (e.getMessage() == "Received authentication challenge is null")
-		            throw new ForrstAuthenticationException("Could not authenticate");
-		        else
-		            throw new IOException(e);
+		        throw new ForrstAuthenticationException("Could not authenticate");
 		    }
-
-		    in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 			
 			String responseLine;
 			while ((responseLine = in.readLine()) != null) {
@@ -152,7 +147,7 @@ public class HttpRequest {
 			osw.close();
 			in.close();
 			
-			json = new JSONObject(jsonResult);
+			json = new JSONObject(jsonResult.trim());
 			json = json.getJSONObject("resp");
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("Invalid URL requested", e);

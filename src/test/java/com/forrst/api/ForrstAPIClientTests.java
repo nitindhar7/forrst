@@ -46,9 +46,9 @@ public class ForrstAPIClientTests {
 	 * Replace EMAIL_OR_USERNAME with email/username
 	 * Replace PASSWORD with password
 	 */
-	@Test (groups={"ready"})
+	@Test (groups={"skip"})
 	public void testUsersAuth() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-		JSONObject json = forrst.usersAuth("nitindhar7", "samtel");
+		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
 		TestCase.assertEquals(true, json.has("token"));
 		TestCase.assertEquals(true, json.has("user_id"));
 	}
