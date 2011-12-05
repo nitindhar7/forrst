@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<project name="forrst" default="dist" basedir=".">
+<project name="forrst" default="jar" basedir=".">
     <property name="targetdir" value="target" />
     <property name="srcdir" value="src/main/java" />
     <property name="classdir" value="${targetdir}/classes" />
@@ -59,14 +59,14 @@
         </javadoc>
     </target>
 
-    <target name="dist" depends="tests" description="Builds a complete forrst jar.">
-        <exec executable="git" outproperty="git-desc">
+    <target name="jar" depends="compile" description="Builds a complete forrst jar.">
+        <exec executable="git" outputproperty="git-desc" failonerror="true">
             <arg value="describe" />
         </exec>
         <mkdir dir="${distdir}" />
         <delete>
             <fileset dir="." includes="${distdir}/forrst-${git-desc}.jar" />
         </delete>
-        <jar destfile="${distdir}/forrst.jar" basedir="${classdir}" />
+        <jar destfile="${distdir}/forrst-${git-desc}.jar" basedir="${classdir}" />
     </target>
 </project>
