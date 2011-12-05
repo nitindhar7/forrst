@@ -1,75 +1,72 @@
 <?xml version='1.0'?>
 <project name="forrst" default="dist" basedir=".">
-    <property name="targetdir" value="target"/>
-    <property name="srcdir" value="src/main/java"/>
-	<property name="classdir" value="${targetdir}/classes"/>
-	<property name="test_srcdir" value="src/test/java"/>
-    <property name="test_resdir" value="src/test/resources"/>
-    <property name="test_outdir" value="test-output"/>
-    <property name="test_classdir" value="${targetdir}/tests"/>
-    <property name="distdir" value="dist"/>
-	<property name="docdir" value="javadocs"/>
+    <property name="targetdir" value="target" />
+    <property name="srcdir" value="src/main/java" />
+    <property name="classdir" value="${targetdir}/classes" />
+    <property name="test_srcdir" value="src/test/java" />
+    <property name="test_resdir" value="src/test/resources" />
+    <property name="test_outdir" value="test-output" />
+    <property name="test_classdir" value="${targetdir}/tests" />
+    <property name="distdir" value="dist" />
+    <property name="docdir" value="javadocs" />
 
     <path id="classpath">
-      <fileset dir="lib">
-        <include name="**/*.jar"/>
-      </fileset>
-      <pathelement path="${classdir}" />
+        <fileset dir="lib">
+            <include name="**/*.jar" />
+        </fileset>
+        <pathelement path="${classdir}" />
     </path>
 
     <path id="test_classpath">
-      <path refid="classpath"/>
-      <pathelement path="${test_classdir}" />
-      <pathelement path="${test_resdir}"/>
+        <path refid="classpath" />
+        <pathelement path="${test_classdir}" />
+        <pathelement path="${test_resdir}" />
     </path>
 
     <target name="init">
-      <mkdir dir="${classdir}"/>
-      <mkdir dir="${test_classdir}"/>
+        <mkdir dir="${classdir}" />
+        <mkdir dir="${test_classdir}" />
     </target>
 
     <target name="clean">
-      <delete dir="${classdir}"/>
-      <delete dir="${test_classdir}"/>
-      <delete dir="${targetdir}"/>
-      <delete dir="${distdir}"/>
+        <delete dir="${classdir}" />
+        <delete dir="${test_classdir}" />
+        <delete dir="${targetdir}" />
+        <delete dir="${distdir}" />
     </target>
 
     <target name="compile" depends="clean, init">
-      <javac debug="on" srcdir="${srcdir}" destdir="${classdir}" classpathref="classpath" includeantruntime="false" />
+        <javac debug="on" srcdir="${srcdir}" destdir="${classdir}" classpathref="classpath" includeantruntime="false" />
     </target>
 
     <target name="compile_tests" depends="compile">
-      <javac debug="on" srcdir="${test_srcdir}" destdir="${test_classdir}" classpathref="test_classpath" includeantruntime="false" />
+        <javac debug="on" srcdir="${test_srcdir}" destdir="${test_classdir}" classpathref="test_classpath" includeantruntime="false" />
     </target>
-	
-	<taskdef resource="testngtasks" classpath="lib/testng-5.9.jar"/>
+
+    <taskdef resource="testngtasks" classpath="lib/testng-5.9.jar" />
     <target name="tests" depends="compile_tests" description="runs unit/functional tests">
-      <testng classpathref="test_classpath" outputDir="${targetdir}/testng" haltOnFailure="true" verbose="5">
-        <xmlfileset dir="${test_resdir}" includes="testng.xml" />
-      </testng>
+        <testng classpathref="test_classpath" outputDir="${targetdir}/testng" haltOnFailure="true" verbose="5">
+            <xmlfileset dir="${test_resdir}" includes="testng.xml" />
+        </testng>
     </target>
-	
-	<target name="javadocs" description="Generates javadoc into target/api">
-      <delete dir="${docdir}"/>
-	  <javadoc
-              destdir="${docdir}"
-	  	      author="true"
-              version="true"
-              use="true"
-              classpathref="classpath"
-              windowtitle="forrst">
-        <packageset dir="${srcdir}" defaultexcludes="yes">
-          <include name="com/forrst/api/**"/>
-        </packageset>
-      </javadoc>
+
+    <target name="javadocs" description="Generates javadoc into target/api">
+        <delete dir="${docdir}" />
+        <javadoc destdir="${docdir}" author="true" version="true" use="true" classpathref="classpath" windowtitle="forrst">
+            <packageset dir="${srcdir}" defaultexcludes="yes">
+                <include name="com/forrst/api/**" />
+            </packageset>
+        </javadoc>
     </target>
-	
-	<target name="dist" depends="tests" description="Builds a complete forrst jar.">
-      <mkdir dir="${distdir}"/>
-      <delete>
-        <fileset dir="." includes="${distdir}/forrst.jar"/>
-      </delete>
-      <jar destfile="${distdir}/forrst.jar" basedir="${classdir}"/>
+
+    <target name="dist" depends="tests" description="Builds a complete forrst jar.">
+        <exec executable="git" outproperty="git-desc">
+            <arg value="describe" />
+        </exec>
+        <mkdir dir="${distdir}" />
+        <delete>
+            <fileset dir="." includes="${distdir}/forrst-${git-desc}.jar" />
+        </delete>
+        <jar destfile="${distdir}/forrst.jar" basedir="${classdir}" />
     </target>
 </project>

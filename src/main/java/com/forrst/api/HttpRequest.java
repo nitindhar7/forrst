@@ -83,7 +83,7 @@ public class HttpRequest {
 			}
 
 			in.close();
-			
+
 			json = new JSONObject(jsonResult.trim());
 			json = json.getJSONObject("resp");
 		} catch (MalformedURLException e) {
