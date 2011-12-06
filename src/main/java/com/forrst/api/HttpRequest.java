@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -25,6 +26,8 @@ import org.json.JSONObject;
 import com.forrst.api.util.ForrstAuthenticationException;
 
 public class HttpRequest {
+    
+    private static final String ENCODING = "UTF-8";
 
 	/**
 	 * GET data from Forrst using the request URI
@@ -75,7 +78,8 @@ public class HttpRequest {
 
 		try {
 			URL url = new URL(requestURI);
-			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+			URLConnection urlConn = url.openConnection();
+			BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), ENCODING));
 			
 			String responseLine;
 			while ((responseLine = in.readLine()) != null) {
@@ -91,7 +95,7 @@ public class HttpRequest {
 		} catch (IOException e) {
 			throw new RuntimeException("Could not read from requested stream", e);
 		} catch (JSONException e) {
-			throw new RuntimeException("JSON could not be formed", e);
+			throw new RuntimeException("JSON [" + jsonResult + "] could not be formed for URI: [" + requestURI + "]", e);
 		}
 		
 		return json;
@@ -134,7 +138,7 @@ public class HttpRequest {
 		    BufferedReader in = null;
 		    
 		    try {
-		        in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+		        in = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), ENCODING));
 		    } catch (IOException e) {
 		        throw new ForrstAuthenticationException("Could not authenticate");
 		    }
