@@ -2,6 +2,7 @@ package com.forrst.api;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import junit.framework.TestCase;
@@ -11,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import com.forrst.api.model.Comment;
 import com.forrst.api.util.ForrstAuthenticationException;
 
 public class ForrstAPIClientTests {
@@ -249,30 +251,15 @@ public class ForrstAPIClientTests {
 	 * Before testing,
 	 * 
 	 * Replace "skip" with "ready"
-	 * Replace USERNAME with username
+	 * Replace EMAIL_OR_USERNAME with email or username
 	 * Replace PASSWORD with password
 	 */
 	@Test (groups={"skip"})
 	public void testPostCommentsByID() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-		JSONObject json = forrst.usersAuth("USERNAME", "PASSWORD");
-		json = forrst.postComments(json.getString("token"), 45114);
-		TestCase.assertEquals(true, json.has("comments"));
-		TestCase.assertEquals(true, json.has("count"));
-	}
-
-	/*
-	 * Before testing,
-	 * 
-	 * Replace "skip" with "ready"
-	 * Replace USERNAME with username
-	 * Replace PASSWORD with password
-	 */
-	@Test (groups={"skip"})
-	public void testPostCommentsByTinyID() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-		JSONObject json = forrst.usersAuth("USERNAME", "PASSWORD");
-		json = forrst.postComments(json.getString("token"), "BMH");
-		TestCase.assertEquals(true, json.has("comments"));
-		TestCase.assertEquals(true, json.has("count"));
+		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+		List<Comment> comments = forrst.postComments(json.getString("token"), 124269);
+		TestCase.assertNotNull(comments);
+		TestCase.assertTrue((comments.size() > 0) ? true : false);
 	}
 	
 	@Test (groups={"toBeFixed"})

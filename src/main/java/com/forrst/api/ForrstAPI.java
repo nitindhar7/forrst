@@ -1,9 +1,11 @@
 package com.forrst.api;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.forrst.api.model.Comment;
 import com.forrst.api.util.ForrstAuthenticationException;
 
 public interface ForrstAPI {
@@ -274,8 +276,7 @@ public interface ForrstAPI {
      *         }],
      *         count
      */
-    public JSONObject postComments(String accessToken, int id);
-    public JSONObject postComments(String accessToken, String tinyId);
+    public List<Comment> postComments(String accessToken, int id);
 
     /**
      * Returns a map containing the name of the endpoint and its URI
