@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
 import com.forrst.api.util.ForrstAuthenticationException;
 
@@ -35,8 +36,8 @@ public class ForrstAPIClientTests {
 	 */
 	@Test (groups={"skip"})
 	public void testNotifications() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
-		json = forrst.notifications(json.getString("token"), null);
+		Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+		JSONObject json = forrst.notifications(auth.getAccessToken(), null);
 		TestCase.assertEquals(true, json.has("items"));
 		TestCase.assertEquals(true, json.has("view_url_format"));
 	}
@@ -50,9 +51,8 @@ public class ForrstAPIClientTests {
 	 */
 	@Test (groups={"skip"})
 	public void testUsersAuth() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
-		TestCase.assertEquals(true, json.has("token"));
-		TestCase.assertEquals(true, json.has("user_id"));
+		Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+		TestCase.assertNotNull(auth);
 	}
 	
 	@Test (groups={"ready"})
@@ -256,8 +256,8 @@ public class ForrstAPIClientTests {
 	 */
 	@Test (groups={"skip"})
 	public void testPostCommentsByID() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-		JSONObject json = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
-		List<Comment> comments = forrst.postComments(json.getString("token"), 124269);
+		Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+		List<Comment> comments = forrst.postComments(auth.getAccessToken(), 124269);
 		TestCase.assertNotNull(comments);
 		TestCase.assertTrue((comments.size() > 0) ? true : false);
 	}

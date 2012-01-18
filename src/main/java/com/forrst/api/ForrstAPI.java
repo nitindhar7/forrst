@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
 import com.forrst.api.util.ForrstAuthenticationException;
 
@@ -71,7 +72,7 @@ public interface ForrstAPI {
      *         token
      * @throws ForrstAuthenticationException when authentication fails
      */
-    public JSONObject usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException;
+    public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException;
 
     /**
      * Returns user info

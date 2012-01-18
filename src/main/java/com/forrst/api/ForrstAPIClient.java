@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
 import com.forrst.api.util.ForrstAuthenticationException;
 
@@ -38,12 +39,25 @@ public class ForrstAPIClient implements ForrstAPI {
 		return http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
 	}
 	
-	public JSONObject usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException {
-		Map<String,String> params = new HashMap<String,String>();
-		params.put("email_or_username", emailOrUsername);
-		params.put("password", password);
+	public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException {
+	    Auth auth = null;
+
+		try {
+		    Map<String,String> params = new HashMap<String,String>();
+	        params.put("email_or_username", emailOrUsername);
+	        params.put("password", password);
+	        
+	        JSONObject json = http.post(Endpoint.getInstance().USERS_AUTH_URI, params);
+
+	        auth = new Auth();
+	        auth.setAccessToken(json.getString("token"));
+	        auth.setUserId(json.getInt("user_id"));
+        } catch (JSONException e) {
+            auth = null;
+            throw new RuntimeException("Error authenticating with Forrst", e);
+        }
 		
-		return http.post(Endpoint.getInstance().USERS_AUTH_URI, params);
+		return auth;
 	}
 
 	public JSONObject usersInfo(int id) {
