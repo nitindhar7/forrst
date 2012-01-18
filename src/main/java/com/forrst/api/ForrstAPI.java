@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.User;
 import com.forrst.api.util.ForrstAuthenticationException;
 
 public interface ForrstAPI {
@@ -62,22 +63,19 @@ public interface ForrstAPI {
 
     /**
      * User authentication. Provide an email/username
-     * and password and get an access token back
-     * 
-     * NOTE: CURRENTLY BROKEN
+     * and password and get the access token back
      *
      * @param emailOrUsername Email/Username
      * @param password Password
-     * @return JSON response containing:
-     *         token
+     * @return Auth object containing access token and user id
      * @throws ForrstAuthenticationException when authentication fails
      */
     public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException;
 
     /**
-     * Returns user info
+     * Given a property identifying a user return a user
      * 
-     * @param id User ID
+     * @param userInfo Map containing user id or username
      * @return JSON response containing:
      *         id,
      *         username,
@@ -102,8 +100,7 @@ public interface ForrstAPI {
      *         in_directory,
      *         tag_string
      */
-    public JSONObject usersInfo(int id);
-    public JSONObject usersInfo(String username);    
+    public User usersInfo(Map<String,String> userInfo);    
 
     /**
      * Returns a user's posts

@@ -12,6 +12,8 @@ import org.json.JSONObject;
 
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.Photo;
+import com.forrst.api.model.User;
 import com.forrst.api.util.ForrstAuthenticationException;
 
 public class ForrstAPIClient implements ForrstAPI {
@@ -60,18 +62,50 @@ public class ForrstAPIClient implements ForrstAPI {
 		return auth;
 	}
 
-	public JSONObject usersInfo(int id) {
-		Map<String,String> params = new HashMap<String,String>();
-		params.put("id", Integer.toString(id));
+	public User usersInfo(Map<String,String> userInfo) {
+		User user = null;
+		Photo photo = null;
+		JSONObject json = null;
 		
-		return http.get(Endpoint.getInstance().USERS_INFO_URI, params);
-	}
-	
-	public JSONObject usersInfo(String username) {
-		Map<String,String> params = new HashMap<String,String>();
-		params.put("username", username);
-		
-		return http.get(Endpoint.getInstance().USERS_INFO_URI, params);
+		try {
+		    if(userInfo.containsKey("id") || userInfo.containsKey("username"))
+	            json = http.get(Endpoint.getInstance().USERS_INFO_URI, userInfo);
+		    else
+		        return user;
+
+		    JSONObject photoJson = json.getJSONObject("photos");
+		    
+            photo = new Photo();
+            user = new User();
+            
+            photo.setXlUrl(photoJson.getString("xl_url"));
+            photo.setLargeUrl(photoJson.getString("large_url"));
+            photo.setMediumUrl(photoJson.getString("medium_url"));
+            photo.setSmallUrl(photoJson.getString("small_url"));
+            photo.setThumbUrl(photoJson.getString("thumb_url"));
+            
+            user.setId(json.getInt("id"));
+            user.setName(json.getString("name"));
+            user.setUsername(json.getString("username"));
+            user.setUrl(json.getString("url"));
+            user.setPosts(json.getInt("posts"));
+            user.setLikes(json.getInt("likes"));
+            user.setComments(json.getInt("comments"));
+            user.setFollowers(json.getInt("followers"));
+            user.setFollowing(json.getInt("following"));
+            user.setPhoto(photo);
+            user.setBio(json.getString("bio"));
+            user.setIsA(json.getString("is_a"));
+            user.setHomepageUrl(json.getString("homepage_url"));
+            user.setTwitter(json.getString("twitter"));
+            user.setInDirectory(json.getBoolean("in_directory"));
+            user.setTagString(json.getString("tag_string"));
+        } catch (JSONException e) {
+            user = null;
+            throw new RuntimeException("Error fetching user data", e);
+        }
+
+		return user;
 	}
 
 	public JSONObject userPosts(int id, Map<String,String> options) {

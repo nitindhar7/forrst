@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.User;
 import com.forrst.api.util.ForrstAuthenticationException;
 
 public class ForrstAPIClientTests {
@@ -56,57 +57,17 @@ public class ForrstAPIClientTests {
 	}
 	
 	@Test (groups={"ready"})
-	public void testUsersInfoById() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.usersInfo(29470);
-		TestCase.assertEquals(true, json.has("id"));
-		TestCase.assertEquals(true, json.has("username"));
-		TestCase.assertEquals(true, json.has("name"));
-		TestCase.assertEquals(true, json.has("url"));
-		TestCase.assertEquals(true, json.has("posts"));
-		TestCase.assertEquals(true, json.has("comments"));
-		TestCase.assertEquals(true, json.has("likes"));
-		TestCase.assertEquals(true, json.has("followers"));
-		TestCase.assertEquals(true, json.has("following"));
-		TestCase.assertEquals(true, json.has("photos"));
-		TestCase.assertEquals(true, json.has("bio"));
-		TestCase.assertEquals(true, json.has("is_a"));
-		TestCase.assertEquals(true, json.has("homepage_url"));
-		TestCase.assertEquals(true, json.has("twitter"));
-		TestCase.assertEquals(true, json.has("in_directory"));
-		TestCase.assertEquals(true, json.has("tag_string"));
-		json = json.getJSONObject("photos");
-		TestCase.assertEquals(true, json.has("xl_url"));
-		TestCase.assertEquals(true, json.has("large_url"));
-		TestCase.assertEquals(true, json.has("medium_url"));
-		TestCase.assertEquals(true, json.has("small_url"));
-		TestCase.assertEquals(true, json.has("thumb_url"));
-	}
-	
-	@Test (groups={"ready"})
-	public void testUsersInfoByUsername() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.usersInfo("nitindhar7");
-		TestCase.assertEquals(true, json.has("id"));
-		TestCase.assertEquals(true, json.has("username"));
-		TestCase.assertEquals(true, json.has("name"));
-		TestCase.assertEquals(true, json.has("url"));
-		TestCase.assertEquals(true, json.has("posts"));
-		TestCase.assertEquals(true, json.has("comments"));
-		TestCase.assertEquals(true, json.has("likes"));
-		TestCase.assertEquals(true, json.has("followers"));
-		TestCase.assertEquals(true, json.has("following"));
-		TestCase.assertEquals(true, json.has("photos"));
-		TestCase.assertEquals(true, json.has("bio"));
-		TestCase.assertEquals(true, json.has("is_a"));
-		TestCase.assertEquals(true, json.has("homepage_url"));
-		TestCase.assertEquals(true, json.has("twitter"));
-		TestCase.assertEquals(true, json.has("in_directory"));
-		TestCase.assertEquals(true, json.has("tag_string"));
-		json = json.getJSONObject("photos");
-		TestCase.assertEquals(true, json.has("xl_url"));
-		TestCase.assertEquals(true, json.has("large_url"));
-		TestCase.assertEquals(true, json.has("medium_url"));
-		TestCase.assertEquals(true, json.has("small_url"));
-		TestCase.assertEquals(true, json.has("thumb_url"));
+	public void testUsersInfo() throws MalformedURLException, JSONException {
+	    Map<String,String> params = new HashMap<String,String>();
+	    params.put("id", "29470");
+		User user = forrst.usersInfo(params);
+		TestCase.assertNotNull(user);
+		TestCase.assertNotNull(user.getPhoto());
+		
+		params.put("username", "nitindhar7");
+        user = forrst.usersInfo(params);
+        TestCase.assertNotNull(user);
+        TestCase.assertNotNull(user.getPhoto());
 	}
 	
 	@Test (groups={"ready"})
