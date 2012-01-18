@@ -1,6 +1,9 @@
 package com.forrst.api.model;
 
-public class Auth {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Auth implements Serializable {
     
     private String accessToken;
     private int userId;

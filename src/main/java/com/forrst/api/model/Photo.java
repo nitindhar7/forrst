@@ -1,6 +1,9 @@
 package com.forrst.api.model;
 
-public class Photo {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Photo implements Serializable {
     
     private String xlUrl;
     private String largeUrl;
