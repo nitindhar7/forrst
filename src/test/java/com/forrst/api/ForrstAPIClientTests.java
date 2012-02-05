@@ -14,6 +14,8 @@ import org.testng.annotations.Test;
 
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.Post;
+import com.forrst.api.model.Stat;
 import com.forrst.api.model.User;
 import com.forrst.api.util.ForrstAuthenticationException;
 
@@ -23,9 +25,8 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testStats() throws MalformedURLException {
-		JSONObject json = forrst.stats();
-		TestCase.assertEquals(true, json.has("rate_limit"));
-		TestCase.assertEquals(true, json.has("calls_made"));
+		Stat stat = forrst.stats();
+		TestCase.assertNotNull(stat);
 	}
 	
 	/*
@@ -72,132 +73,27 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"ready"})
 	public void testUsersPostsById() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.userPosts(29470, null);
-		TestCase.assertEquals(true, json.has("posts"));
-		JSONArray jsonArray = json.getJSONArray("posts");
-		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
-		json = (JSONObject) jsonArray.get(0);
-		TestCase.assertEquals(true, json.has("id"));
-		TestCase.assertEquals(true, json.has("tiny_id"));
-		TestCase.assertEquals(true, json.has("post_type"));
-		TestCase.assertEquals(true, json.has("post_url"));
-		TestCase.assertEquals(true, json.has("created_at"));
-		TestCase.assertEquals(true, json.has("updated_at"));
-		TestCase.assertEquals(true, json.has("user"));
-		TestCase.assertEquals(true, json.has("published"));
-		TestCase.assertEquals(true, json.has("public"));
-		TestCase.assertEquals(true, json.has("title"));
-		TestCase.assertEquals(true, json.has("url"));
-		TestCase.assertEquals(true, json.has("content"));
-		TestCase.assertEquals(true, json.has("description"));
-		TestCase.assertEquals(true, json.has("formatted_description"));
-		TestCase.assertEquals(true, json.has("like_count"));
-		TestCase.assertEquals(true, json.has("comment_count"));
-	}
-
-	@Test (groups={"ready"})
-	public void testUsersPostsByUsername() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.userPosts("nitindhar7", null);
-		TestCase.assertEquals(true, json.has("posts"));
-		JSONArray jsonArray = json.getJSONArray("posts");
-		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
-		json = (JSONObject) jsonArray.get(0);
-		TestCase.assertEquals(true, json.has("id"));
-		TestCase.assertEquals(true, json.has("tiny_id"));
-		TestCase.assertEquals(true, json.has("post_type"));
-		TestCase.assertEquals(true, json.has("post_url"));
-		TestCase.assertEquals(true, json.has("created_at"));
-		TestCase.assertEquals(true, json.has("updated_at"));
-		TestCase.assertEquals(true, json.has("user"));
-		TestCase.assertEquals(true, json.has("published"));
-		TestCase.assertEquals(true, json.has("public"));
-		TestCase.assertEquals(true, json.has("title"));
-		TestCase.assertEquals(true, json.has("url"));
-		TestCase.assertEquals(true, json.has("content"));
-		TestCase.assertEquals(true, json.has("description"));
-		TestCase.assertEquals(true, json.has("formatted_description"));
-		TestCase.assertEquals(true, json.has("like_count"));
-		TestCase.assertEquals(true, json.has("comment_count"));
+	    Map<String,String> params = new HashMap<String,String>();
+	    params.put("id", "29470");
+		List<Post> posts = forrst.userPosts(params, null);
+		TestCase.assertNotNull(posts);
+		TestCase.assertTrue(posts.size() > 0 ? true : false);
 	}
 	
 	@Test (groups={"ready"})
 	public void testPostsShowById() throws MalformedURLException {
-		JSONObject json = forrst.postsShow(45114);
-		TestCase.assertEquals(true, json.has("id"));
-		TestCase.assertEquals(true, json.has("tiny_id"));
-		TestCase.assertEquals(true, json.has("post_type"));
-		TestCase.assertEquals(true, json.has("post_url"));
-		TestCase.assertEquals(true, json.has("created_at"));
-		TestCase.assertEquals(true, json.has("updated_at"));
-		TestCase.assertEquals(true, json.has("user"));
-		TestCase.assertEquals(true, json.has("published"));
-		TestCase.assertEquals(true, json.has("public"));
-		TestCase.assertEquals(true, json.has("title"));
-		TestCase.assertEquals(true, json.has("url"));
-		TestCase.assertEquals(true, json.has("content"));
-		TestCase.assertEquals(true, json.has("description"));
-		TestCase.assertEquals(true, json.has("formatted_description"));
-		TestCase.assertEquals(true, json.has("like_count"));
-		TestCase.assertEquals(true, json.has("comment_count"));
-		TestCase.assertEquals(true, json.has("tag_string"));
-		TestCase.assertEquals(true, json.has("tags"));
+		Post post = forrst.postsShow(45114);
+		TestCase.assertNotNull(post);
+		TestCase.assertNotNull(post.getUser());
+		TestCase.assertNotNull(post.getUser().getPhoto());
 	}
-	
-	@Test (groups={"ready"})
-	public void testPostsShowByTinyID() throws MalformedURLException {
-		JSONObject json = forrst.postsShow("BMH");
-		TestCase.assertEquals(true, json.has("id"));
-		TestCase.assertEquals(true, json.has("tiny_id"));
-		TestCase.assertEquals(true, json.has("post_type"));
-		TestCase.assertEquals(true, json.has("post_url"));
-		TestCase.assertEquals(true, json.has("created_at"));
-		TestCase.assertEquals(true, json.has("updated_at"));
-		TestCase.assertEquals(true, json.has("user"));
-		TestCase.assertEquals(true, json.has("published"));
-		TestCase.assertEquals(true, json.has("public"));
-		TestCase.assertEquals(true, json.has("title"));
-		TestCase.assertEquals(true, json.has("url"));
-		TestCase.assertEquals(true, json.has("content"));
-		TestCase.assertEquals(true, json.has("description"));
-		TestCase.assertEquals(true, json.has("formatted_description"));
-		TestCase.assertEquals(true, json.has("like_count"));
-		TestCase.assertEquals(true, json.has("comment_count"));
-		TestCase.assertEquals(true, json.has("tag_string"));
-		TestCase.assertEquals(true, json.has("tags"));
-	}
-	
+
 	@Test (groups={"ready"})
 	public void testPostsAll() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.postsAll();
+		JSONObject json = forrst.postsAll(null);
 		TestCase.assertEquals(true, json.has("posts"));
 		JSONArray jsonArray = json.getJSONArray("posts");
 		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
-	}
-	
-	@Test (groups={"ready"})
-	public void testPostsAllAfter() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.postsAll(46000);
-		TestCase.assertEquals(true, json.has("posts"));
-		JSONArray jsonArray = json.getJSONArray("posts");
-		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
-		json = jsonArray.getJSONObject(0);
-		TestCase.assertEquals(true, json.has("id"));
-		TestCase.assertEquals(true, json.has("tiny_id"));
-		TestCase.assertEquals(true, json.has("post_type"));
-		TestCase.assertEquals(true, json.has("post_url"));
-		TestCase.assertEquals(true, json.has("created_at"));
-		TestCase.assertEquals(true, json.has("updated_at"));
-		TestCase.assertEquals(true, json.has("user"));
-		TestCase.assertEquals(true, json.has("published"));
-		TestCase.assertEquals(true, json.has("public"));
-		TestCase.assertEquals(true, json.has("title"));
-		TestCase.assertEquals(true, json.has("url"));
-		TestCase.assertEquals(true, json.has("content"));
-		TestCase.assertEquals(true, json.has("description"));
-		TestCase.assertEquals(true, json.has("formatted_description"));
-		TestCase.assertEquals(true, json.has("like_count"));
-		TestCase.assertEquals(true, json.has("comment_count"));
-		// TODO: ensure that no post has an ID of < 46000
 	}
 	
 	@Test (groups={"ready"})

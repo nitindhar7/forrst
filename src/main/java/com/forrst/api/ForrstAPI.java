@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.Post;
+import com.forrst.api.model.Stat;
 import com.forrst.api.model.User;
 import com.forrst.api.util.ForrstAuthenticationException;
 
@@ -28,11 +30,9 @@ public interface ForrstAPI {
      * Returns stats about your API usage. Note: does
      * not count against your rate limit.
      *
-     * @return JSON response containing:
-     *         rate_limit,
-     *         calls_made
+     * @return Stat object containing current rate limit & calls made
      */
-    public JSONObject stats();
+    public Stat stats();
     
     /**
      * Return notification items for the authenticating user.
@@ -105,44 +105,14 @@ public interface ForrstAPI {
     /**
      * Returns a user's posts
      * 
-     * @param id User ID
+     * @param id User identifier - id or username
      * @param options is a map & can contain:
      *        type [optional] Post type (code, snap, link, question)
      *        limit [optional, default = 10, max = 25] number of posts to return per page
      *        after [optional] if given, return posts with an ID lower than after
-     * @return JSON response containing:
-     *         posts [{
-     *             id,
-     *             tiny_id,
-     *             post_type,
-     *             post_url,
-     *             created_at,
-     *             updated_at,
-     *             user {
-     *                 ...
-     *             },
-     *             published,
-     *             public,
-     *             title,
-     *             url,
-     *             content,
-     *             description,
-     *             formatter_description,
-     *             like_count,
-     *             comment_count,
-     *             snaps {
-     *                 mega_url,
-     *                 keith_url,
-     *                 large_url,
-     *                 medium_url,
-     *                 small_url,
-     *                 thumb_url,
-     *                 original_url
-     *             }
-     *         }]
+     * @return list of posts
      */
-    public JSONObject userPosts(int id, Map<String,String> options);
-    public JSONObject userPosts(String username, Map<String,String> options);
+    public List<Post> userPosts(Map<String,String> userInfo, Map<String,String> options);
 
     /**
      * Return data about a single post. Note: For questions,
@@ -151,30 +121,10 @@ public interface ForrstAPI {
      * is the post description; it is not used for questions.
      * 
      * @param id Post ID
-     * @return JSON response containing:
-     *         id,
-     *         tiny_id,
-     *         post_type,
-     *         post_url,
-     *         created_at,
-     *         updated_at,
-     *         user: {
-     *             ...
-     *         },
-     *         published,
-     *         public,
-     *         title,
-     *         url,
-     *         content,
-     *         description,
-     *         formatted_description,
-     *         like_count,
-     *         comment_count,
-     *         tag_string,
-     *         tags [ ... ]
+     * @return post object containing user (+ users photos) and
+     *          post snaps if available.
      */
-    public JSONObject postsShow(int id);
-    public JSONObject postsShow(String tinyId);
+    public Post postsShow(int id);
 
     /**
      * Returns a list of all posts in reverse-chron order
@@ -212,8 +162,7 @@ public interface ForrstAPI {
      *         }],
      *         page
      */
-    public JSONObject postsAll();
-    public JSONObject postsAll(int after);
+    public JSONObject postsAll(Map<String,String> options);
 
     /**
      * Returns a list of posts of a given type
