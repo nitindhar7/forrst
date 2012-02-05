@@ -179,8 +179,8 @@ public class ForrstAPIClient implements ForrstAPI {
 			if(options.containsKey("sort")) {
 				params.put("sort", options.get("sort"));
 			}
-			if(options.containsKey("after")) {
-				params.put("after", options.get("after"));
+			if(options.containsKey("page")) {
+				params.put("page", options.get("page"));
 			}
 		}
 		
