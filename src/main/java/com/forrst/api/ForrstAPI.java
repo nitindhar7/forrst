@@ -100,7 +100,7 @@ public interface ForrstAPI {
      *         in_directory,
      *         tag_string
      */
-    public User usersInfo(Map<String,String> userInfo);    
+    public User usersInfo(Map<String,String> userInfo);
 
     /**
      * Returns a user's posts
