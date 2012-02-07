@@ -208,10 +208,7 @@ public class HttpRequest {
                 return new java.security.cert.X509Certificate[] {};
             }
         
-            @Override
             public void checkClientTrusted(X509Certificate[] chain, String authType) {}
-        
-            @Override
             public void checkServerTrusted(X509Certificate[] chain, String authType) {}
         }};
 
