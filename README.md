@@ -48,15 +48,15 @@ API Endpoints
 This library is built around the Forrst API version 2. At the moment there are 9 API endpoints available and each of them uses `https://forrst.com/api/v2/` as the base URI. Also at the moment, API calls are rate limited to 150
 calls per hour, so keep that in mind when designing your applications. Here's the list:
 
-- *stats()*
-- *notifications(String accessToken, Map<String,String> options)*
-- *usersAuth(String emailOrUsername, String password)*
-- *usersInfo(Map<String,String> userInfo)*
-- *userPosts(Map<String,String> userInfo, Map<String,String> options)*
-- *postsShow(int id)*
-- *postsAll(Map<String,String> options)*
-- *postsList(String postType, Map<String,String> options)*
-- *postComments(String accessToken, int id)*
+- `stats()`
+- `notifications(String accessToken, Map<String,String> options)`
+- `usersAuth(String emailOrUsername, String password)`
+- `usersInfo(Map<String,String> userInfo)`
+- `userPosts(Map<String,String> userInfo, Map<String,String> options)`
+- `postsShow(int id)`
+- `postsAll(Map<String,String> options)`
+- `postsList(String postType, Map<String,String> options)`
+- `postComments(String accessToken, int id)`
 
 Authors
 -------
