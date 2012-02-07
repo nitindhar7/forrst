@@ -70,6 +70,11 @@ Tests coming up soon! Until then please help us find bugs.
   - Site: http://coding-sense.blogspot.com
   - Twitter: @nitin_dhar
 
+TODO
+----
+
+- Upload to the [maven repository](http://maven.apache.org/guides/mini/guide-central-repository-upload.html)
+
 Copyright
 ---------
 Copyright (c) 2012 Nitin Dhar. See MIT-LICENSE for details.
