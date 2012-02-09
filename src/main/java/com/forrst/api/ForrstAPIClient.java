@@ -176,7 +176,7 @@ public class ForrstAPIClient implements ForrstAPI {
                 user.setTwitter(userJson.getString("twitter"));
                 user.setInDirectory(userJson.getBoolean("in_directory"));
                 user.setTagString(userJson.getString("tag_string"));                
-                if(json.has("snaps")) {
+                if(postJson.has("snaps")) {
                     JSONObject snapJson = postJson.getJSONObject("snaps");
                     snap.setKeithUrl(snapJson.getString("keith_url"));
                     snap.setLargeUrl(snapJson.getString("large_url"));
