@@ -124,7 +124,7 @@ public class ForrstAPIClient implements ForrstAPI {
 	}
 
 	public List<Post> userPosts(Map<String,String> userInfo, Map<String,String> options) {
-	    List<Post> posts = null;
+	    List<Post> posts = new ArrayList<Post>();
 	    
 		Map<String,String> params = new HashMap<String,String>();
 		if(userInfo.containsKey("id"))
@@ -143,7 +143,6 @@ public class ForrstAPIClient implements ForrstAPI {
 		try {
 	        JSONObject json = http.get(Endpoint.getInstance().USER_POSTS_URI, params);
             JSONArray postsJsonArray = (JSONArray) json.get("posts");
-            posts = new ArrayList<Post>();
             
             for(int i = 0; i < postsJsonArray.length(); i++) {
                 Post post = new Post();
