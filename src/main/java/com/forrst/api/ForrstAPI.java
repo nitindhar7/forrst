@@ -3,10 +3,9 @@ package com.forrst.api;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.Notification;
 import com.forrst.api.model.Post;
 import com.forrst.api.model.Stat;
 import com.forrst.api.model.User;
@@ -59,7 +58,7 @@ public interface ForrstAPI {
      *         },
      *         view_url_format
      */
-    public JSONObject notifications(String accessToken, Map<String,String> options);
+    public List<Notification> notifications(String accessToken, Map<String,String> options);
 
     /**
      * User authentication. Provide an email/username

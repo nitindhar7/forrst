@@ -7,13 +7,12 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.testng.annotations.Test;
 
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.Notification;
 import com.forrst.api.model.Post;
 import com.forrst.api.model.Stat;
 import com.forrst.api.model.User;
@@ -39,9 +38,9 @@ public class ForrstAPIClientTests {
 	@Test (groups={"skip"})
 	public void testNotifications() throws MalformedURLException, JSONException, ForrstAuthenticationException {
 		Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
-		JSONObject json = forrst.notifications(auth.getAccessToken(), null);
-		TestCase.assertEquals(true, json.has("items"));
-		TestCase.assertEquals(true, json.has("view_url_format"));
+		List<Notification> notifications = forrst.notifications(auth.getAccessToken(), null);
+		TestCase.assertNotNull(notifications);
+		TestCase.assertTrue(notifications.size() > 0 ? true : false);
 	}
 	
 	/*

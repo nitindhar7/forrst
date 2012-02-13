@@ -3,6 +3,7 @@ package com.forrst.api;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import org.json.JSONObject;
 
 import com.forrst.api.model.Auth;
 import com.forrst.api.model.Comment;
+import com.forrst.api.model.Notification;
+import com.forrst.api.model.NotificationData;
 import com.forrst.api.model.Photo;
 import com.forrst.api.model.Post;
 import com.forrst.api.model.Snap;
@@ -43,7 +46,9 @@ public class ForrstAPIClient implements ForrstAPI {
 		return stat;
 	}
 
-	public JSONObject notifications(String accessToken, Map<String,String> options) {
+	@SuppressWarnings("unchecked")
+    public List<Notification> notifications(String accessToken, Map<String,String> options) {
+	    List<Notification> notifications = new ArrayList<Notification>();
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("access_token", accessToken);
 		
@@ -53,7 +58,50 @@ public class ForrstAPIClient implements ForrstAPI {
 			}
 		}
 		
-		return http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
+		try {
+		    JSONObject json = http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
+		    JSONObject itemsJson = json.getJSONObject("items");
+		    
+		    Iterator<String> itemsIterator = itemsJson.keys();
+		    while(itemsIterator.hasNext()) {
+		        String itemKey = (String) itemsIterator.next();
+		        JSONObject notificationTypeJson = (JSONObject) itemsJson.get(itemKey);
+
+		        Iterator<String> notificationTypeIterator = notificationTypeJson.keys();
+		        while(notificationTypeIterator.hasNext()) {
+		            String notificationTypeKey = (String) notificationTypeIterator.next();
+		            JSONObject notificationJson = (JSONObject) notificationTypeJson.get(notificationTypeKey);
+		            JSONObject dataJson = (JSONObject) notificationJson.getJSONObject("data");
+		            
+		            Notification notification = new Notification();
+		            notification.setId(notificationJson.getString("id"));
+		            notification.setTimestamp(notificationJson.getLong("timestamp"));
+		            notification.setBehavior(notificationJson.getString("behavior"));
+		            notification.setForUserId(notificationJson.getInt("for_user_id"));
+                    notification.setObjectType(notificationJson.getString("object_type"));
+                    notification.setObjectId(notificationJson.getInt("object_id"));
+                    NotificationData data = new NotificationData();
+                    if(dataJson.has("actor"))
+                        data.setActor(dataJson.getString("actor"));
+                    if(dataJson.has("actor_url"))
+                        data.setActorUrl(dataJson.getString("actor_url"));
+                    if(dataJson.has("object_url"))
+                        data.setObjectUrl(dataJson.getString("object_url"));
+                    if(dataJson.has("post_type"))
+                        data.setPostType(dataJson.getString("post_type"));
+                    if(dataJson.has("post_title"))
+                        data.setPostTitle(dataJson.getString("post_title"));
+                    if(dataJson.has("photo"))
+                        data.setPhoto(dataJson.getString("photo"));
+                    notification.setData(data);       
+                    notifications.add(notification);
+		        }
+		    }
+		} catch (JSONException e) {
+            throw new RuntimeException("Error fetching notifications from Forrst", e);
+        }
+
+		return notifications;
 	}
 	
 	public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException {
