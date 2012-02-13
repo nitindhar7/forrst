@@ -90,18 +90,18 @@ public class ForrstAPIClientTests {
 
 	@Test (groups={"ready"})
 	public void testPostsAll() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.postsAll(null);
-		TestCase.assertEquals(true, json.has("posts"));
-		JSONArray jsonArray = json.getJSONArray("posts");
-		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
+	    Map<String,String> params = new HashMap<String,String>();
+		List<Post> posts = forrst.postsAll(params);
+        TestCase.assertNotNull(posts);
+        TestCase.assertTrue(posts.size() > 0 ? true : false);
 	}
 	
 	@Test (groups={"ready"})
 	public void testPostsList() throws MalformedURLException, JSONException {
-		JSONObject json = forrst.postsList("question", null);
-		TestCase.assertEquals(true, json.has("posts"));
-		JSONArray jsonArray = json.getJSONArray("posts");
-		TestCase.assertEquals(true, jsonArray.length() > 0 ? true : false);
+		Map<String,String> params = new HashMap<String,String>();
+        List<Post> posts = forrst.postsList("question", params);
+        TestCase.assertNotNull(posts);
+        TestCase.assertTrue(posts.size() > 0 ? true : false);
 	}
 
 	/*

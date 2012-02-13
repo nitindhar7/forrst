@@ -70,7 +70,6 @@ public class ForrstAPIClient implements ForrstAPI {
 	        auth.setAccessToken(json.getString("token"));
 	        auth.setUserId(json.getInt("user_id"));
         } catch (JSONException e) {
-            auth = null;
             throw new RuntimeException("Error authenticating with Forrst", e);
         }
 		
@@ -116,7 +115,6 @@ public class ForrstAPIClient implements ForrstAPI {
             user.setInDirectory(json.getBoolean("in_directory"));
             user.setTagString(json.getString("tag_string"));
         } catch (JSONException e) {
-            user = null;
             throw new RuntimeException("Error fetching user data", e);
         }
 
@@ -295,11 +293,93 @@ public class ForrstAPIClient implements ForrstAPI {
 		return post;
 	}
 
-	public JSONObject postsAll(Map<String,String> options) {
-		return http.get(Endpoint.getInstance().POSTS_ALL_URI, options);
+	public List<Post> postsAll(Map<String,String> options) {
+	    List<Post> posts = new ArrayList<Post>();
+	    Map<String,String> params = new HashMap<String,String>();
+
+	    if(options != null) {
+            if(options.containsKey("after")) {
+                params.put("after", options.get("after"));
+            }
+        }
+
+	    try {
+            JSONObject json = http.get(Endpoint.getInstance().POSTS_ALL_URI, params);
+            JSONArray postsJsonArray = (JSONArray) json.get("posts");
+            
+            for(int i = 0; i < postsJsonArray.length(); i++) {
+                Post post = new Post();
+                Photo photo = new Photo();
+                User user = new User();
+                Snap snap = new Snap();
+                
+                JSONObject postJson = (JSONObject) postsJsonArray.get(i);
+                JSONObject userJson = postJson.getJSONObject("user");
+                JSONObject photoJson = userJson.getJSONObject("photos"); 
+                
+                photo.setXlUrl(photoJson.getString("xl_url"));
+                photo.setLargeUrl(photoJson.getString("large_url"));
+                photo.setMediumUrl(photoJson.getString("medium_url"));
+                photo.setSmallUrl(photoJson.getString("small_url"));
+                photo.setThumbUrl(photoJson.getString("thumb_url"));
+                
+                user.setId(userJson.getInt("id"));
+                user.setName(userJson.getString("name"));
+                user.setUsername(userJson.getString("username"));
+                user.setUrl(userJson.getString("url"));
+                user.setPosts(userJson.getInt("posts"));
+                user.setLikes(userJson.getInt("likes"));
+                user.setComments(userJson.getInt("comments"));
+                user.setFollowers(userJson.getInt("followers"));
+                user.setFollowing(userJson.getInt("following"));
+                user.setPhoto(photo);
+                user.setBio(userJson.getString("bio"));
+                user.setIsA(userJson.getString("is_a"));
+                user.setHomepageUrl(userJson.getString("homepage_url"));
+                user.setTwitter(userJson.getString("twitter"));
+                user.setInDirectory(userJson.getBoolean("in_directory"));
+                user.setTagString(userJson.getString("tag_string"));                
+                if(postJson.has("snaps")) {
+                    JSONObject snapJson = postJson.getJSONObject("snaps");
+                    snap.setKeithUrl(snapJson.getString("keith_url"));
+                    snap.setLargeUrl(snapJson.getString("large_url"));
+                    snap.setMediumUrl(snapJson.getString("medium_url"));
+                    snap.setMegaUrl(snapJson.getString("mega_url"));
+                    snap.setOriginalUrl(snapJson.getString("original_url"));
+                    snap.setSmallUrl(snapJson.getString("small_url"));
+                    snap.setThumbUrl(snapJson.getString("thumb_url"));
+                    post.setSnap(snap);
+                }
+                post.setId(postJson.getInt("id"));
+                post.setTinyId(postJson.getString("tiny_id"));
+                post.setPostType(postJson.getString("post_type"));
+                post.setPostUrl(postJson.getString("post_url"));
+                post.setCreatedAt(postJson.getString("created_at"));
+                post.setUpdatedAt(postJson.getString("updated_at"));
+                post.setUser(user);
+                post.setPublished(postJson.getBoolean("published"));
+                post.setPublic(postJson.getBoolean("public"));
+                post.setTitle(postJson.getString("title"));
+                post.setUrl(postJson.getString("url"));
+                post.setContent(postJson.getString("content"));
+                post.setDescription(postJson.getString("description"));
+                post.setViewCount(postJson.getInt("view_count"));
+                post.setLikeCount(postJson.getInt("like_count"));
+                post.setCommentCount(postJson.getInt("comment_count"));
+                post.setTagString(postJson.getString("tag_string"));
+                
+                posts.add(post);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException("Error fetching users posts", e);
+        }
+	    
+		return posts;
 	}
 
-	public JSONObject postsList(String postType, Map<String,String> options) {
+	public List<Post> postsList(String postType, Map<String,String> options) {
+	    List<Post> posts = new ArrayList<Post>();
+	    
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("post_type", postType);
 		
@@ -312,7 +392,78 @@ public class ForrstAPIClient implements ForrstAPI {
 			}
 		}
 		
-		return http.get(Endpoint.getInstance().POSTS_LIST_URI, params);
+		try {
+            JSONObject json = http.get(Endpoint.getInstance().POSTS_LIST_URI, params);
+            JSONArray postsJsonArray = (JSONArray) json.get("posts");
+            
+            for(int i = 0; i < postsJsonArray.length(); i++) {
+                Post post = new Post();
+                Photo photo = new Photo();
+                User user = new User();
+                Snap snap = new Snap();
+                
+                JSONObject postJson = (JSONObject) postsJsonArray.get(i);
+                JSONObject userJson = postJson.getJSONObject("user");
+                JSONObject photoJson = userJson.getJSONObject("photos"); 
+                
+                photo.setXlUrl(photoJson.getString("xl_url"));
+                photo.setLargeUrl(photoJson.getString("large_url"));
+                photo.setMediumUrl(photoJson.getString("medium_url"));
+                photo.setSmallUrl(photoJson.getString("small_url"));
+                photo.setThumbUrl(photoJson.getString("thumb_url"));
+                
+                user.setId(userJson.getInt("id"));
+                user.setName(userJson.getString("name"));
+                user.setUsername(userJson.getString("username"));
+                user.setUrl(userJson.getString("url"));
+                user.setPosts(userJson.getInt("posts"));
+                user.setLikes(userJson.getInt("likes"));
+                user.setComments(userJson.getInt("comments"));
+                user.setFollowers(userJson.getInt("followers"));
+                user.setFollowing(userJson.getInt("following"));
+                user.setPhoto(photo);
+                user.setBio(userJson.getString("bio"));
+                user.setIsA(userJson.getString("is_a"));
+                user.setHomepageUrl(userJson.getString("homepage_url"));
+                user.setTwitter(userJson.getString("twitter"));
+                user.setInDirectory(userJson.getBoolean("in_directory"));
+                user.setTagString(userJson.getString("tag_string"));                
+                if(postJson.has("snaps")) {
+                    JSONObject snapJson = postJson.getJSONObject("snaps");
+                    snap.setKeithUrl(snapJson.getString("keith_url"));
+                    snap.setLargeUrl(snapJson.getString("large_url"));
+                    snap.setMediumUrl(snapJson.getString("medium_url"));
+                    snap.setMegaUrl(snapJson.getString("mega_url"));
+                    snap.setOriginalUrl(snapJson.getString("original_url"));
+                    snap.setSmallUrl(snapJson.getString("small_url"));
+                    snap.setThumbUrl(snapJson.getString("thumb_url"));
+                    post.setSnap(snap);
+                }
+                post.setId(postJson.getInt("id"));
+                post.setTinyId(postJson.getString("tiny_id"));
+                post.setPostType(postJson.getString("post_type"));
+                post.setPostUrl(postJson.getString("post_url"));
+                post.setCreatedAt(postJson.getString("created_at"));
+                post.setUpdatedAt(postJson.getString("updated_at"));
+                post.setUser(user);
+                post.setPublished(postJson.getBoolean("published"));
+                post.setPublic(postJson.getBoolean("public"));
+                post.setTitle(postJson.getString("title"));
+                post.setUrl(postJson.getString("url"));
+                post.setContent(postJson.getString("content"));
+                post.setDescription(postJson.getString("description"));
+                post.setViewCount(postJson.getInt("view_count"));
+                post.setLikeCount(postJson.getInt("like_count"));
+                post.setCommentCount(postJson.getInt("comment_count"));
+                post.setTagString(postJson.getString("tag_string"));
+                
+                posts.add(post);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException("Error fetching users posts", e);
+        }
+		
+		return posts;
 	}
 
 	public List<Comment> postComments(String accessToken, int id) {
@@ -355,7 +506,6 @@ public class ForrstAPIClient implements ForrstAPI {
                 }
             }
         } catch (JSONException e) {
-            comments = null;
             throw new RuntimeException("Error fetching comments from Forrst", e);
         }
 

@@ -162,7 +162,7 @@ public interface ForrstAPI {
      *         }],
      *         page
      */
-    public JSONObject postsAll(Map<String,String> options);
+    public List<Post> postsAll(Map<String,String> options);
 
     /**
      * Returns a list of posts of a given type
@@ -204,7 +204,7 @@ public interface ForrstAPI {
      *         }],
      *         page
      */
-    public JSONObject postsList(String postType, Map<String,String> options);
+    public List<Post> postsList(String postType, Map<String,String> options);
 
     /**
      * Returns a post's comments

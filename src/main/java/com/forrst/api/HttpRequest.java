@@ -171,7 +171,7 @@ public class HttpRequest {
 	 * @return
 	 */
 	protected String stringifyArgs(Map<String,String> params) {
-	    if(params == null)
+	    if(params == null || params.keySet().isEmpty())
 	        return "";
 	    
 		StringBuilder argString = new StringBuilder();
