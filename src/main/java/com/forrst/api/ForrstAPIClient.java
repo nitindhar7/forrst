@@ -60,6 +60,10 @@ public class ForrstAPIClient implements ForrstAPI {
 		
 		try {
 		    JSONObject json = http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
+		    JSONArray jsonItemsArray = (JSONArray) json.get("items");
+		    if(jsonItemsArray.length() == 0)
+		        return notifications;
+		    
 		    JSONObject itemsJson = json.getJSONObject("items");
 		    
 		    Iterator<String> itemsIterator = itemsJson.keys();
