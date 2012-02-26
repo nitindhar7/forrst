@@ -2,71 +2,82 @@ package com.forrst.api.model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+import javax.validation.constraints.NotNull;
+
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Notification implements Serializable {
 
-    private String id;
-    private long timestamp;
-    private String behavior;
-    private int forUserId;
-    private String objectType;
-    private int objectId;
-    private NotificationData data;
+    private static final long serialVersionUID = 6642536797702136330L;
+
+    @JsonProperty("id")
+    @NotNull
+    private final String id;
+    
+    @JsonProperty("timetamp")
+    @NotNull
+    private final long timestamp;
+    
+    @JsonProperty("behavior")
+    @NotNull
+    private final String behavior;
+    
+    @JsonProperty("for_user_id")
+    @NotNull
+    private final int forUserId;
+    
+    @JsonProperty("object_type")
+    @NotNull
+    private final String objectType;
+    
+    @JsonProperty("object_id")
+    @NotNull
+    private final int objectId;
+    
+    @JsonProperty("data")
+    @NotNull
+    private final NotificationData data;
+    
+    @JsonCreator
+    public Notification(@JsonProperty("id") @NotNull String id,
+                        @JsonProperty("timetamp") @NotNull long timestamp,
+                        @JsonProperty("behavior") @NotNull String behavior,
+                        @JsonProperty("for_user_id") @NotNull int forUserId, 
+                        @JsonProperty("object_type") @NotNull String objectType,
+                        @JsonProperty("object_id") @NotNull int objectId,
+                        @JsonProperty("data") @NotNull NotificationData data) {
+        this.id = id;
+        this.timestamp = timestamp;
+        this.behavior = behavior;
+        this.forUserId = forUserId;
+        this.objectType = objectType;
+        this.objectId = objectId;
+        this.data = data;
+    }
     
     public String getId() {
         return id;
     }
-    
-    public void setId(String id) {
-        this.id = id;
-    }
-    
     public long getTimestamp() {
         return timestamp;
     }
-    
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-    
     public String getBehavior() {
         return behavior;
     }
-    
-    public void setBehavior(String behavior) {
-        this.behavior = behavior;
-    }
-    
     public int getForUserId() {
         return forUserId;
     }
-    
-    public void setForUserId(int forUserId) {
-        this.forUserId = forUserId;
-    }
-    
     public String getObjectType() {
         return objectType;
     }
-    
-    public void setObjectType(String objectType) {
-        this.objectType = objectType;
-    }
-    
     public int getObjectId() {
         return objectId;
     }
-    
-    public void setObjectId(int objectId) {
-        this.objectId = objectId;
-    }
-    
     public NotificationData getData() {
         return data;
-    }
-    
-    public void setData(NotificationData data) {
-        this.data = data;
     }
 
 }

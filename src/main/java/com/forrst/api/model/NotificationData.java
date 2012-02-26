@@ -2,62 +2,70 @@ package com.forrst.api.model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+import javax.validation.constraints.NotNull;
+
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class NotificationData implements Serializable {
+
+    private static final long serialVersionUID = -789095518714799364L;
+
+    @JsonProperty("actor")
+    @NotNull
+    private final String actor;
     
-    private String actor;
-    private String actorUrl;
-    private String objectUrl;
-    private String postType;
-    private String postTitle;
-    private String photo;
+    @JsonProperty("actor_url")
+    @NotNull
+    private final String actorUrl;
+    
+    @JsonProperty("object_url")
+    @NotNull
+    private final String objectUrl;
+    
+    @JsonProperty("post_type")
+    private final String postType;
+    
+    @JsonProperty("post_title")
+    private final String postTitle;
+    
+    @JsonProperty("photo")
+    private final String photo;
+    
+    @JsonCreator
+    public NotificationData(@JsonProperty("actor") @NotNull String actor, 
+                            @JsonProperty("actor_url") @NotNull String actorUrl,
+                            @JsonProperty("object_url") @NotNull String objectUrl,
+                            @JsonProperty("post_type") String postType,
+                            @JsonProperty("post_title") String postTitle,
+                            @JsonProperty("photo") String photo) {
+        this.actor = actor;
+        this.actorUrl = actorUrl;
+        this.objectUrl = objectUrl;
+        this.postType = postType;
+        this.postTitle = postTitle;
+        this.photo = photo;
+    }
     
     public String getActor() {
         return actor;
     }
-    
-    public void setActor(String actor) {
-        this.actor = actor;
-    }
-    
     public String getActorUrl() {
         return actorUrl;
     }
-    
-    public void setActorUrl(String actorUrl) {
-        this.actorUrl = actorUrl;
-    }
-    
     public String getObjectUrl() {
         return objectUrl;
     }
-    
-    public void setObjectUrl(String objectUrl) {
-        this.objectUrl = objectUrl;
-    }
-    
     public String getPostType() {
         return postType;
     }
-    
-    public void setPostType(String postType) {
-        this.postType = postType;
-    }
-    
     public String getPostTitle() {
         return postTitle;
     }
-    
-    public void setPostTitle(String postTitle) {
-        this.postTitle = postTitle;
-    }
-    
     public String getPhoto() {
         return photo;
-    }
-    
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
 }

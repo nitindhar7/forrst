@@ -60,6 +60,7 @@ public interface ForrstAPI {
      *         view_url_format
      */
     public List<Notification> notifications(String accessToken, Map<String,String> options);
+    // DONE
 
     /**
      * User authentication. Provide an email/username

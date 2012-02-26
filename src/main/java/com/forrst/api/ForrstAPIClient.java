@@ -68,34 +68,11 @@ public class ForrstAPIClient implements ForrstAPI {
 		        Iterator<String> notificationTypeIterator = notificationTypeJson.keys();
 		        while(notificationTypeIterator.hasNext()) {
 		            String notificationTypeKey = (String) notificationTypeIterator.next();
-		            JSONObject notificationJson = (JSONObject) notificationTypeJson.get(notificationTypeKey);
-		            JSONObject dataJson = (JSONObject) notificationJson.getJSONObject("data");
-		            
-		            Notification notification = new Notification();
-		            notification.setId(notificationJson.getString("id"));
-		            notification.setTimestamp(notificationJson.getLong("timestamp"));
-		            notification.setBehavior(notificationJson.getString("behavior"));
-		            notification.setForUserId(notificationJson.getInt("for_user_id"));
-                    notification.setObjectType(notificationJson.getString("object_type"));
-                    notification.setObjectId(notificationJson.getInt("object_id"));
-                    NotificationData data = new NotificationData();
-                    if(dataJson.has("actor"))
-                        data.setActor(dataJson.getString("actor"));
-                    if(dataJson.has("actor_url"))
-                        data.setActorUrl(dataJson.getString("actor_url"));
-                    if(dataJson.has("object_url"))
-                        data.setObjectUrl(dataJson.getString("object_url"));
-                    if(dataJson.has("post_type"))
-                        data.setPostType(dataJson.getString("post_type"));
-                    if(dataJson.has("post_title"))
-                        data.setPostTitle(dataJson.getString("post_title"));
-                    if(dataJson.has("photo"))
-                        data.setPhoto(dataJson.getString("photo"));
-                    notification.setData(data);       
+		            Notification notification = mapper.readValue(notificationTypeJson.get(notificationTypeKey).toString(), Notification.class);
                     notifications.add(notification);
 		        }
 		    }
-		} catch (JSONException e) {
+		} catch (Exception e) {
             throw new RuntimeException("Error fetching notifications from Forrst", e);
         }
 
