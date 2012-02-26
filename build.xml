@@ -5,7 +5,7 @@
     <property name="classdir" value="${targetdir}/classes" />
     <property name="test_srcdir" value="src/test/java" />
     <property name="test_resdir" value="src/test/resources" />
-    <property name="test_outdir" value="test-output" />
+    <property name="test_outdir" value="${targetdir}/test-output" />
     <property name="test_classdir" value="${targetdir}/tests" />
     <property name="distdir" value="dist" />
     <property name="docdir" value="javadocs" />

@@ -2,121 +2,158 @@ package com.forrst.api.model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+import javax.validation.constraints.NotNull;
+
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class User implements Serializable {
+
+    private static final long serialVersionUID = 5071040535094485719L;
+
+    @JsonProperty("id")
+    @NotNull
+    private final int id;
     
-    private int id;
-    private String username;
-    private String name;
-    private String url;
-    private int posts;
-    private int comments;
-    private int likes;
-    private int followers;
-    private int following;
-    private Photo photo;
-    private String bio;
-    private String isA;
-    private String homepageUrl;
-    private String twitter;
-    private boolean inDirectory;
-    private String tagString;
+    @JsonProperty("username")
+    @NotNull
+    private final String username;
+    
+    @JsonProperty("name")
+    @NotNull
+    private final String name;
+    
+    @JsonProperty("url")
+    @NotNull
+    private final String url;
+    
+    @JsonProperty("posts")
+    @NotNull
+    private final int posts;
+    
+    @JsonProperty("comments")
+    @NotNull
+    private final int comments;
+    
+    @JsonProperty("likes")
+    @NotNull
+    private final int likes;
+    
+    @JsonProperty("followers")
+    @NotNull
+    private final int followers;
+    
+    @JsonProperty("following")
+    @NotNull
+    private final int following;
+    
+    @JsonProperty("photos")
+    private final Photo photo;
+    
+    @JsonProperty("bio")
+    private final String bio;
+    
+    @JsonProperty("is_a")
+    @NotNull
+    private final String isA;
+    
+    @JsonProperty("homepage_url")
+    private final String homepageUrl;
+    
+    @JsonProperty("twitter")
+    private final String twitter;
+    
+    @JsonProperty("in_directory")
+    @NotNull
+    private final boolean inDirectory;
+    
+    @JsonProperty("tag_string")
+    private final String tagString;
+    
+    @JsonCreator
+    public User(@JsonProperty("id") @NotNull int id,
+                @JsonProperty("username") @NotNull String username,
+                @JsonProperty("name") @NotNull String name,
+                @JsonProperty("url") @NotNull String url,
+                @JsonProperty("posts") @NotNull int posts,
+                @JsonProperty("comments") @NotNull int comments,
+                @JsonProperty("likes") @NotNull int likes,
+                @JsonProperty("followers") @NotNull int followers,
+                @JsonProperty("following") @NotNull int following,
+                @JsonProperty("photos") Photo photo,
+                @JsonProperty("bio") String bio,
+                @JsonProperty("is_a") @NotNull String isA,
+                @JsonProperty("homepage_url") String homepageUrl,
+                @JsonProperty("twitter") String twitter,
+                @JsonProperty("in_directory") @NotNull boolean inDirectory,
+                @JsonProperty("tag_string") String tagString) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.url = url;
+        this.posts = posts;
+        this.comments = comments;
+        this.likes = likes;
+        this.followers = followers;
+        this.following = following;
+        this.photo = photo;
+        this.bio = bio;
+        this.isA = isA;
+        this.homepageUrl = homepageUrl;
+        this.twitter = twitter;
+        this.inDirectory = inDirectory;
+        this.tagString = tagString;
+    }
 
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
     public String getUsername() {
         return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
     }
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
     public String getUrl() {
         return url;
-    }
-    public void setUrl(String url) {
-        this.url = url;
     }
     public int getPosts() {
         return posts;
     }
-    public void setPosts(int posts) {
-        this.posts = posts;
-    }
     public int getComments() {
         return comments;
-    }
-    public void setComments(int comments) {
-        this.comments = comments;
     }
     public int getLikes() {
         return likes;
     }
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
     public int getFollowers() {
         return followers;
-    }
-    public void setFollowers(int followers) {
-        this.followers = followers;
     }
     public int getFollowing() {
         return following;
     }
-    public void setFollowing(int following) {
-        this.following = following;
-    }
     public Photo getPhoto() {
         return photo;
-    }
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
     }
     public String getBio() {
         return bio;
     }
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
     public String getIsA() {
         return isA;
-    }
-    public void setIsA(String isA) {
-        this.isA = isA;
     }
     public String getHomepageUrl() {
         return homepageUrl;
     }
-    public void setHomepageUrl(String homepageUrl) {
-        this.homepageUrl = homepageUrl;
-    }
     public String getTwitter() {
         return twitter;
-    }
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
     }
     public boolean isInDirectory() {
         return inDirectory;
     }
-    public void setInDirectory(boolean inDirectory) {
-        this.inDirectory = inDirectory;
-    }
     public String getTagString() {
         return tagString;
-    }
-    public void setTagString(String tagString) {
-        this.tagString = tagString;
     }
 
 }

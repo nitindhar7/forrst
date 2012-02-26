@@ -26,6 +26,8 @@ public class ForrstAPIClientTests {
 	public void testStats() throws MalformedURLException {
 		Stat stat = forrst.stats();
 		TestCase.assertNotNull(stat);
+		TestCase.assertTrue(stat.getRateLimit() == ForrstAPI.RATE_LIMIT);
+		TestCase.assertTrue(stat.getCallsMade() >= 0);
 	}
 	
 	/*
@@ -54,6 +56,8 @@ public class ForrstAPIClientTests {
 	public void testUsersAuth() throws MalformedURLException, JSONException, ForrstAuthenticationException {
 		Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
 		TestCase.assertNotNull(auth);
+		TestCase.assertNotNull(auth.getUserId());
+		TestCase.assertTrue(auth.getAccessToken() != null && auth.getAccessToken().length() > 0);
 	}
 	
 	@Test (groups={"ready"})
@@ -64,13 +68,14 @@ public class ForrstAPIClientTests {
 		TestCase.assertNotNull(user);
 		TestCase.assertNotNull(user.getPhoto());
 		
+		params.remove("id");
 		params.put("username", "nitindhar7");
         user = forrst.usersInfo(params);
         TestCase.assertNotNull(user);
         TestCase.assertNotNull(user.getPhoto());
 	}
 	
-	@Test (groups={"ready"})
+	@Test (groups={"skip"})
 	public void testUsersPostsById() throws MalformedURLException, JSONException {
 	    Map<String,String> params = new HashMap<String,String>();
 	    params.put("id", "29470");
@@ -79,7 +84,7 @@ public class ForrstAPIClientTests {
 		TestCase.assertTrue(posts.size() > 0 ? true : false);
 	}
 	
-	@Test (groups={"ready"})
+	@Test (groups={"skip"})
 	public void testPostsShowById() throws MalformedURLException {
 		Post post = forrst.postsShow(45114);
 		TestCase.assertNotNull(post);
@@ -87,7 +92,7 @@ public class ForrstAPIClientTests {
 		TestCase.assertNotNull(post.getUser().getPhoto());
 	}
 
-	@Test (groups={"ready"})
+	@Test (groups={"skip"})
 	public void testPostsAll() throws MalformedURLException, JSONException {
 	    Map<String,String> params = new HashMap<String,String>();
 		List<Post> posts = forrst.postsAll(params);
@@ -95,7 +100,7 @@ public class ForrstAPIClientTests {
         TestCase.assertTrue(posts.size() > 0 ? true : false);
 	}
 	
-	@Test (groups={"ready"})
+	@Test (groups={"skip"})
 	public void testPostsList() throws MalformedURLException, JSONException {
 		Map<String,String> params = new HashMap<String,String>();
         List<Post> posts = forrst.postsList("question", params);
@@ -120,20 +125,6 @@ public class ForrstAPIClientTests {
 	
 	@Test (groups={"toBeFixed"})
 	public void testRateLimit() {
-	}
-	
-	@Test (groups={"ready"})
-	public void testGetEndpointURIs() {		
-		Map<String,String> endpoints = new HashMap<String,String>();
-		endpoints.put("stats", Endpoint.getInstance().STATS_URI);
-		endpoints.put("users/auth", Endpoint.getInstance().USERS_AUTH_URI);
-		endpoints.put("users/info", Endpoint.getInstance().USERS_INFO_URI);
-		endpoints.put("user/posts", Endpoint.getInstance().USER_POSTS_URI);
-		endpoints.put("posts/show", Endpoint.getInstance().POSTS_SHOW_URI);
-		endpoints.put("posts/all", Endpoint.getInstance().POSTS_ALL_URI);
-		endpoints.put("posts/list", Endpoint.getInstance().POSTS_LIST_URI);
-		endpoints.put("post/comments", Endpoint.getInstance().POST_COMMENTS_URI);
-		TestCase.assertEquals(endpoints, forrst.getEndpointsURIs());
 	}
 
 }

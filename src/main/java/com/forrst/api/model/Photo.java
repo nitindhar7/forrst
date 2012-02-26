@@ -2,44 +2,64 @@ package com.forrst.api.model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+import javax.validation.constraints.NotNull;
+
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Photo implements Serializable {
+
+    private static final long serialVersionUID = 2480791481636946751L;
+
+    @JsonProperty("xl_url")
+    @NotNull
+    private final String xlUrl;
     
-    private String xlUrl;
-    private String largeUrl;
-    private String mediumUrl;
-    private String smallUrl;
-    private String thumbUrl;
+    @JsonProperty("large_url")
+    @NotNull
+    private final String largeUrl;
+    
+    @JsonProperty("medium_url")
+    @NotNull
+    private final String mediumUrl;
+    
+    @JsonProperty("small_url")
+    @NotNull
+    private final String smallUrl;
+    
+    @JsonProperty("thumb_url")
+    @NotNull
+    private final String thumbUrl;
+    
+    @JsonCreator
+    public Photo(@JsonProperty("xl_url") @NotNull String xlUrl,
+                 @JsonProperty("large_url") @NotNull String largeUrl,
+                 @JsonProperty("medium_url") @NotNull String mediumUrl,
+                 @JsonProperty("small_url") @NotNull String smallUrl, 
+                 @JsonProperty("thumb_url") @NotNull String thumbUrl) {
+        this.xlUrl = xlUrl;
+        this.largeUrl = largeUrl;
+        this.mediumUrl = mediumUrl;
+        this.smallUrl = smallUrl;
+        this.thumbUrl = thumbUrl;
+    }
     
     public String getXlUrl() {
         return xlUrl;
     }
-    public void setXlUrl(String xlUrl) {
-        this.xlUrl = xlUrl;
-    }
     public String getLargeUrl() {
         return largeUrl;
-    }
-    public void setLargeUrl(String largeUrl) {
-        this.largeUrl = largeUrl;
     }
     public String getMediumUrl() {
         return mediumUrl;
     }
-    public void setMediumUrl(String mediumUrl) {
-        this.mediumUrl = mediumUrl;
-    }
     public String getSmallUrl() {
         return smallUrl;
     }
-    public void setSmallUrl(String smallUrl) {
-        this.smallUrl = smallUrl;
-    }
     public String getThumbUrl() {
         return thumbUrl;
-    }
-    public void setThumbUrl(String thumbUrl) {
-        this.thumbUrl = thumbUrl;
     }
 
 }

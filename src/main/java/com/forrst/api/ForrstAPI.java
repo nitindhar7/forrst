@@ -23,7 +23,7 @@ public interface ForrstAPI {
      * request rate limiting stats at api/v2/stats (it won't
      * count against your total). Your limit resets each hour.
      */
-    public int RATE_LIMIT = 150;
+    public int RATE_LIMIT = 10000;
 
     /**
      * Returns stats about your API usage. Note: does
@@ -32,6 +32,7 @@ public interface ForrstAPI {
      * @return Stat object containing current rate limit & calls made
      */
     public Stat stats();
+    // DONE
     
     /**
      * Return notification items for the authenticating user.
@@ -70,7 +71,8 @@ public interface ForrstAPI {
      * @throws ForrstAuthenticationException when authentication fails
      */
     public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException;
-
+    // DONE
+    
     /**
      * Given a property identifying a user return a user
      * 
@@ -100,6 +102,7 @@ public interface ForrstAPI {
      *         tag_string
      */
     public User usersInfo(Map<String,String> userInfo);
+    // DONE
 
     /**
      * Returns a user's posts
@@ -224,9 +227,4 @@ public interface ForrstAPI {
      */
     public List<Comment> postComments(String accessToken, int id);
 
-    /**
-     * Returns a map containing the name of the endpoint and its URI
-     * @return A map of endpoint name and uri
-     */
-    public Map<String,String> getEndpointsURIs();
 }
