@@ -45,7 +45,7 @@
 
     <taskdef resource="testngtasks" classpath="lib/testng-5.9.jar" />
     <target name="tests" depends="compile_tests" description="runs unit/functional tests">
-        <testng classpathref="test_classpath" outputDir="${targetdir}/testng" haltOnFailure="true" verbose="5">
+        <testng classpathref="test_classpath" outputDir="${targetdir}/testng" haltOnFailure="false" verbose="5">
             <xmlfileset dir="${test_resdir}" includes="testng.xml" />
         </testng>
     </target>

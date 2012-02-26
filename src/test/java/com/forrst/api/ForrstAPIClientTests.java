@@ -75,7 +75,7 @@ public class ForrstAPIClientTests {
         TestCase.assertNotNull(user.getPhoto());
 	}
 	
-	@Test (groups={"skip"})
+	@Test (groups={"ready"})
 	public void testUsersPostsById() throws MalformedURLException, JSONException {
 	    Map<String,String> params = new HashMap<String,String>();
 	    params.put("id", "29470");
@@ -84,7 +84,7 @@ public class ForrstAPIClientTests {
 		TestCase.assertTrue(posts.size() > 0 ? true : false);
 	}
 	
-	@Test (groups={"skip"})
+	@Test (groups={"ready"})
 	public void testPostsShowById() throws MalformedURLException {
 		Post post = forrst.postsShow(45114);
 		TestCase.assertNotNull(post);
@@ -92,7 +92,7 @@ public class ForrstAPIClientTests {
 		TestCase.assertNotNull(post.getUser().getPhoto());
 	}
 
-	@Test (groups={"skip"})
+	@Test (groups={"ready"})
 	public void testPostsAll() throws MalformedURLException, JSONException {
 	    Map<String,String> params = new HashMap<String,String>();
 		List<Post> posts = forrst.postsAll(params);
@@ -100,7 +100,7 @@ public class ForrstAPIClientTests {
         TestCase.assertTrue(posts.size() > 0 ? true : false);
 	}
 	
-	@Test (groups={"skip"})
+	@Test (groups={"ready"})
 	public void testPostsList() throws MalformedURLException, JSONException {
 		Map<String,String> params = new HashMap<String,String>();
         List<Post> posts = forrst.postsList("question", params);
@@ -121,10 +121,6 @@ public class ForrstAPIClientTests {
 		List<Comment> comments = forrst.postComments(auth.getAccessToken(), 124269);
 		TestCase.assertNotNull(comments);
 		TestCase.assertTrue((comments.size() > 0) ? true : false);
-	}
-	
-	@Test (groups={"toBeFixed"})
-	public void testRateLimit() {
 	}
 
 }

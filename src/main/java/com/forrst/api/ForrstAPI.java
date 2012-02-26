@@ -14,14 +14,7 @@ import com.forrst.api.util.ForrstAuthenticationException;
 public interface ForrstAPI {
 
     /**
-     * All API calls (with the exception of stats) are rated
-     * limited at 150 calls per hour. In the future, we will
-     * offer whitelisting by request. When making unauthenticated
-     * calls, each request counts against the total made by
-     * the calling IP address; when authenticating, calls
-     * count against the authenticated user's limit. You may
-     * request rate limiting stats at api/v2/stats (it won't
-     * count against your total). Your limit resets each hour.
+     * Maximum calls per hour throttled by Forrst (resets each hour).
      */
     public int RATE_LIMIT = 10000;
 
@@ -32,7 +25,6 @@ public interface ForrstAPI {
      * @return Stat object containing current rate limit & calls made
      */
     public Stat stats();
-    // DONE
     
     /**
      * Return notification items for the authenticating user.
@@ -51,16 +43,9 @@ public interface ForrstAPI {
      *        grouped: [optional] Boolean indicating whether
      *                 to return items logically grouped by
      *                 type 
-     * @return JSON response containing:
-     *         items {
-     *             like {
-     *                 ...
-     *             }
-     *         },
-     *         view_url_format
+     * @return List of notifications
      */
     public List<Notification> notifications(String accessToken, Map<String,String> options);
-    // DONE
 
     /**
      * User authentication. Provide an email/username
@@ -72,38 +57,14 @@ public interface ForrstAPI {
      * @throws ForrstAuthenticationException when authentication fails
      */
     public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException;
-    // DONE
     
     /**
      * Given a property identifying a user return a user
      * 
      * @param userInfo Map containing user id or username
-     * @return JSON response containing:
-     *         id,
-     *         username,
-     *         name,
-     *         url,
-     *         posts,
-     *         comments,
-     *         likes,
-     *         followers,
-     *         following,
-     *         photos {
-     *             xl_url,
-     *             large_url,
-     *             medium_url,
-     *             small_url,
-     *             thumb_url
-     *         },
-     *         bio,
-     *         is_a,
-     *         homepage_url,
-     *         twitter,
-     *         in_directory,
-     *         tag_string
+     * @return User data
      */
     public User usersInfo(Map<String,String> userInfo);
-    // DONE
 
     /**
      * Returns a user's posts
@@ -129,44 +90,15 @@ public interface ForrstAPI {
      */
     public Post postsShow(int id);
 
+    // TODO: return page # also
     /**
      * Returns a list of all posts in reverse-chron order
      * 
-     * @return JSON response containing:
-     *         posts [{
-     *             id,
-     *             tiny_id,
-     *             post_type,
-     *             post_url,
-     *             created_at,
-     *             updated_at,
-     *             user: {
-     *                 ...
-     *             },
-     *             published,
-     *             public,
-     *             title,
-     *             url,
-     *             content,
-     *             description,
-     *             formatted_content,
-     *             formatted_description,
-     *             like_count,
-     *             comment_count,
-     *             snaps {
-     *                 mega_url,
-     *                 keith_url,
-     *                 large_url,
-     *                 medium_url,
-     *                 small_url,
-     *                 thumb_url,
-     *                 original_url
-     *             }
-     *         }],
-     *         page
+     * @return List of posts
      */
     public List<Post> postsAll(Map<String,String> options);
 
+    // TODO: return page # also
     /**
      * Returns a list of posts of a given type
      * 
@@ -174,57 +106,17 @@ public interface ForrstAPI {
      * @param options Map containing
      *        sort [optional, default = recent] Sort by recent, popular, best (staff picks)
      *        page [optional, default = 1] Page of results to return
-     * @return JSON response containing:
-     *         posts [{
-     *             id,
-     *             tiny_id,
-     *             post_type,
-     *             post_url,
-     *             created_at,
-     *             updated_at,
-     *             user: {
-     *                 ...
-     *             },
-     *             published,
-     *             public,
-     *             title,
-     *             url,
-     *             content,
-     *             description,
-     *             formatted_content,
-     *             formatted_description,
-     *             like_count,
-     *             comment_count,
-     *             snaps {
-     *                 mega_url,
-     *                 keith_url,
-     *                 large_url,
-     *                 medium_url,
-     *                 small_url,
-     *                 thumb_url,
-     *                 original_url
-     *             }
-     *         }],
-     *         page
+     * @return List of posts of given type
      */
     public List<Post> postsList(String postType, Map<String,String> options);
 
+    // TODO: return count for comments
     /**
      * Returns a post's comments
      * 
      * @param accessToken Token obtained when the user is authenticated
      * @param id Post ID
-     * @return JSON response containing:
-     *         comments [{
-     *             id,
-     *             user {
-     *                 ...
-     *             },
-     *             body,
-     *             created_at,
-     *             updated_at
-     *         }],
-     *         count
+     * @return List of comments for given post
      */
     public List<Comment> postComments(String accessToken, int id);
 

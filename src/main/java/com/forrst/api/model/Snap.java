@@ -2,58 +2,73 @@ package com.forrst.api.model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Snap implements Serializable {
+
+    private static final long serialVersionUID = -2152657599214990086L;
+
+    @JsonProperty("mega_url")
+    private final String megaUrl;
     
-    private String megaUrl;
-    private String keithUrl;
-    private String largeUrl;
-    private String mediumUrl;
-    private String smallUrl;
-    private String thumbUrl;
-    private String originalUrl;
+    @JsonProperty("keith_url")
+    private final String keithUrl;
+    
+    @JsonProperty("large_url")
+    private final String largeUrl;
+    
+    @JsonProperty("medium_url")
+    private final String mediumUrl;
+    
+    @JsonProperty("small_url")
+    private final String smallUrl;
+    
+    @JsonProperty("thumb_url")
+    private final String thumbUrl;
+    
+    @JsonProperty("original_url")
+    private final String originalUrl;
+    
+    @JsonCreator
+    public Snap(@JsonProperty("mega_url") String megaUrl,
+                @JsonProperty("keith_url") String keithUrl,
+                @JsonProperty("large_url") String largeUrl,
+                @JsonProperty("medium_url") String mediumUrl,
+                @JsonProperty("small_url") String smallUrl,
+                @JsonProperty("thumb_url") String thumbUrl,
+                @JsonProperty("original_url") String originalUrl) {
+        this.megaUrl = megaUrl;
+        this.keithUrl = keithUrl;
+        this.largeUrl = largeUrl;
+        this.mediumUrl = mediumUrl;
+        this.smallUrl = smallUrl;
+        this.thumbUrl = thumbUrl;
+        this.originalUrl = originalUrl;
+    }
 
     public String getMegaUrl() {
         return megaUrl;
     }
-    public void setMegaUrl(String megaUrl) {
-        this.megaUrl = megaUrl;
-    }
     public String getKeithUrl() {
         return keithUrl;
-    }
-    public void setKeithUrl(String keithUrl) {
-        this.keithUrl = keithUrl;
     }
     public String getLargeUrl() {
         return largeUrl;
     }
-    public void setLargeUrl(String largeUrl) {
-        this.largeUrl = largeUrl;
-    }
     public String getMediumUrl() {
         return mediumUrl;
-    }
-    public void setMediumUrl(String mediumUrl) {
-        this.mediumUrl = mediumUrl;
     }
     public String getSmallUrl() {
         return smallUrl;
     }
-    public void setSmallUrl(String smallUrl) {
-        this.smallUrl = smallUrl;
-    }
     public String getThumbUrl() {
         return thumbUrl;
     }
-    public void setThumbUrl(String thumbUrl) {
-        this.thumbUrl = thumbUrl;
-    }
     public String getOriginalUrl() {
         return originalUrl;
-    }
-    public void setOriginalUrl(String originalUrl) {
-        this.originalUrl = originalUrl;
     }
 
 }
