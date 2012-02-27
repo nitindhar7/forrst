@@ -1,8 +1,10 @@
-package com.forrst.api;
+package com.nitindhar.forrst;
 
 import junit.framework.TestCase;
 
 import org.testng.annotations.Test;
+
+import com.nitindhar.forrst.Endpoint;
 
 public class EndpointTests {
 	

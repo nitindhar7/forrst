@@ -1,4 +1,4 @@
-package com.forrst.api;
+package com.nitindhar.forrst;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -12,13 +12,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.forrst.api.model.Auth;
-import com.forrst.api.model.Comment;
-import com.forrst.api.model.Notification;
-import com.forrst.api.model.Post;
-import com.forrst.api.model.Stat;
-import com.forrst.api.model.User;
-import com.forrst.api.util.ForrstAuthenticationException;
+import com.nitindhar.forrst.model.Auth;
+import com.nitindhar.forrst.model.Comment;
+import com.nitindhar.forrst.model.Notification;
+import com.nitindhar.forrst.model.Post;
+import com.nitindhar.forrst.model.Stat;
+import com.nitindhar.forrst.model.User;
+import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class ForrstAPIClient implements ForrstAPI {
 
@@ -51,9 +51,12 @@ public class ForrstAPIClient implements ForrstAPI {
 		
 		try {
 		    JSONObject json = http.get(Endpoint.getInstance().NOTIFICATIONS_URI, params);
-		    JSONArray jsonItemsArray = (JSONArray) json.get("items");
-		    if(jsonItemsArray.length() == 0)
-		        return notifications;
+		    
+		    if(json.get("items") instanceof JSONArray) {
+    		    JSONArray jsonItemsArray = (JSONArray) json.get("items");
+    		    if(jsonItemsArray.length() == 0)
+    		        return notifications;
+		    }
 		    
 		    JSONObject itemsJson = json.getJSONObject("items");
 		    

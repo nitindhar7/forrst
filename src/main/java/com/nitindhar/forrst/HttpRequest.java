@@ -1,4 +1,4 @@
-package com.forrst.api;
+package com.nitindhar.forrst;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import javax.net.ssl.X509TrustManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.forrst.api.util.ForrstAuthenticationException;
+import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class HttpRequest {
     

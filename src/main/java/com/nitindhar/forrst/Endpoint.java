@@ -1,4 +1,4 @@
-package com.forrst.api;
+package com.nitindhar.forrst;
 
 public class Endpoint {
 	

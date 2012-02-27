@@ -1,4 +1,4 @@
-package com.forrst.api.util;
+package com.nitindhar.forrst.util;
 
 public class ForrstAuthenticationException extends Exception {
     

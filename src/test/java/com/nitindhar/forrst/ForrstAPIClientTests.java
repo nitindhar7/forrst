@@ -1,4 +1,4 @@
-package com.forrst.api;
+package com.nitindhar.forrst;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
@@ -10,13 +10,15 @@ import junit.framework.TestCase;
 import org.json.JSONException;
 import org.testng.annotations.Test;
 
-import com.forrst.api.model.Auth;
-import com.forrst.api.model.Comment;
-import com.forrst.api.model.Notification;
-import com.forrst.api.model.Post;
-import com.forrst.api.model.Stat;
-import com.forrst.api.model.User;
-import com.forrst.api.util.ForrstAuthenticationException;
+import com.nitindhar.forrst.ForrstAPI;
+import com.nitindhar.forrst.ForrstAPIClient;
+import com.nitindhar.forrst.model.Auth;
+import com.nitindhar.forrst.model.Comment;
+import com.nitindhar.forrst.model.Notification;
+import com.nitindhar.forrst.model.Post;
+import com.nitindhar.forrst.model.Stat;
+import com.nitindhar.forrst.model.User;
+import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class ForrstAPIClientTests {
 

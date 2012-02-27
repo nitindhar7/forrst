@@ -1,15 +1,15 @@
-package com.forrst.api;
+package com.nitindhar.forrst;
 
 import java.util.List;
 import java.util.Map;
 
-import com.forrst.api.model.Auth;
-import com.forrst.api.model.Comment;
-import com.forrst.api.model.Notification;
-import com.forrst.api.model.Post;
-import com.forrst.api.model.Stat;
-import com.forrst.api.model.User;
-import com.forrst.api.util.ForrstAuthenticationException;
+import com.nitindhar.forrst.model.Auth;
+import com.nitindhar.forrst.model.Comment;
+import com.nitindhar.forrst.model.Notification;
+import com.nitindhar.forrst.model.Post;
+import com.nitindhar.forrst.model.Stat;
+import com.nitindhar.forrst.model.User;
+import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public interface ForrstAPI {
 

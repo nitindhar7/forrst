@@ -1,4 +1,4 @@
-package com.forrst.api.model;
+package com.nitindhar.forrst.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

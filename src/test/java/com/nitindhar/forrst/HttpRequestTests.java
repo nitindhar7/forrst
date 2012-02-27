@@ -1,4 +1,4 @@
-package com.forrst.api;
+package com.nitindhar.forrst;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,7 +10,8 @@ import junit.framework.TestCase;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import com.forrst.api.util.ForrstAuthenticationException;
+import com.nitindhar.forrst.HttpRequest;
+import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class HttpRequestTests {
 	
