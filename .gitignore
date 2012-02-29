@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings/
+.sonar/
 bin/
 target/
 test-output/

@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <project name="forrst" default="jar" basedir=".">
+    <property name="libdir" value="lib" />
     <property name="targetdir" value="target" />
     <property name="srcdir" value="src/main/java" />
     <property name="classdir" value="${targetdir}/classes" />
@@ -57,6 +58,24 @@
                 <include name="com/forrst/api/**" />
             </packageset>
         </javadoc>
+    </target>
+
+    <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+    </taskdef>
+
+    <property name="sonar.jdbc.url" value="jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8" />
+    <property name="sonar.jdbc.driverClassName" value="com.mysql.jdbc.Driver" />
+    <property name="sonar.jdbc.username" value="sonar" />
+    <property name="sonar.jdbc.password" value="sonar" />
+
+    <target name="sonar">
+        <!-- list of mandatories Sonar properties -->
+        <property name="sonar.sources" value="${srcdir}" />
+        <!-- list of optional Sonar properties -->
+        <property name="sonar.binaries" value="${classdir}" />
+        <property name="sonar.tests" value="${test_srcdir}" />
+        <property name="sonar.libraries" value="${libdir}" />
+        <sonar:sonar key="com.nitindhar:forrst" version="5.0.0" xmlns:sonar="antlib:org.sonar.ant" />
     </target>
 
     <target name="jar" depends="compile" description="Builds a complete forrst jar.">
