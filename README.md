@@ -73,6 +73,7 @@ Tests coming up soon! Until then please help us find bugs.
 TODO
 ----
 
+- Improve deserialization for Notifications
 - Upload to the [maven repository](http://maven.apache.org/guides/mini/guide-central-repository-upload.html)
 
 Copyright

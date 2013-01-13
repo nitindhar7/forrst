@@ -1,46 +1,81 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
-@SuppressWarnings("serial")
-public class Comment implements Serializable {
+import javax.validation.constraints.NotNull;
 
-    private int id;
-    private String userName;
-    private String body;
-    private Timestamp createdAt;
-    private String userIconUrl;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class Comment extends AbstractData {
+
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    @JsonProperty("id")
+    @NotNull
+    private final int id;
+
+    @JsonProperty("user")
+    @NotNull
+    private final User user;
+
+    @JsonProperty("body")
+    @NotNull
+    private final String body;
+
+    @JsonProperty("created_at")
+    @NotNull
+    private final String createdAt;
+
+    @JsonProperty("updated_at")
+    @NotNull
+    private final String updatedAt;
+
+    @JsonProperty("replies")
+    private final List<Comment> replies;
+
+    @JsonCreator
+    public Comment(@JsonProperty("id") @NotNull int id,
+                   @JsonProperty("user") @NotNull User user,
+                   @JsonProperty("body") @NotNull String body,
+                   @JsonProperty("created_at") @NotNull String createdAt,
+                   @JsonProperty("updated_at") @NotNull String updatedAt,
+                   @JsonProperty("replies") List<Comment> replies) {
+        this.id = id;
+        this.user = user;
+        this.body = body;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.replies = replies;
+    }
 
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getUserName() {
-        return userName;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+
     public String getBody() {
         return body;
     }
-    public void setBody(String body) {
-        this.body = body;
+
+    public User getUser() {
+        return user;
     }
-    public Timestamp getCreatedAt() {
-        return createdAt;
+
+    public Timestamp getCreatedAt() throws ParseException {
+        return new Timestamp(format.parse(createdAt).getTime());
     }
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+
+    public Timestamp getUpdatedAt() throws ParseException {
+        return new Timestamp(format.parse(updatedAt).getTime());
     }
-    public String getUserIconUrl() {
-        return userIconUrl;
-    }
-    public void setUserIconUrl(String userIconUrl) {
-        this.userIconUrl = userIconUrl;
+
+    public List<Comment> getReplies() {
+        return replies;
     }
 
 }

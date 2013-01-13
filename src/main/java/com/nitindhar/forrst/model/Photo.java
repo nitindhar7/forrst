@@ -1,7 +1,5 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -9,9 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Photo implements Serializable {
-
-    private static final long serialVersionUID = 2480791481636946751L;
+public class Photo extends AbstractData {
 
     @JsonProperty("xl_url")
     @NotNull
@@ -49,15 +45,19 @@ public class Photo implements Serializable {
     public String getXlUrl() {
         return xlUrl;
     }
+
     public String getLargeUrl() {
         return largeUrl;
     }
+
     public String getMediumUrl() {
         return mediumUrl;
     }
+
     public String getSmallUrl() {
         return smallUrl;
     }
+
     public String getThumbUrl() {
         return thumbUrl;
     }

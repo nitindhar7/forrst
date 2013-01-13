@@ -1,7 +1,5 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -9,9 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Stat implements Serializable {
-
-    private static final long serialVersionUID = 602943778915558047L;
+public class Stat extends AbstractData {
 
     @JsonProperty("rate_limit")
     @NotNull

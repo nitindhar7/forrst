@@ -1,7 +1,5 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -9,9 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Notification implements Serializable {
-
-    private static final long serialVersionUID = 6642536797702136330L;
+public class Notification extends AbstractData {
 
     @JsonProperty("id")
     @NotNull
@@ -61,21 +57,27 @@ public class Notification implements Serializable {
     public String getId() {
         return id;
     }
+
     public long getTimestamp() {
         return timestamp;
     }
+
     public String getBehavior() {
         return behavior;
     }
+
     public int getForUserId() {
         return forUserId;
     }
+
     public String getObjectType() {
         return objectType;
     }
+
     public int getObjectId() {
         return objectId;
     }
+
     public NotificationData getData() {
         return data;
     }

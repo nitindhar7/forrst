@@ -1,7 +1,5 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -9,9 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Auth implements Serializable {
-
-    private static final long serialVersionUID = -5107182257864805170L;
+public class Auth extends AbstractData {
 
     @JsonProperty("token")
     @NotNull

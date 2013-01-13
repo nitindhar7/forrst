@@ -1,15 +1,11 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
-
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Snap implements Serializable {
-
-    private static final long serialVersionUID = -2152657599214990086L;
+public class Snap extends AbstractData {
 
     @JsonProperty("mega_url")
     private final String megaUrl;
@@ -52,21 +48,27 @@ public class Snap implements Serializable {
     public String getMegaUrl() {
         return megaUrl;
     }
+
     public String getKeithUrl() {
         return keithUrl;
     }
+
     public String getLargeUrl() {
         return largeUrl;
     }
+
     public String getMediumUrl() {
         return mediumUrl;
     }
+
     public String getSmallUrl() {
         return smallUrl;
     }
+
     public String getThumbUrl() {
         return thumbUrl;
     }
+
     public String getOriginalUrl() {
         return originalUrl;
     }

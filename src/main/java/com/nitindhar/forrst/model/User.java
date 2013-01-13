@@ -1,16 +1,13 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class User implements Serializable {
+public class User extends AbstractData {
 
     @JsonProperty("id")
     @NotNull
@@ -109,48 +106,63 @@ public class User implements Serializable {
     public int getId() {
         return id;
     }
+
     public String getUsername() {
         return username;
     }
+
     public String getName() {
         return name;
     }
+
     public String getUrl() {
         return url;
     }
+
     public int getPosts() {
         return posts;
     }
+
     public int getComments() {
         return comments;
     }
+
     public int getLikes() {
         return likes;
     }
+
     public int getFollowers() {
         return followers;
     }
+
     public int getFollowing() {
         return following;
     }
+
     public Photo getPhoto() {
         return photo;
     }
+
     public String getBio() {
         return bio;
     }
+
     public String getIsA() {
         return isA;
     }
+
     public String getHomepageUrl() {
         return homepageUrl;
     }
+
     public String getTwitter() {
         return twitter;
     }
+
     public boolean isInDirectory() {
         return inDirectory;
     }
+
     public String getTagString() {
         return tagString;
     }

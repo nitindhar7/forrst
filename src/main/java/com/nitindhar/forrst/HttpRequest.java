@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
@@ -24,7 +23,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.collections.MapUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.common.base.Optional;
@@ -62,7 +60,6 @@ public class HttpRequest {
             Response resp = f.get(MAX_HTTP_GET_WAIT, TimeUnit.SECONDS);
 
             json = new JSONObject(resp.getResponseBody());
-            json = json.getJSONObject("resp");
         } catch (Exception e) {
             throw new RuntimeException("Unable to get data from: " + requestURI, e);
         }
@@ -133,12 +130,8 @@ public class HttpRequest {
 
             json = new JSONObject(jsonResult.trim());
             json = json.getJSONObject("resp");
-            } catch (MalformedURLException e) {
-                throw new RuntimeException("Invalid URL requested", e);
-            } catch (IOException e) {
-                throw new RuntimeException("Could not read from requested stream", e);
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON could not be formed", e);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to post data to: " + requestURI, e);
             }
 
         return json;

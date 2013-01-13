@@ -1,7 +1,5 @@
 package com.nitindhar.forrst.model;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -9,9 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Post implements Serializable {
-
-    private static final long serialVersionUID = -1452555723247838013L;
+public class Post extends AbstractData {
 
     @JsonProperty("id")
     @NotNull
@@ -123,54 +119,71 @@ public class Post implements Serializable {
     public int getId() {
         return id;
     }
+
     public String getTinyId() {
         return tinyId;
     }
+
     public String getPostType() {
         return postType;
     }
+
     public String getPostUrl() {
         return postUrl;
     }
+
     public String getCreatedAt() {
         return createdAt;
     }
+
     public String getUpdatedAt() {
         return updatedAt;
     }
+
     public User getUser() {
         return user;
     }
+
     public boolean isPublished() {
         return isPublished;
     }
+
     public boolean isPublic() {
         return isPublic;
     }
+
     public String getTitle() {
         return title;
     }
+
     public String getUrl() {
         return url;
     }
+
     public String getContent() {
         return content;
     }
+
     public String getDescription() {
         return description;
     }
+
     public int getViewCount() {
         return viewCount;
     }
+
     public int getLikeCount() {
         return likeCount;
     }
+
     public int getCommentCount() {
         return commentCount;
     }
+
     public String getTagString() {
         return tagString;
     }
+
     public Snap getSnap() {
         return snap;
     }
