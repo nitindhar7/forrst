@@ -16,36 +16,36 @@ public class Notification implements Serializable {
     @JsonProperty("id")
     @NotNull
     private final String id;
-    
+
     @JsonProperty("timetamp")
     @NotNull
     private final long timestamp;
-    
+
     @JsonProperty("behavior")
     @NotNull
     private final String behavior;
-    
+
     @JsonProperty("for_user_id")
     @NotNull
     private final int forUserId;
-    
+
     @JsonProperty("object_type")
     @NotNull
     private final String objectType;
-    
+
     @JsonProperty("object_id")
     @NotNull
     private final int objectId;
-    
+
     @JsonProperty("data")
     @NotNull
     private final NotificationData data;
-    
+
     @JsonCreator
     public Notification(@JsonProperty("id") @NotNull String id,
                         @JsonProperty("timetamp") @NotNull long timestamp,
                         @JsonProperty("behavior") @NotNull String behavior,
-                        @JsonProperty("for_user_id") @NotNull int forUserId, 
+                        @JsonProperty("for_user_id") @NotNull int forUserId,
                         @JsonProperty("object_type") @NotNull String objectType,
                         @JsonProperty("object_id") @NotNull int objectId,
                         @JsonProperty("data") @NotNull NotificationData data) {
@@ -57,7 +57,7 @@ public class Notification implements Serializable {
         this.objectId = objectId;
         this.data = data;
     }
-    
+
     public String getId() {
         return id;
     }

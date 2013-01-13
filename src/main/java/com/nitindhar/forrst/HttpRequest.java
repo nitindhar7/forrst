@@ -4,14 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -20,178 +23,159 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.commons.collections.MapUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.common.base.Optional;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.AsyncHttpClient.BoundRequestBuilder;
+import com.ning.http.client.Response;
 import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class HttpRequest {
-    
+
+    private static final int MAX_HTTP_GET_WAIT = 2;
     private static final String ENCODING = "UTF-8";
+    private static final AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
 
-	/**
-	 * GET data from Forrst using the request URI
-	 * without URL parameters
-	 * 
-	 * @param requestURI Forrst URI requested
-	 * @return JSONObject containing a response
-	 */
-	public JSONObject get(String requestURI) {
-		return getData(requestURI);
-	}
-	
-	/**
-	 * GET data from Forrst using the request URI
-	 * with URL parameters
-	 * 
-	 * @param requestURI Forrst URI requested
-	 * @param params Map of URL parameters and their values
-	 * @return JSONObject containing a response
-	 */
-	public JSONObject get(String requestURI, Map<String,String> params) {
-		return getData(requestURI + "?" + stringifyArgs(params));
-	}
-	
-	/**
-	 * POST data from Forrst using the request URI
-	 * 
-	 * @param requestURI Forrst URI requested
-	 * @param params Map of URL parameters and their values
-	 * @return JSONObject containing a response
-	 * @throws ForrstAuthenticationException when authentication fails
-	 */
-	public JSONObject post(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
-		return postData(requestURI, params);
-	}
-	
-	/**
-	 * Workhorse method that POSTs data from a URL and
-	 * returns the result as a JSON object
-	 * 
-	 * @param requestURI The Forrst endpoint requested
-	 * @return JSONObject containing the full Forrst API response
-	 */
-	protected JSONObject getData(String requestURI) {
-		String jsonResult = "";
-		
-		JSONObject json = null;
+    /**
+     * Workhorse method that POSTs data from a URL and
+     * returns the result as a JSON object
+     *
+     * @param requestURI The Forrst endpoint requested
+     * @return JSONObject containing the full Forrst API response
+     */
+    @SuppressWarnings("deprecation")
+    protected JSONObject get(String requestURI, Optional<Map<String,String>> params) {
+        JSONObject json = null;
 
-		try {
-			URL url = new URL(requestURI);
-			URLConnection urlConn = url.openConnection();
-			BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), ENCODING));
-			
-			String responseLine;
-			while ((responseLine = in.readLine()) != null) {
-				jsonResult += responseLine;
-			}
+        try {
+            BoundRequestBuilder builder = asyncHttpClient.prepareGet(requestURI);
+            if(params.isPresent()) {
+                Map<String,String> queryParams = params.get();
+                for(String key : queryParams.keySet()) {
+                    builder.addQueryParameter(URLEncoder.encode(key), URLEncoder.encode(queryParams.get(key)));
+                }
+            }
+            Future<Response> f = builder.execute();
+            Response resp = f.get(MAX_HTTP_GET_WAIT, TimeUnit.SECONDS);
 
-			in.close();
+            json = new JSONObject(resp.getResponseBody());
+            json = json.getJSONObject("resp");
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to get data from: " + requestURI, e);
+        }
 
-			json = new JSONObject(jsonResult.trim());
-			json = json.getJSONObject("resp");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException("Invalid URL requested", e);
-		} catch (IOException e) {
-			throw new RuntimeException("Could not read from requested stream", e);
-		} catch (JSONException e) {
-			throw new RuntimeException("JSON [" + jsonResult + "] could not be formed for URI: [" + requestURI + "]", e);
-		}
-		
-		return json;
-	}
-	
-	/**
-	 * Workhorse method that GETs data from a URL and
-	 * returns the result as a JSON object
-	 * 
-	 * @param requestURI The Forrst endpoint requested
-	 * @return JSONObject containing the full Forrst API response
-	 * @throws ForrstAuthenticationException when authentication fails
-	 */
-	protected JSONObject postData(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
-		String jsonResult = "";
-		
-		JSONObject json = null;
-		HttpsURLConnection urlConnHttps = null;
-		HttpURLConnection urlConn = null;
+        return json;
+    }
 
-		try {
-			URL url = new URL(requestURI);
-			
-			if (url.getProtocol().toLowerCase().equals("https")) {
+    /**
+     * POST data from Forrst using the request URI
+     *
+     * @param requestURI Forrst URI requested
+     * @param params Map of URL parameters and their values
+     * @return JSONObject containing a response
+     * @throws ForrstAuthenticationException when authentication fails
+     */
+    public JSONObject post(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
+        return postData(requestURI, params);
+    }
+
+    /**
+     * Workhorse method that GETs data from a URL and
+     * returns the result as a JSON object
+     *
+     * @param requestURI The Forrst endpoint requested
+     * @return JSONObject containing the full Forrst API response
+     * @throws ForrstAuthenticationException when authentication fails
+     */
+    protected JSONObject postData(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
+        String jsonResult = "";
+
+        JSONObject json = null;
+        HttpsURLConnection urlConnHttps = null;
+        HttpURLConnection urlConn = null;
+
+        try {
+            URL url = new URL(requestURI);
+
+            if (url.getProtocol().toLowerCase().equals("https")) {
                 trustAllHosts();
                 urlConnHttps = (HttpsURLConnection) url.openConnection();
                 urlConnHttps.setHostnameVerifier(DO_NOT_VERIFY);
                 urlConn = urlConnHttps;
-                
             } else {
                 urlConn = (HttpURLConnection) url.openConnection();
             }
 
-		    urlConn.setDoOutput(true);
-		    
-		    OutputStreamWriter osw = new OutputStreamWriter(urlConn.getOutputStream());
-		    osw.write(stringifyArgs(params));
-		    osw.flush();
-		    
-		    BufferedReader in = null;
-		    
-		    try {
-		        in = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), ENCODING));
-		    } catch (IOException e) {
-		        throw new ForrstAuthenticationException("Could not authenticate");
-		    }
-			
-			String responseLine;
-			while ((responseLine = in.readLine()) != null) {
-				jsonResult += responseLine;
-			}
+            urlConn.setDoOutput(true);
 
-			osw.close();
-			in.close();
-			
-			json = new JSONObject(jsonResult.trim());
-			json = json.getJSONObject("resp");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException("Invalid URL requested", e);
-		} catch (IOException e) {
-			throw new RuntimeException("Could not read from requested stream", e);
-		} catch (JSONException e) {
-			throw new RuntimeException("JSON could not be formed", e);
-		}
-		
-		return json;
-	}
-	
-	/**
-	 * Creates a string version of the URL params
-	 * 
-	 * @param params
-	 * @return
-	 */
-	protected String stringifyArgs(Map<String,String> params) {
-	    if(params == null || params.keySet().isEmpty())
-	        return "";
-	    
-		StringBuilder argString = new StringBuilder();
+            OutputStreamWriter osw = new OutputStreamWriter(urlConn.getOutputStream());
+            osw.write(stringifyArgs(params));
+            osw.flush();
 
-		for(String key : params.keySet()) {
-			argString.append(key);
-			argString.append('=');
-			argString.append(params.get(key));
-			argString.append('&');
-		}
+            BufferedReader in = null;
 
-		String stringifiedArgs = argString.toString();
+            try {
+                in = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), ENCODING));
+            } catch (IOException e) {
+                throw new ForrstAuthenticationException("Could not authenticate");
+            }
 
-		return stringifiedArgs.substring(0, stringifiedArgs.length() - 1);
-	}
-	
-	/**
+            String responseLine;
+            while ((responseLine = in.readLine()) != null) {
+                jsonResult += responseLine;
+            }
+
+            osw.close();
+            in.close();
+
+            json = new JSONObject(jsonResult.trim());
+            json = json.getJSONObject("resp");
+            } catch (MalformedURLException e) {
+                throw new RuntimeException("Invalid URL requested", e);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not read from requested stream", e);
+            } catch (JSONException e) {
+                throw new RuntimeException("JSON could not be formed", e);
+            }
+
+        return json;
+    }
+
+    /**
+     * Creates a string version of the URL params
+     *
+     * @param params
+     * @return
+     */
+    protected String stringifyArgs(Map<String,String> params) {
+        StringBuilder argString = new StringBuilder();
+
+        try {
+            if(MapUtils.isEmpty(params)) {
+                return "";
+            }
+
+            for(String key : params.keySet()) {
+                argString.append(URLEncoder.encode(key, ENCODING));
+                argString.append('=');
+                argString.append(URLEncoder.encode(params.get(key), ENCODING));
+                argString.append('&');
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Unable to stringify parameters: " + params.toString(), e);
+        }
+
+        return argString.toString().substring(0, argString.length() - 1);
+    }
+
+    /**
      * always verify the host - dont check for certificate
      */
     protected final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
+        @Override
         public boolean verify(String hostname, SSLSession session) {
             return true;
         }
@@ -203,14 +187,19 @@ public class HttpRequest {
     * 2. Install the all-trusting trust manager
     */
     protected static void trustAllHosts() {
-        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                return new java.security.cert.X509Certificate[] {};
+        TrustManager[] trustAllCerts = new TrustManager[] {
+            new X509TrustManager() {
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[] {};
+                }
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+                @Override
+                public void checkServerTrusted(X509Certificate[] chain, String authType) {}
             }
-        
-            public void checkClientTrusted(X509Certificate[] chain, String authType) {}
-            public void checkServerTrusted(X509Certificate[] chain, String authType) {}
-        }};
+        };
 
         SSLContext sc;
         try {

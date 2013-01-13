@@ -16,26 +16,26 @@ public class NotificationData implements Serializable {
     @JsonProperty("actor")
     @NotNull
     private final String actor;
-    
+
     @JsonProperty("actor_url")
     @NotNull
     private final String actorUrl;
-    
+
     @JsonProperty("object_url")
     @NotNull
     private final String objectUrl;
-    
+
     @JsonProperty("post_type")
     private final String postType;
-    
+
     @JsonProperty("post_title")
     private final String postTitle;
-    
+
     @JsonProperty("photo")
     private final String photo;
-    
+
     @JsonCreator
-    public NotificationData(@JsonProperty("actor") @NotNull String actor, 
+    public NotificationData(@JsonProperty("actor") @NotNull String actor,
                             @JsonProperty("actor_url") @NotNull String actorUrl,
                             @JsonProperty("object_url") @NotNull String objectUrl,
                             @JsonProperty("post_type") String postType,
@@ -48,7 +48,7 @@ public class NotificationData implements Serializable {
         this.postTitle = postTitle;
         this.photo = photo;
     }
-    
+
     public String getActor() {
         return actor;
     }

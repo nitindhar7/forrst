@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @SuppressWarnings("serial")
 public class Comment implements Serializable {
-    
+
     private int id;
     private String userName;
     private String body;

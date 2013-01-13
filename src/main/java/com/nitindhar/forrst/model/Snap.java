@@ -13,25 +13,25 @@ public class Snap implements Serializable {
 
     @JsonProperty("mega_url")
     private final String megaUrl;
-    
+
     @JsonProperty("keith_url")
     private final String keithUrl;
-    
+
     @JsonProperty("large_url")
     private final String largeUrl;
-    
+
     @JsonProperty("medium_url")
     private final String mediumUrl;
-    
+
     @JsonProperty("small_url")
     private final String smallUrl;
-    
+
     @JsonProperty("thumb_url")
     private final String thumbUrl;
-    
+
     @JsonProperty("original_url")
     private final String originalUrl;
-    
+
     @JsonCreator
     public Snap(@JsonProperty("mega_url") String megaUrl,
                 @JsonProperty("keith_url") String keithUrl,

@@ -25,7 +25,7 @@ public interface ForrstAPI {
      * @return Stat object containing current rate limit & calls made
      */
     public Stat stats();
-    
+
     /**
      * Return notification items for the authenticating user.
      * Most items have an associated redirect URL that will
@@ -57,7 +57,7 @@ public interface ForrstAPI {
      * @throws ForrstAuthenticationException when authentication fails
      */
     public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException;
-    
+
     /**
      * Given a property identifying a user return a user
      * 
@@ -90,7 +90,6 @@ public interface ForrstAPI {
      */
     public Post postsShow(int id);
 
-    // TODO: return page # also
     /**
      * Returns a list of all posts in reverse-chron order
      * 
@@ -98,7 +97,6 @@ public interface ForrstAPI {
      */
     public List<Post> postsAll(Map<String,String> options);
 
-    // TODO: return page # also
     /**
      * Returns a list of posts of a given type
      * 
@@ -110,7 +108,6 @@ public interface ForrstAPI {
      */
     public List<Post> postsList(String postType, Map<String,String> options);
 
-    // TODO: return count for comments
     /**
      * Returns a post's comments
      * 

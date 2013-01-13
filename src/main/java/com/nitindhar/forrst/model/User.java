@@ -8,70 +8,69 @@ import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+@SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class User implements Serializable {
-
-    private static final long serialVersionUID = 5071040535094485719L;
 
     @JsonProperty("id")
     @NotNull
     private final int id;
-    
+
     @JsonProperty("username")
     @NotNull
     private final String username;
-    
+
     @JsonProperty("name")
     @NotNull
     private final String name;
-    
+
     @JsonProperty("url")
     @NotNull
     private final String url;
-    
+
     @JsonProperty("posts")
     @NotNull
     private final int posts;
-    
+
     @JsonProperty("comments")
     @NotNull
     private final int comments;
-    
+
     @JsonProperty("likes")
     @NotNull
     private final int likes;
-    
+
     @JsonProperty("followers")
     @NotNull
     private final int followers;
-    
+
     @JsonProperty("following")
     @NotNull
     private final int following;
-    
+
     @JsonProperty("photos")
     private final Photo photo;
-    
+
     @JsonProperty("bio")
     private final String bio;
-    
+
     @JsonProperty("is_a")
     @NotNull
     private final String isA;
-    
+
     @JsonProperty("homepage_url")
     private final String homepageUrl;
-    
+
     @JsonProperty("twitter")
     private final String twitter;
-    
+
     @JsonProperty("in_directory")
     @NotNull
     private final boolean inDirectory;
-    
+
     @JsonProperty("tag_string")
     private final String tagString;
-    
+
     @JsonCreator
     public User(@JsonProperty("id") @NotNull int id,
                 @JsonProperty("username") @NotNull String username,

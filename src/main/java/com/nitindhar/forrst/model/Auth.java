@@ -10,13 +10,13 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Auth implements Serializable {
-    
+
     private static final long serialVersionUID = -5107182257864805170L;
 
     @JsonProperty("token")
     @NotNull
     private final String accessToken;
-    
+
     @JsonProperty("user_id")
     @NotNull
     private final int userId;
@@ -27,7 +27,7 @@ public class Auth implements Serializable {
         this.accessToken = accessToken;
         this.userId = userId;
     }
-    
+
     public String getAccessToken() {
         return accessToken;
     }

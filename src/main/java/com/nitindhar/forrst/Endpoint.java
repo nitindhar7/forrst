@@ -1,7 +1,7 @@
 package com.nitindhar.forrst;
 
 public class Endpoint {
-	
+
     /**
      * All calls should be made using https://forrst.com/api/v2/
      * as the endpoint (e.g. calling posts/all would be
@@ -23,18 +23,15 @@ public class Endpoint {
     public String POSTS_ALL_URI = BASE_URI + "posts/all";
     public String POSTS_LIST_URI = BASE_URI + "posts/list";
     public String POST_COMMENTS_URI = BASE_URI + "post/comments";
-    
-    /**
-     * Singleton
-     */
+
     private static Endpoint endpoint = new Endpoint();
-    
+
     /**
      * Returns an instance of the endpoint singleton
      * @return endpoint
      */
     public static Endpoint getInstance() {
-    	return endpoint;
+        return endpoint;
     }
 
 }

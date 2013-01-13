@@ -16,13 +16,13 @@ public class Stat implements Serializable {
     @JsonProperty("rate_limit")
     @NotNull
     private final int rateLimit;
-    
+
     @JsonProperty("calls_made")
     @NotNull
     private final int callsMade;
-    
+
     @JsonCreator
-    public Stat(@JsonProperty("rate_limit") @NotNull int rateLimit, 
+    public Stat(@JsonProperty("rate_limit") @NotNull int rateLimit,
                 @JsonProperty("calls_made") @NotNull int callsMade) {
         this.rateLimit = rateLimit;
         this.callsMade = callsMade;

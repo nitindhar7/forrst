@@ -19,16 +19,16 @@ To begin, build Forrst and import it in your code. __To run the tests for the `u
 
     // API stats
     forrst.stats();
-    
+
     // Authentication
     forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
-    
+
     // Notifications
     forrst.notifications("ACCESS_TOKEN", options)
 
     // User information
     forrst.usersInfo("USERNAME");
-    
+
     // User posts
     forrst.userPosts("USERNAME", options)
 
@@ -67,7 +67,7 @@ Tests coming up soon! Until then please help us find bugs.
 - Nitin Dhar
 
   - Forrst: https://forrst.com/people/nitindhar7
-  - Site: http://coding-sense.blogspot.com
+  - Site: http://softwarebynitin.com
   - Twitter: @nitin_dhar
 
 TODO

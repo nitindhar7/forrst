@@ -16,71 +16,71 @@ public class Post implements Serializable {
     @JsonProperty("id")
     @NotNull
     private final int id;
-    
+
     @JsonProperty("tiny_id")
     @NotNull
     private final String tinyId;
-    
+
     @JsonProperty("post_type")
     @NotNull
     private final String postType;
-    
+
     @JsonProperty("post_url")
     @NotNull
     private final String postUrl;
-    
+
     @JsonProperty("created_at")
     @NotNull
     private final String createdAt;
-    
+
     @JsonProperty("updated_at")
     @NotNull
     private final String updatedAt;
-    
+
     @JsonProperty("user")
     @NotNull
     private final User user;
-    
+
     @JsonProperty("published")
     @NotNull
     private final boolean isPublished;
-    
+
     @JsonProperty("public")
     @NotNull
     private final boolean isPublic;
-    
+
     @JsonProperty("title")
     @NotNull
     private final String title;
-    
+
     @JsonProperty("url")
     private final String url;
-    
+
     @JsonProperty("content")
     private final String content;
-    
+
     @JsonProperty("description")
     private final String description;
-    
+
     @JsonProperty("view_count")
     @NotNull
     private final int viewCount;
-    
+
     @JsonProperty("like_count")
     @NotNull
     private final int likeCount;
-    
+
     @JsonProperty("comment_count")
     @NotNull
     private final int commentCount;
-    
+
     @JsonProperty("tag_string")
     @NotNull
     private final String tagString;
-    
+
     @JsonProperty("snaps")
     private final Snap snap;
-    
+
     @JsonCreator
     public Post(@JsonProperty("id") @NotNull int id,
                 @JsonProperty("tiny_id") @NotNull String tinyId,
@@ -119,7 +119,7 @@ public class Post implements Serializable {
         this.tagString = tagString;
         this.snap = snap;
     }
-    
+
     public int getId() {
         return id;
     }
