@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+<ivy-module version="2.0">
+  <info organisation="com.nitindhar" module="forrst" />
+  <dependencies>
+    <dependency org="com.ning" name="async-http-client" rev="1.7.9" />
+    <dependency org="commons-collections" name="commons-collections"
+      rev="3.2.1" />
+    <dependency org="org.apache.commons" name="commons-lang3"
+      rev="3.1" />
+    <dependency org="com.google.guava" name="guava" rev="12.0" />
+    <dependency org="org.codehaus.jackson" name="jackson-core-asl"
+      rev="1.9.5" />
+    <dependency org="org.codehaus.jackson" name="jackson-mapper-asl"
+      rev="1.9.5" />
+    <dependency org="org.json" name="json" rev="20090211" />
+    <dependency org="junit" name="junit" rev="4.9" />
+    <dependency org="org.slf4j" name="slf4j-api" rev="1.7.2" />
+    <dependency org="org.testng" name="testng" rev="6.7" />
+    <dependency org="javax.validation" name="validation-api"
+      rev="1.0.0.GA" />
+  </dependencies>
+</ivy-module>

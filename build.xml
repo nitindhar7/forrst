@@ -1,91 +1,85 @@
 <?xml version='1.0'?>
-<project name="forrst" default="jar" basedir=".">
-    <property name="libdir" value="lib" />
-    <property name="targetdir" value="target" />
-    <property name="srcdir" value="src/main/java" />
-    <property name="classdir" value="${targetdir}/classes" />
-    <property name="test_srcdir" value="src/test/java" />
-    <property name="test_resdir" value="src/test/resources" />
-    <property name="test_outdir" value="${targetdir}/test-output" />
-    <property name="test_classdir" value="${targetdir}/tests" />
-    <property name="distdir" value="dist" />
-    <property name="docdir" value="javadocs" />
+<project name="forrst" xmlns:ivy="antlib:org.apache.ivy.ant"
+  default="dist" basedir=".">
+  <property name="libdir" value="lib" />
+  <property name="targetdir" value="target" />
+  <property name="srcdir" value="src/main/java" />
+  <property name="classdir" value="${targetdir}/classes" />
+  <property name="test_srcdir" value="src/test/java" />
+  <property name="test_resdir" value="src/test/resources" />
+  <property name="test_outdir" value="${targetdir}/test-output" />
+  <property name="test_classdir" value="${targetdir}/tests" />
+  <property name="distdir" value="dist" />
+  <property name="docdir" value="javadocs" />
 
-    <path id="classpath">
-        <fileset dir="lib">
-            <include name="**/*.jar" />
-        </fileset>
-        <pathelement path="${classdir}" />
-    </path>
+  <path id="classpath">
+    <fileset dir="lib">
+      <include name="**/*.jar" />
+    </fileset>
+    <pathelement path="${classdir}" />
+  </path>
 
-    <path id="test_classpath">
-        <path refid="classpath" />
-        <pathelement path="${test_classdir}" />
-        <pathelement path="${test_resdir}" />
-    </path>
+  <path id="test_classpath">
+    <path refid="classpath" />
+    <pathelement path="${test_classdir}" />
+    <pathelement path="${test_resdir}" />
+  </path>
 
-    <target name="init">
-        <mkdir dir="${classdir}" />
-        <mkdir dir="${test_classdir}" />
-    </target>
+  <target name="resolve" depends="clean,init">
+    <ivy:retrieve />
+  </target>
 
-    <target name="clean">
-        <delete dir="${classdir}" />
-        <delete dir="${test_classdir}" />
-        <delete dir="${targetdir}" />
-        <delete dir="${distdir}" />
-    </target>
+  <target name="init">
+    <mkdir dir="${classdir}" />
+    <mkdir dir="${test_classdir}" />
+    <mkdir dir="${libdir}" />
+  </target>
 
-    <target name="compile" depends="clean, init">
-        <javac debug="on" srcdir="${srcdir}" destdir="${classdir}" classpathref="classpath" includeantruntime="false" />
-    </target>
+  <target name="clean">
+    <delete dir="${classdir}" />
+    <delete dir="${test_classdir}" />
+    <delete dir="${targetdir}" />
+    <delete dir="${distdir}" />
+    <delete dir="${libdir}" />
+  </target>
 
-    <target name="compile_tests" depends="compile">
-        <javac debug="on" srcdir="${test_srcdir}" destdir="${test_classdir}" classpathref="test_classpath" includeantruntime="false" />
-    </target>
+  <target name="compile" depends="clean, init">
+    <javac debug="on" srcdir="${srcdir}" destdir="${classdir}"
+      classpathref="classpath" includeantruntime="false" />
+  </target>
 
-    <taskdef resource="testngtasks" classpath="lib/testng-5.9.jar" />
-    <target name="tests" depends="compile_tests" description="runs unit/functional tests">
-        <testng classpathref="test_classpath" outputDir="${targetdir}/testng" haltOnFailure="false" verbose="5">
-            <xmlfileset dir="${test_resdir}" includes="testng.xml" />
-        </testng>
-    </target>
+  <target name="compile_tests" depends="compile">
+    <javac debug="on" srcdir="${test_srcdir}" destdir="${test_classdir}"
+      classpathref="test_classpath" includeantruntime="false" />
+  </target>
 
-    <target name="javadocs" description="Generates javadoc into target/api">
-        <delete dir="${docdir}" />
-        <javadoc destdir="${docdir}" author="true" version="true" use="true" classpathref="classpath" windowtitle="forrst">
-            <packageset dir="${srcdir}" defaultexcludes="yes">
-                <include name="com/forrst/api/**" />
-            </packageset>
-        </javadoc>
-    </target>
+  <taskdef resource="testngtasks" classpath="lib/testng-6.7.jar" />
+  <target name="test" depends="resolve,compile_tests"
+    description="runs unit/functional tests">
+    <testng classpathref="test_classpath" outputDir="${targetdir}/testng"
+      haltOnFailure="false" verbose="5">
+      <xmlfileset dir="${test_resdir}" includes="testng.xml" />
+    </testng>
+  </target>
 
-    <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
-    </taskdef>
+  <target name="javadocs" description="Generates javadoc into target/api">
+    <delete dir="${docdir}" />
+    <javadoc destdir="${docdir}" author="true" version="true"
+      use="true" classpathref="classpath" windowtitle="forrst">
+      <packageset dir="${srcdir}" defaultexcludes="yes">
+        <include name="com/forrst/api/**" />
+      </packageset>
+    </javadoc>
+  </target>
 
-    <property name="sonar.jdbc.url" value="jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8" />
-    <property name="sonar.jdbc.driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="sonar.jdbc.username" value="sonar" />
-    <property name="sonar.jdbc.password" value="sonar" />
-
-    <target name="sonar">
-        <!-- list of mandatories Sonar properties -->
-        <property name="sonar.sources" value="${srcdir}" />
-        <!-- list of optional Sonar properties -->
-        <property name="sonar.binaries" value="${classdir}" />
-        <property name="sonar.tests" value="${test_srcdir}" />
-        <property name="sonar.libraries" value="${libdir}" />
-        <sonar:sonar key="com.nitindhar:forrst" version="5.0.0" xmlns:sonar="antlib:org.sonar.ant" />
-    </target>
-
-    <target name="jar" depends="compile" description="Builds a complete forrst jar.">
-        <exec executable="git" outputproperty="git-desc" failonerror="true">
-            <arg value="describe" />
-        </exec>
-        <mkdir dir="${distdir}" />
-        <delete>
-            <fileset dir="." includes="${distdir}/forrst-${git-desc}.jar" />
-        </delete>
-        <jar destfile="${distdir}/forrst-${git-desc}.jar" basedir="${classdir}" />
-    </target>
+  <target name="dist" depends="resolve,compile" description="Builds a complete forrst jar.">
+    <exec executable="git" outputproperty="git-desc" failonerror="true">
+      <arg value="describe" />
+    </exec>
+    <mkdir dir="${distdir}" />
+    <delete>
+      <fileset dir="." includes="${distdir}/forrst-${git-desc}.jar" />
+    </delete>
+    <jar destfile="${distdir}/forrst-${git-desc}.jar" basedir="${classdir}" />
+  </target>
 </project>

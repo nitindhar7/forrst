@@ -2,6 +2,7 @@
 .project
 .settings/
 .sonar/
+lib/
 bin/
 target/
 test-output/
