@@ -1,8 +1,11 @@
 package com.nitindhar.forrst.model;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-public abstract class AbstractData {
+@SuppressWarnings("serial")
+public abstract class AbstractData implements Serializable {
 
     @Override
     public String toString() {
