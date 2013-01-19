@@ -72,7 +72,14 @@
     </javadoc>
   </target>
 
-  <target name="dist" depends="resolve,compile" description="Builds a complete forrst jar.">
+  <target name="readme" description="Sets the correct download version in readme.">
+    <exec executable="git" outputproperty="git-desc" failonerror="true">
+      <arg value="describe" />
+    </exec>
+    <replaceregexp file="README.md" match="forrst-[\d]+[\.][\d]+[\.][\d]+" replace="forrst-${git-desc}" />
+  </target>
+
+  <target name="dist" depends="resolve,compile,readme" description="Builds a complete forrst jar.">
     <exec executable="git" outputproperty="git-desc" failonerror="true">
       <arg value="describe" />
     </exec>

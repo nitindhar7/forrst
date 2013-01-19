@@ -6,6 +6,10 @@ Android
 -------
 Android platform to be tested soon!
 
+Download Latest
+---------------
+Download the latest jar [here](https://github.com/nitindhar7/forrst/blob/master/dist/forrst-5.1.0.jar)
+
 Build & Use
 -----------
 Each API method in this library is heavily commented. The descriptions are taken directly from Forrst. Please check the official [Forrst API documentation](http://forrst.com/api) for up to date API definitions and descriptions.
@@ -58,25 +62,23 @@ calls per hour, so keep that in mind when designing your applications. Here's th
 - `postsList(String postType, Map<String,String> options)`
 - `postComments(String accessToken, int id)`
 
-Authors
--------
+TODO
+----
 
-Our aim is to make Forrst integration into Java applications as easy as possible. We have tried our best to provide in-code documentation for each method.
-Tests coming up soon! Until then please help us find bugs.
+- Improve deserialization for Notifications
+- Upload to the [maven repository](http://maven.apache.org/guides/mini/guide-central-repository-upload.html)
+
+Copyright
+---------
+Copyright (c) 2013 Nitin Dhar. See MIT-LICENSE for details.
+
+Author
+------
+
+My aim is to make Forrst integration into Java applications as easy as possible. I have tried my best to provide in-code documentation for each method.
 
 - Nitin Dhar
 
   - Forrst: https://forrst.com/people/nitindhar7
   - Site: http://softwarebynitin.com
   - Twitter: @nitin_dhar
-
-TODO
-----
-
-- Use Apache Ivy for dependency management
-- Improve deserialization for Notifications
-- Upload to the [maven repository](http://maven.apache.org/guides/mini/guide-central-repository-upload.html)
-
-Copyright
----------
-Copyright (c) 2012 Nitin Dhar. See MIT-LICENSE for details.

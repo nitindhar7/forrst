@@ -6,6 +6,5 @@ lib/
 bin/
 target/
 test-output/
-dist/
 javadocs/
 src/main/java/com/forrst/api/*.asc
