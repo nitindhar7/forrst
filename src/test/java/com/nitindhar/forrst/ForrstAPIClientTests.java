@@ -22,7 +22,7 @@ public class ForrstAPIClientTests {
 
     private final ForrstAPI forrst = new ForrstAPIClient();
 
-    @Test (groups={"ready"})
+    @Test (groups={"skip"})
     public void testStats() throws MalformedURLException {
         Stat stat = forrst.stats();
         TestCase.assertNotNull(stat);
@@ -35,14 +35,14 @@ public class ForrstAPIClientTests {
      *
      * Replace "skip" with "ready"
      * Replace EMAIL_OR_USERNAME with email/username
-     * Replace PASSWORD with password
+     * Replace PASSWORD with PASSWORD
      */
     @Test (groups={"skip"})
     public void testNotifications() throws MalformedURLException, JSONException, ForrstAuthenticationException {
         Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
         List<Notification> notifications = forrst.notifications(auth.getAccessToken(), null);
         TestCase.assertNotNull(notifications);
-        TestCase.assertTrue(notifications.size() == 0 ? true : false);
+        TestCase.assertTrue(notifications.size() == 1 ? true : false);
     }
 
     /*
@@ -50,7 +50,7 @@ public class ForrstAPIClientTests {
      *
      * Replace "skip" with "ready"
      * Replace EMAIL_OR_USERNAME with email/username
-     * Replace PASSWORD with password
+     * Replace PASSWORD with PASSWORD
      */
     @Test (groups={"skip"})
     public void testUsersAuth() throws MalformedURLException, JSONException, ForrstAuthenticationException {
@@ -113,7 +113,7 @@ public class ForrstAPIClientTests {
      *
      * Replace "skip" with "ready"
      * Replace EMAIL_OR_USERNAME with email or username
-     * Replace PASSWORD with password
+     * Replace PASSWORD with PASSWORD
      */
     @Test (groups={"skip"})
     public void testPostCommentsByID() throws MalformedURLException, JSONException, ForrstAuthenticationException {

@@ -1,4 +1,4 @@
-package com.nitindhar.forrst;
+package com.nitindhar.forrst.http;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,7 +15,7 @@ import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class HttpRequestTests {
 
-    private static final HttpRequest http = new HttpRequest();
+    private static final HttpRequest http = new HttpRequest(HttpProvider.ASYNC_HTTP_CLIENT);
 
     @SuppressWarnings("rawtypes")
     private static final Optional ABSENT = Optional.absent();

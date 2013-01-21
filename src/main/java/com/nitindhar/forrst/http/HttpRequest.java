@@ -1,4 +1,4 @@
-package com.nitindhar.forrst;
+package com.nitindhar.forrst.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -35,7 +36,16 @@ public class HttpRequest {
 
     private static final int MAX_HTTP_GET_WAIT = 2;
     private static final String ENCODING = "UTF-8";
-    private static final AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+
+    private AsyncHttpClient asyncHttpClient;
+    private final HttpProvider httpProvider;
+
+    public HttpRequest(HttpProvider httpProvider) {
+        this.httpProvider = httpProvider;
+        if(httpProvider == HttpProvider.ASYNC_HTTP_CLIENT) {
+            asyncHttpClient = new AsyncHttpClient();
+        }
+    }
 
     /**
      * Workhorse method that POSTs data from a URL and
@@ -45,21 +55,42 @@ public class HttpRequest {
      * @return JSONObject containing the full Forrst API response
      */
     @SuppressWarnings("deprecation")
-    protected JSONObject get(String requestURI, Optional<Map<String,String>> params) {
+    public JSONObject get(String requestURI, Optional<Map<String,String>> params) {
         JSONObject json = null;
 
         try {
-            BoundRequestBuilder builder = asyncHttpClient.prepareGet(requestURI);
-            if(params.isPresent()) {
-                Map<String,String> queryParams = params.get();
-                for(String key : queryParams.keySet()) {
-                    builder.addQueryParameter(URLEncoder.encode(key), URLEncoder.encode(queryParams.get(key)));
+            if(httpProvider == HttpProvider.ASYNC_HTTP_CLIENT) {
+                BoundRequestBuilder builder = asyncHttpClient.prepareGet(requestURI);
+                if(params.isPresent()) {
+                    Map<String,String> queryParams = params.get();
+                    for(String key : queryParams.keySet()) {
+                        builder.addQueryParameter(URLEncoder.encode(key), URLEncoder.encode(queryParams.get(key)));
+                    }
                 }
-            }
-            Future<Response> f = builder.execute();
-            Response resp = f.get(MAX_HTTP_GET_WAIT, TimeUnit.SECONDS);
+                Future<Response> f = builder.execute();
+                Response resp = f.get(MAX_HTTP_GET_WAIT, TimeUnit.SECONDS);
 
-            json = new JSONObject(resp.getResponseBody());
+                json = new JSONObject(resp.getResponseBody());
+            } else {
+                String jsonResult = "";
+
+                if(params.isPresent()) {
+                    requestURI = requestURI + "?" + stringifyArgs(params.get());
+                }
+
+                URL url = new URL(requestURI);
+                URLConnection urlConn = url.openConnection();
+                BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), ENCODING));
+
+                String responseLine;
+                while ((responseLine = in.readLine()) != null) {
+                    jsonResult += responseLine;
+                }
+
+                in.close();
+
+                json = new JSONObject(jsonResult.trim());
+            }
         } catch (Exception e) {
             throw new RuntimeException("Unable to get data from: " + requestURI, e);
         }
@@ -87,7 +118,7 @@ public class HttpRequest {
      * @return JSONObject containing the full Forrst API response
      * @throws ForrstAuthenticationException when authentication fails
      */
-    protected JSONObject postData(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
+    public JSONObject postData(String requestURI, Map<String,String> params) throws ForrstAuthenticationException {
         String jsonResult = "";
 
         JSONObject json = null;
@@ -143,7 +174,7 @@ public class HttpRequest {
      * @param params
      * @return
      */
-    protected String stringifyArgs(Map<String,String> params) {
+    public String stringifyArgs(Map<String,String> params) {
         StringBuilder argString = new StringBuilder();
 
         try {

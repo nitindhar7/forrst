@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.common.base.Optional;
+import com.nitindhar.forrst.http.HttpProvider;
+import com.nitindhar.forrst.http.HttpRequest;
 import com.nitindhar.forrst.model.Auth;
 import com.nitindhar.forrst.model.Comment;
 import com.nitindhar.forrst.model.CommentWrapper;
@@ -26,8 +28,20 @@ import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class ForrstAPIClient implements ForrstAPI {
 
-    private static final HttpRequest http = new HttpRequest();
     private static final ObjectMapper mapper = new ObjectMapper();
+
+    private final HttpRequest http;
+    private final HttpProvider httpProvider;
+
+    public ForrstAPIClient() {
+        this.httpProvider = HttpProvider.ASYNC_HTTP_CLIENT;
+        http = new HttpRequest(httpProvider);
+    }
+
+    public ForrstAPIClient(HttpProvider httpProvider) {
+        this.httpProvider = httpProvider;
+        http = new HttpRequest(httpProvider);
+    }
 
     @Override
     public Stat stats() {

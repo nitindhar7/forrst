@@ -8,7 +8,7 @@ Android platform to be tested soon!
 
 Download Latest
 ---------------
-Download the latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-5.1.1.jar)
+Download the latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-5.2.0.jar)
 
 Build & Use
 -----------
@@ -19,7 +19,14 @@ To begin, build Forrst and import it in your code. __To run the tests for the `u
 
     import com.forrst.api;
 
+    // Defaults to the async-http-client http implementation from Sonatype
     ForrstAPI forrst = new ForrstAPIClient();
+
+    // To use a specific HTTP provider implementation
+    ForrstAPI forrst = new ForrstAPIClient(HttpProvider.JAVA_NET);
+
+    // OR..
+    ForrstAPI forrst = new ForrstAPIClient(HttpProvider.ASYNC_HTTP_CLIENT);
 
     // API stats
     forrst.stats();
