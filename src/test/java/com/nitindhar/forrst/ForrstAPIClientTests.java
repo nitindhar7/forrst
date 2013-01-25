@@ -10,6 +10,7 @@ import junit.framework.TestCase;
 import org.json.JSONException;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Optional;
 import com.nitindhar.forrst.model.Auth;
 import com.nitindhar.forrst.model.Comment;
 import com.nitindhar.forrst.model.Notification;
@@ -39,8 +40,8 @@ public class ForrstAPIClientTests {
      */
     @Test (groups={"skip"})
     public void testNotifications() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-        Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
-        List<Notification> notifications = forrst.notifications(auth.getAccessToken(), null);
+        Optional<Auth> auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+        List<Notification> notifications = forrst.notifications(auth.get().getAccessToken(), null);
         TestCase.assertNotNull(notifications);
         TestCase.assertTrue(notifications.size() == 1 ? true : false);
     }
@@ -54,10 +55,10 @@ public class ForrstAPIClientTests {
      */
     @Test (groups={"skip"})
     public void testUsersAuth() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-        Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+        Optional<Auth> auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
         TestCase.assertNotNull(auth);
-        TestCase.assertNotNull(auth.getUserId());
-        TestCase.assertTrue(auth.getAccessToken() != null && auth.getAccessToken().length() > 0);
+        TestCase.assertNotNull(auth.get().getUserId());
+        TestCase.assertTrue(auth.get().getAccessToken() != null && auth.get().getAccessToken().length() > 0);
     }
 
     @Test (groups={"ready"})
@@ -117,8 +118,8 @@ public class ForrstAPIClientTests {
      */
     @Test (groups={"skip"})
     public void testPostCommentsByID() throws MalformedURLException, JSONException, ForrstAuthenticationException {
-        Auth auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
-        List<Comment> comments = forrst.postComments(auth.getAccessToken(), 124269);
+        Optional<Auth> auth = forrst.usersAuth("EMAIL_OR_USERNAME", "PASSWORD");
+        List<Comment> comments = forrst.postComments(auth.get().getAccessToken(), 124269);
         TestCase.assertNotNull(comments);
         TestCase.assertTrue((comments.size() > 0) ? true : false);
     }

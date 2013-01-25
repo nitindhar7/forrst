@@ -3,13 +3,13 @@ package com.nitindhar.forrst;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Optional;
 import com.nitindhar.forrst.model.Auth;
 import com.nitindhar.forrst.model.Comment;
 import com.nitindhar.forrst.model.Notification;
 import com.nitindhar.forrst.model.Post;
 import com.nitindhar.forrst.model.Stat;
 import com.nitindhar.forrst.model.User;
-import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public interface ForrstAPI {
 
@@ -37,12 +37,12 @@ public interface ForrstAPI {
      * notification (currently for likes, comments [replies,
      * subscription-based, on your post], mentions, jobs, and
      * follows) will have the same fields present for data.
-     * 
+     *
      * @param accessToken Token obtained when the user is authenticated
      * @param options is a map & can contain
      *        grouped: [optional] Boolean indicating whether
      *                 to return items logically grouped by
-     *                 type 
+     *                 type
      * @return List of notifications
      */
     public List<Notification> notifications(String accessToken, Map<String,String> options);
@@ -54,13 +54,12 @@ public interface ForrstAPI {
      * @param emailOrUsername Email/Username
      * @param password Password
      * @return Auth object containing access token and user id
-     * @throws ForrstAuthenticationException when authentication fails
      */
-    public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException;
+    public Optional<Auth> usersAuth(String emailOrUsername, String password);
 
     /**
      * Given a property identifying a user return a user
-     * 
+     *
      * @param userInfo Map containing user id or username
      * @return User data
      */
@@ -68,7 +67,7 @@ public interface ForrstAPI {
 
     /**
      * Returns a user's posts
-     * 
+     *
      * @param id User identifier - id or username
      * @param options is a map & can contain:
      *        type [optional] Post type (code, snap, link, question)
@@ -83,7 +82,7 @@ public interface ForrstAPI {
      * content is the question. For code, content contains
      * the code snippet. For code, snaps, and links, description
      * is the post description; it is not used for questions.
-     * 
+     *
      * @param id Post ID
      * @return post object containing user (+ users photos) and
      *          post snaps if available.
@@ -92,14 +91,14 @@ public interface ForrstAPI {
 
     /**
      * Returns a list of all posts in reverse-chron order
-     * 
+     *
      * @return List of posts
      */
     public List<Post> postsAll(Map<String,String> options);
 
     /**
      * Returns a list of posts of a given type
-     * 
+     *
      * @param postType Post type (code, snap, link, question)
      * @param options Map containing
      *        sort [optional, default = recent] Sort by recent, popular, best (staff picks)
@@ -110,7 +109,7 @@ public interface ForrstAPI {
 
     /**
      * Returns a post's comments
-     * 
+     *
      * @param accessToken Token obtained when the user is authenticated
      * @param id Post ID
      * @return List of comments for given post

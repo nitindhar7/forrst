@@ -8,7 +8,7 @@ Android platform to be tested soon!
 
 Download Latest
 ---------------
-Download the latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-5.2.0.jar)
+Download the latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-6.0.0.jar)
 
 Build & Use
 -----------

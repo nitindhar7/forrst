@@ -24,7 +24,6 @@ import com.nitindhar.forrst.model.Post;
 import com.nitindhar.forrst.model.PostWrapper;
 import com.nitindhar.forrst.model.Stat;
 import com.nitindhar.forrst.model.User;
-import com.nitindhar.forrst.util.ForrstAuthenticationException;
 
 public class ForrstAPIClient implements ForrstAPI {
 
@@ -103,18 +102,16 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public Auth usersAuth(String emailOrUsername, String password) throws ForrstAuthenticationException {
-        Auth auth = null;
+    public Optional<Auth> usersAuth(String emailOrUsername, String password) {
+        Optional<Auth> auth = Optional.absent();
 
         try {
             Map<String,String> params = new HashMap<String,String>();
             params.put("email_or_username", emailOrUsername);
             params.put("password", password);
 
-            auth = mapper.readValue(http.post(Endpoint.getInstance().USERS_AUTH_URI, params).toString(), Auth.class);
-        } catch (Exception e) {
-            throw new RuntimeException("Error authenticating with Forrst", e);
-        }
+            auth = Optional.fromNullable(mapper.readValue(http.post(Endpoint.getInstance().USERS_AUTH_URI, params).toString(), Auth.class));
+        } catch (Throwable t) {}
 
         return auth;
     }
