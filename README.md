@@ -72,6 +72,7 @@ calls per hour, so keep that in mind when designing your applications. Here's th
 TODO
 ----
 
+- Remove ForrstAuthenticationException
 - Improve deserialization for Notifications
 - Upload to the [maven repository](http://maven.apache.org/guides/mini/guide-central-repository-upload.html)
 
