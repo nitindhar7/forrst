@@ -74,6 +74,7 @@ TODO
 
 - Remove ForrstAuthenticationException
 - Improve deserialization for Notifications
+- Create enum : PostType instead of using java.lang.String
 - Upload to the [maven repository](http://maven.apache.org/guides/mini/guide-central-repository-upload.html)
 
 Copyright

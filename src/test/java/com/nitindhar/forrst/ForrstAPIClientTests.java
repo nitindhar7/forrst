@@ -87,7 +87,8 @@ public class ForrstAPIClientTests {
 
     @Test (groups={"ready"})
     public void testPostsShowById() throws MalformedURLException {
-        Post post = forrst.postsShow(45114);
+        Post post = forrst.postsShow(159543);
+        System.out.println(post.toString());
         TestCase.assertNotNull(post);
         TestCase.assertNotNull(post.getUser());
         TestCase.assertNotNull(post.getUser().getPhoto());

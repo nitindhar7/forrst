@@ -1,5 +1,7 @@
 package com.nitindhar.forrst.model;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonCreator;
@@ -77,6 +79,9 @@ public class Post extends AbstractData {
     @JsonProperty("snaps")
     private final Snap snap;
 
+    @JsonProperty("multiposts")
+    private final List<Multipost> multiposts;
+
     @JsonCreator
     public Post(@JsonProperty("id") @NotNull int id,
                 @JsonProperty("tiny_id") @NotNull String tinyId,
@@ -95,7 +100,8 @@ public class Post extends AbstractData {
                 @JsonProperty("like_count") @NotNull int likeCount,
                 @JsonProperty("comment_count") @NotNull int commentCount,
                 @JsonProperty("tag_string") @NotNull String tagString,
-                @JsonProperty("snaps") Snap snap) {
+                @JsonProperty("snaps") Snap snap,
+                @JsonProperty("multiposts") List<Multipost> multiposts) {
         this.id = id;
         this.tinyId = tinyId;
         this.postType = postType;
@@ -114,6 +120,7 @@ public class Post extends AbstractData {
         this.commentCount = commentCount;
         this.tagString = tagString;
         this.snap = snap;
+        this.multiposts = multiposts;
     }
 
     public int getId() {
@@ -186,6 +193,10 @@ public class Post extends AbstractData {
 
     public Snap getSnap() {
         return snap;
+    }
+
+    public List<Multipost> getMultiposts() {
+        return multiposts;
     }
 
 }
