@@ -21,6 +21,7 @@ import com.nitindhar.forrst.model.CommentWrapper;
 import com.nitindhar.forrst.model.ForrstData;
 import com.nitindhar.forrst.model.Notification;
 import com.nitindhar.forrst.model.Post;
+import com.nitindhar.forrst.model.PostType;
 import com.nitindhar.forrst.model.PostWrapper;
 import com.nitindhar.forrst.model.Stat;
 import com.nitindhar.forrst.model.User;
@@ -33,7 +34,7 @@ public class ForrstAPIClient implements ForrstAPI {
     private final HttpProvider httpProvider;
 
     public ForrstAPIClient() {
-        this.httpProvider = HttpProvider.ASYNC_HTTP_CLIENT;
+        httpProvider = HttpProvider.ASYNC_HTTP_CLIENT;
         http = new HttpRequest(httpProvider);
     }
 
@@ -43,7 +44,7 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public Stat stats() {
+    public Stat getStats() {
         ForrstData<Stat> data = null;
 
         try {
@@ -58,7 +59,7 @@ public class ForrstAPIClient implements ForrstAPI {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Notification> notifications(String accessToken, Map<String,String> options) {
+    public List<Notification> getNotifications(String accessToken, Map<String,String> options) {
         List<Notification> notifications = new ArrayList<Notification>();
         Map<String,String> params = new HashMap<String,String>();
         params.put("access_token", accessToken);
@@ -102,7 +103,7 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public Optional<Auth> usersAuth(String emailOrUsername, String password) {
+    public Optional<Auth> authenticateUser(String emailOrUsername, String password) {
         Optional<Auth> auth = Optional.absent();
 
         try {
@@ -117,7 +118,7 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public User usersInfo(Map<String,String> userInfo) {
+    public User getUser(Map<String,String> userInfo) {
         ForrstData<User> data = null;
 
         try {
@@ -133,7 +134,7 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public List<Post> userPosts(Map<String,String> userInfo, Map<String,String> options) {
+    public List<Post> getUserPosts(Map<String,String> userInfo, Map<String,String> options) {
         ForrstData<PostWrapper> data = null;
 
         Map<String,String> params = new HashMap<String,String>();
@@ -166,7 +167,7 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public Post postsShow(int id) {
+    public Post getPost(int id) {
         ForrstData<Post> data = null;
 
         try {
@@ -182,7 +183,7 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public List<Post> postsAll(Map<String,String> options) {
+    public List<Post> getPosts(Map<String,String> options) {
         ForrstData<PostWrapper> data = null;
         Map<String,String> params = new HashMap<String,String>();
 
@@ -203,11 +204,11 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public List<Post> postsList(String postType, Map<String,String> options) {
+    public List<Post> getPostsByType(PostType postType, Map<String,String> options) {
         ForrstData<PostWrapper> data = null;
 
         Map<String,String> params = new HashMap<String,String>();
-        params.put("post_type", postType);
+        params.put("post_type", postType.getKey());
 
         if(MapUtils.isNotEmpty(options)) {
             if(options.containsKey("sort")) {
@@ -229,7 +230,7 @@ public class ForrstAPIClient implements ForrstAPI {
     }
 
     @Override
-    public List<Comment> postComments(String accessToken, int id) {
+    public List<Comment> getPostComments(String accessToken, int id) {
         ForrstData<CommentWrapper> data = null;
 
         try {
@@ -245,4 +246,5 @@ public class ForrstAPIClient implements ForrstAPI {
 
         return data.getResp().getComments();
     }
+
 }

@@ -1,14 +1,10 @@
 Forrst
 ======
-forrst is a Java library for the Forrst API(v2). Currently this library is in development and will provide basic support for reading posts. forrst has minimal dependencies and is aimed to be easy to use.
-
-Android
--------
-Android platform to be tested soon!
+forrst is a Java library for the Forrst API(v2) providing basic support for reading posts.
 
 Download Latest
 ---------------
-Download the latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-6.1.0.jar)
+Download the latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-7.0.0.jar)
 
 Build & Use
 -----------
@@ -17,7 +13,7 @@ To begin, build Forrst and import it in your code. __To run the tests for the `u
 
     $ ant
 
-    import com.forrst.api;
+    import com.nitindhar.forrst;
 
     // Defaults to the async-http-client http implementation from Sonatype
     ForrstAPI forrst = new ForrstAPIClient();
@@ -47,12 +43,9 @@ Note that each library API endpoint returns a JSONObject. For more information o
 Also, at the moment the rate limit threshold is soft, which means that it is up to the client application to ensure that it sticks close to the 150 calls/hour limit. This limit may become strictly
 enforced eventually.
 
-Details for the rest of the available API endpoints are given inline.
-
-Contribute
-------------
-Submit well documented code with unit tests and I will merge your changes in
-as long as your code does not break the build.
+Android
+-------
+Android platform to be tested soon!
 
 API Endpoints
 -------------
@@ -74,20 +67,14 @@ TODO
 
 - Remove ForrstAuthenticationException
 - Improve deserialization for Notifications
-- Create enum : PostType instead of using java.lang.String
 - Upload to the [maven repository](http://maven.apache.org/guides/mini/guide-central-repository-upload.html)
 
 Copyright
 ---------
 Copyright (c) 2013 Nitin Dhar. See MIT-LICENSE for details.
 
-Author
-------
+* * *
 
-My aim is to make Forrst integration into Java applications as easy as possible. I have tried my best to provide in-code documentation for each method.
-
-- Nitin Dhar
-
-  - Forrst: https://forrst.com/people/nitindhar7
-  - Site: http://softwarebynitin.com
-  - Twitter: @nitin_dhar
+- Tumblr: http://softwarebynitin.com
+- Forrst: https://forrst.com/people/nitindhar7
+- Twitter: @nitin_dhar

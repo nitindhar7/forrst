@@ -8,10 +8,11 @@ import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+@SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class PostWrapper extends AbstractData {
 
-    @JsonProperty("id")
+    @JsonProperty("posts")
     @NotNull
     private final List<Post> posts;
 
@@ -21,7 +22,7 @@ public class PostWrapper extends AbstractData {
     }
 
     public List<Post> getPosts() {
-        return this.posts;
+        return posts;
     }
 
 }

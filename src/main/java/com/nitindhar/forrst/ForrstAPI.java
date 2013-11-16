@@ -8,6 +8,7 @@ import com.nitindhar.forrst.model.Auth;
 import com.nitindhar.forrst.model.Comment;
 import com.nitindhar.forrst.model.Notification;
 import com.nitindhar.forrst.model.Post;
+import com.nitindhar.forrst.model.PostType;
 import com.nitindhar.forrst.model.Stat;
 import com.nitindhar.forrst.model.User;
 
@@ -24,7 +25,7 @@ public interface ForrstAPI {
      *
      * @return Stat object containing current rate limit & calls made
      */
-    public Stat stats();
+    public Stat getStats();
 
     /**
      * Return notification items for the authenticating user.
@@ -45,7 +46,7 @@ public interface ForrstAPI {
      *                 type
      * @return List of notifications
      */
-    public List<Notification> notifications(String accessToken, Map<String,String> options);
+    public List<Notification> getNotifications(String accessToken, Map<String,String> options);
 
     /**
      * User authentication. Provide an email/username
@@ -55,7 +56,7 @@ public interface ForrstAPI {
      * @param password Password
      * @return Auth object containing access token and user id
      */
-    public Optional<Auth> usersAuth(String emailOrUsername, String password);
+    public Optional<Auth> authenticateUser(String emailOrUsername, String password);
 
     /**
      * Given a property identifying a user return a user
@@ -63,7 +64,7 @@ public interface ForrstAPI {
      * @param userInfo Map containing user id or username
      * @return User data
      */
-    public User usersInfo(Map<String,String> userInfo);
+    public User getUser(Map<String,String> userInfo);
 
     /**
      * Returns a user's posts
@@ -75,7 +76,7 @@ public interface ForrstAPI {
      *        after [optional] if given, return posts with an ID lower than after
      * @return list of posts
      */
-    public List<Post> userPosts(Map<String,String> userInfo, Map<String,String> options);
+    public List<Post> getUserPosts(Map<String,String> userInfo, Map<String,String> options);
 
     /**
      * Return data about a single post. Note: For questions,
@@ -87,14 +88,14 @@ public interface ForrstAPI {
      * @return post object containing user (+ users photos) and
      *          post snaps if available.
      */
-    public Post postsShow(int id);
+    public Post getPost(int id);
 
     /**
      * Returns a list of all posts in reverse-chron order
      *
      * @return List of posts
      */
-    public List<Post> postsAll(Map<String,String> options);
+    public List<Post> getPosts(Map<String,String> options);
 
     /**
      * Returns a list of posts of a given type
@@ -105,7 +106,7 @@ public interface ForrstAPI {
      *        page [optional, default = 1] Page of results to return
      * @return List of posts of given type
      */
-    public List<Post> postsList(String postType, Map<String,String> options);
+    public List<Post> getPostsByType(PostType postType, Map<String,String> options);
 
     /**
      * Returns a post's comments
@@ -114,6 +115,6 @@ public interface ForrstAPI {
      * @param id Post ID
      * @return List of comments for given post
      */
-    public List<Comment> postComments(String accessToken, int id);
+    public List<Comment> getPostComments(String accessToken, int id);
 
 }

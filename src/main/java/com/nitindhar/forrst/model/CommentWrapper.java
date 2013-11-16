@@ -8,6 +8,7 @@ import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+@SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class CommentWrapper extends AbstractData {
 
@@ -27,11 +28,11 @@ public class CommentWrapper extends AbstractData {
     }
 
     public int getCount() {
-        return this.count;
+        return count;
     }
 
     public List<Comment> getComments() {
-        return this.comments;
+        return comments;
     }
 
 }
