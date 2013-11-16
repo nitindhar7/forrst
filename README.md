@@ -1,10 +1,8 @@
 Forrst
-======
-forrst is a Java library for the Forrst API(v2) providing basic support for reading posts.
 
-Download Latest
----------------
-Latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-7.0.0.jar)
+forrst is a Java library for the Forrst API(v2) providing basic support for reading posts. Download the latest jar [here](https://github.com/nitindhar7/forrst/raw/master/dist/forrst-7.0.0.jar)
+
+* * *
 
 Examples
 --------
